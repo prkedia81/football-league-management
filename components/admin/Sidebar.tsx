@@ -15,10 +15,10 @@ import {
 import { cn } from "@/lib/utils";
 
 const navigation = [
-  { name: "Matches", href: "#", icon: HomeIcon, current: true },
-  { name: "Teams", href: "#", icon: UserGroupIcon, current: false },
-  { name: "Venues", href: "#", icon: CalendarIcon, current: false },
-  { name: "Referees", href: "#", icon: MapIcon, current: false },
+  { name: "Matches", href: "/admin", icon: HomeIcon, current: true },
+  { name: "Teams", href: "/admin/teams", icon: UserGroupIcon, current: false },
+  { name: "Venues", href: "/admin/venues", icon: CalendarIcon, current: false },
+  { name: "Official", href: "/admin/officials", icon: MapIcon, current: false },
 ];
 
 export default function Sidebar({
