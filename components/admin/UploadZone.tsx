@@ -1,68 +1,59 @@
-"use client";
-
-import { ChangeEvent, useState } from "react";
+import React, { ChangeEvent } from "react";
 import * as XLSX from "xlsx";
 
-const UploadPage = () => {
-  const [data, setData] = useState([]);
+interface Props {
+  setHeadings: (item: string[]) => void;
+  setData: (item: any[]) => void;
+  text: string;
+}
 
-  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files === null) return;
-    const file = e.target.files[0];
+function UploadZone<T>({ setHeadings, setData, text }: Props) {
+  const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files === null) return;
+    const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = (evt) => {
       const bstr = evt.target?.result;
-      const wb = XLSX.read(bstr, { type: "binary" });
-      const wsname = wb.SheetNames[0];
-      const ws = wb.Sheets[wsname];
-      const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      setData(data);
+      const workbook = XLSX.read(bstr, { type: "binary" });
+      const worksheetName = workbook.SheetNames[0];
+      const ws = workbook.Sheets[worksheetName];
+      const sheetData = XLSX.utils.sheet_to_json(ws, {
+        header: 1,
+        raw: false,
+        dateNF: "yyyy-mm-dd",
+      });
+      // TODO: Check Type Safety here
+      const tableHeadings = sheetData.shift() as string[];
+      setHeadings(tableHeadings);
+      const tableData: any[] = [];
+      // TODO: Edit this
+      sheetData.forEach((row) => {
+        if (Array.isArray(row) && row?.length == 6)
+          tableData.push({
+            srNum: row[0],
+            team1Id: row[1],
+            team2Id: row[2],
+            date: row[3],
+            time: row[4],
+            location: row[5],
+          });
+      });
+      setData(tableData);
     };
     reader.readAsBinaryString(file);
   };
 
   return (
-    <div>
-      <UploadZone
-        text="Upload list of matches in .xlsx or .xls format"
-        fileType=".xls, .xlsx"
-        onChangeFn={handleFileUpload}
+    <div className="mx-4 w-[95%] my-4 relative group border border-dashed border-gray-300 rounded-lg p-8 items-center justify-center flex text-base text-gray-800 dark:text-gray-400">
+      {text}
+      <input
+        className="absolute inset-0 z-0 w-full h-full opacity-0 cursor-pointer"
+        type="file"
+        accept=".xls, .xlsx"
+        onChange={handleFileUpload}
       />
-      <table>
-        <tbody>
-          {data.map((row, i) => (
-            <tr key={i}>
-              {row.map((cell, j) => (
-                <td key={j}>{cell}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
-interface Props {
-  text: string;
-  onChangeFn: (event: ChangeEvent<HTMLInputElement>) => void;
-  fileType: string;
-}
-
-function UploadZone({ text, fileType, onChangeFn }: Props) {
-  return (
-    <div className="flex flex-col w-full gap-2">
-      <div className="mx-4 w-[95%] my-4 relative group border border-dashed border-gray-300 rounded-lg p-6 items-center justify-center flex text-sm text-gray-700 dark:text-gray-400">
-        {text}
-        <input
-          className="absolute inset-0 z-0 w-full h-full opacity-0 cursor-pointer"
-          type="file"
-          accept={fileType}
-          onChange={onChangeFn}
-        />
-      </div>
     </div>
   );
 }
 
-export default UploadPage;
+export default UploadZone;

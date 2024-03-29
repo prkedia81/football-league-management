@@ -31,8 +31,8 @@ function page() {
         link={"/admin/teams/add-teams"}
       />
       <div className="mx-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {teamCards.map((team) => (
-          <TeamCard {...team} />
+        {teamCards.map((team, i) => (
+          <TeamCard key={i} {...team} />
         ))}
       </div>
     </>
