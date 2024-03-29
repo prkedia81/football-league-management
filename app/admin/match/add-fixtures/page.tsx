@@ -1,5 +1,6 @@
 "use client";
 
+import AddTeam from "@/components/admin/addTeam";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -77,6 +78,8 @@ const page = () => {
             onChange={handleFileUpload}
           />
         </div>
+        <br/>OR
+        <AddTeam />
         {/* TODO: OR Single Entry Form here*/}
       </div>
       <Table>
