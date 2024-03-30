@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import * as React from "react";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -8,82 +8,126 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
+interface TimePickerProps {
+  value?: string;
+  onChange: (...event: any[]) => void;
+}
+const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
+  const [selectedTime, setSelectedTime] = useState(value || "12:00 PM");
 
-
-const TimePicker = () => {
-  const [time, setTime] = useState('12:00');
-
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setTime(event.target.value);
+  const handleTimeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const time = event.target.value;
+    setSelectedTime(time);
+    onChange(time);
   };
-
-  const handleClick = () => {
-    alert(`Selected time: ${time}`);
-  };
-
   return (
-    <div >
-        <Select value={time} onChange={handleChange}>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Time" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-        <SelectItem value="00:00">00:00</SelectItem>
-        <SelectItem value="00:30">00:30</SelectItem>
-        <SelectItem value="01:00">01:00</SelectItem>
-        <SelectItem value="01:30">01:30</SelectItem>
-        <SelectItem value="02:00">02:00</SelectItem>
-        <SelectItem value="02:30">02:30</SelectItem>
-        <SelectItem value="03:00">03:00</SelectItem>
-        <SelectItem value="03:30">03:30</SelectItem>
-        <SelectItem value="04:00">04:00</SelectItem>
-        <SelectItem value="04:30">04:30</SelectItem>
-        <SelectItem value="05:00">05:00</SelectItem>
-        <SelectItem value="05:30">05:30</SelectItem>
-        <SelectItem value="06:00">06:00</SelectItem>
-        <SelectItem value="06:30">06:30</SelectItem>
-        <SelectItem value="07:00">07:00</SelectItem>
-        <SelectItem value="07:30">07:30</SelectItem>
-        <SelectItem value="08:00">08:00</SelectItem>
-        <SelectItem value="08:30">08:30</SelectItem>
-        <SelectItem value="09:00">09:00</SelectItem>
-        <SelectItem value="09:30">09:30</SelectItem>
-        <SelectItem value="10:00">10:00</SelectItem>
-        <SelectItem value="10:30">10:30</SelectItem>
-        <SelectItem value="11:00">11:00</SelectItem>
-        <SelectItem value='11:30'>11:30</SelectItem>
-        <SelectItem value="12:00">12:00</SelectItem>
-        <SelectItem value="12:30">12:30</SelectItem>
-        <SelectItem value="13:00">13:00</SelectItem>
-        <SelectItem value="13:30">13:30</SelectItem>
-        <SelectItem value="14:00">14:00</SelectItem>
-        <SelectItem value="14:30">14:30</SelectItem>
-        <SelectItem value="15:00">15:00</SelectItem>
-        <SelectItem value="15:30">15:30</SelectItem>
-        <SelectItem value="16:00">16:00</SelectItem>
-        <SelectItem value="16:30">16:30</SelectItem>
-        <SelectItem value="17:00">17:00</SelectItem>
-        <SelectItem value="17:30">17:30</SelectItem>
-        <SelectItem value="18:00">18:00</SelectItem>
-        <SelectItem value="18:30">18:30</SelectItem>
-        <SelectItem value="19:00">19:00</SelectItem>
-        <SelectItem value="19:30">19:30</SelectItem>
-        <SelectItem value="20:00">20:00</SelectItem>
-        <SelectItem value="20:30">20:30</SelectItem>
-        <SelectItem value="21:00">21:00</SelectItem>
-        <SelectItem value="21:30">21:30</SelectItem>
-        <SelectItem value="22:00">22:00</SelectItem>
-        <SelectItem value="22:30">22:30</SelectItem>
-        <SelectItem value="23:00">23:00</SelectItem>
-        <SelectItem value="23:30">23:30</SelectItem>
-        </SelectGroup>
-      </SelectContent>
+    <div className="flex w-full">
+      <Select>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Hours" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Hours</SelectLabel>
+            <SelectItem value="00">00</SelectItem>
+            <SelectItem value="01">01</SelectItem>
+            <SelectItem value="02">02</SelectItem>
+            <SelectItem value="03">03</SelectItem>
+            <SelectItem value="04">04</SelectItem>
+            <SelectItem value="05">05</SelectItem>
+            <SelectItem value="06">06</SelectItem>
+            <SelectItem value="07">07</SelectItem>
+            <SelectItem value="08">08</SelectItem>
+            <SelectItem value="09">09</SelectItem>
+            <SelectItem value="10">10</SelectItem>
+            <SelectItem value="11">11</SelectItem>
+            <SelectItem value="12">12</SelectItem>
+            <SelectItem value="13">13</SelectItem>
+            <SelectItem value="14">14</SelectItem>
+            <SelectItem value="15">15</SelectItem>
+            <SelectItem value="16">16</SelectItem>
+            <SelectItem value="17">17</SelectItem>
+            <SelectItem value="18">18</SelectItem>
+            <SelectItem value="19">19</SelectItem>
+            <SelectItem value="20">20</SelectItem>
+            <SelectItem value="21">21</SelectItem>
+            <SelectItem value="22">22</SelectItem>
+            <SelectItem value="23">23</SelectItem>
+          </SelectGroup>
+        </SelectContent>
       </Select>
-      <button onClick={handleClick}>Click me</button>
+      <Select>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Minutes" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Minutes</SelectLabel>
+            <SelectItem value="00">00</SelectItem>
+            <SelectItem value="01">01</SelectItem>
+            <SelectItem value="02">02</SelectItem>
+            <SelectItem value="03">03</SelectItem>
+            <SelectItem value="04">04</SelectItem>
+            <SelectItem value="05">05</SelectItem>
+            <SelectItem value="06">06</SelectItem>
+            <SelectItem value="07">07</SelectItem>
+            <SelectItem value="08">08</SelectItem>
+            <SelectItem value="09">09</SelectItem>
+            <SelectItem value="10">10</SelectItem>
+            <SelectItem value="11">11</SelectItem>
+            <SelectItem value="12">12</SelectItem>
+            <SelectItem value="13">13</SelectItem>
+            <SelectItem value="14">14</SelectItem>
+            <SelectItem value="15">15</SelectItem>
+            <SelectItem value="16">16</SelectItem>
+            <SelectItem value="17">17</SelectItem>
+            <SelectItem value="18">18</SelectItem>
+            <SelectItem value="19">19</SelectItem>
+            <SelectItem value="20">20</SelectItem>
+            <SelectItem value="21">21</SelectItem>
+            <SelectItem value="22">22</SelectItem>
+            <SelectItem value="23">23</SelectItem>
+            <SelectItem value="24">24</SelectItem>
+            <SelectItem value="25">25</SelectItem>
+            <SelectItem value="26">26</SelectItem>
+            <SelectItem value="27">27</SelectItem>
+            <SelectItem value="28">28</SelectItem>
+            <SelectItem value="29">29</SelectItem>
+            <SelectItem value="30">30</SelectItem>
+            <SelectItem value="31">31</SelectItem>
+            <SelectItem value="32">32</SelectItem>
+            <SelectItem value="33">33</SelectItem>
+            <SelectItem value="34">34</SelectItem>
+            <SelectItem value="35">35</SelectItem>
+            <SelectItem value="36">36</SelectItem>
+            <SelectItem value="37">37</SelectItem>
+            <SelectItem value="38">38</SelectItem>
+            <SelectItem value="39">39</SelectItem>
+            <SelectItem value="40">40</SelectItem>
+            <SelectItem value="41">41</SelectItem>
+            <SelectItem value="42">42</SelectItem>
+            <SelectItem value="43">43</SelectItem>
+            <SelectItem value="44">44</SelectItem>
+            <SelectItem value="45">45</SelectItem>
+            <SelectItem value="46">46</SelectItem>
+            <SelectItem value="47">47</SelectItem>
+            <SelectItem value="48">48</SelectItem>
+            <SelectItem value="49">49</SelectItem>
+            <SelectItem value="50">50</SelectItem>
+            <SelectItem value="51">51</SelectItem>
+            <SelectItem value="52">52</SelectItem>
+            <SelectItem value="53">53</SelectItem>
+            <SelectItem value="54">54</SelectItem>
+            <SelectItem value="55">55</SelectItem>
+            <SelectItem value="56">56</SelectItem>
+            <SelectItem value="57">57</SelectItem>
+            <SelectItem value="58">58</SelectItem>
+            <SelectItem value="59">59</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
     </div>
   );
 };
-
 export default TimePicker;
