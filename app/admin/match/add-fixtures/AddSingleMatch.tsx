@@ -9,8 +9,7 @@ import { AddMatchInputs } from "@/app/admin/match/add-fixtures/page";
 import { useState } from "react";
 import SuccessFailModal from "@/components/admin/SuccessFailModal";
 import LoadingSpinner from "@/components/admin/LoadingSpinner";
-import TimePicker12 from "@/components/admin/TimePicker12";
-import TimePicker from "@/components/admin/TimePicker";
+import TimePickerField from "@/components/admin/formElements/TimePickerField";
 
 interface Props {
   // TODO: Fix type
@@ -29,6 +28,7 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
   const methods = useForm<AddMatchInputs>();
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
   const [statusModal, setStatusModal] = useState<boolean | undefined>();
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<AddMatchInputs> = async (data) => {
     setUploadLoading(true);
@@ -45,7 +45,8 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
     <>
       <AddIndividualEntryCard
         title="Add Single Match"
-        description="Use this form to add a single match to all fixtures">
+        description="Use this form to add a single match to all fixtures"
+      >
         <FormProvider {...methods}>
           <form className="space-y-2" onSubmit={methods.handleSubmit(onSubmit)}>
             <InputField
@@ -69,14 +70,13 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
               id="date"
             />
             {/* TODO: Time Picker */}
-            {/* <InputField
+            <TimePickerField
               label="Time"
               isRequired={true}
               name="time"
               id="time"
-              placeholder="Select a time for the match"
-            /> */}
-            <TimePicker12/>
+            />
+            {/* <TimePicker12 /> */}
             {/* TODO: Get from drop down */}
             <InputField
               label="Location"
