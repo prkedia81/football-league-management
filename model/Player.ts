@@ -1,4 +1,4 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, model, models } from "mongoose";
 
 // Define the TypeScript interface for the Player document
 interface Players extends Document {
@@ -53,6 +53,6 @@ const playerSchema = new Schema({
 });
 
 // Create the model
-const Player = model<Players>("Player", playerSchema);
+const Player = models.Player || model<Players>("Player", playerSchema);
 
 export default Player;

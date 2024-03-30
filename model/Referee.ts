@@ -1,4 +1,4 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, model, models } from "mongoose";
 
 // Define the TypeScript interface for the Referee document
 interface Referees extends Document {
@@ -28,6 +28,6 @@ const refereeSchema = new Schema({
 });
 
 // Create the model
-const Referee = model<Referees>("Referee", refereeSchema);
+const Referee = models.Referee || model<Referees>("Referee", refereeSchema);
 
 export default Referee;

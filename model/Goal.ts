@@ -1,4 +1,4 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, model, models } from "mongoose";
 
 // Define the TypeScript interface for the Goal document
 interface Goals extends Document {
@@ -29,6 +29,6 @@ const goalSchema = new Schema({
 });
 
 // Create the model
-const Goal = model<Goals>("Goal", goalSchema);
+const Goal = models.Goal || model<Goals>("Goal", goalSchema);
 
 export default Goal;

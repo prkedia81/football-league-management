@@ -1,4 +1,4 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, model, models } from "mongoose";
 
 // Define the TypeScript interface for the Team document
 interface Teams extends Document {
@@ -83,6 +83,6 @@ const teamSchema = new Schema({
 });
 
 // Create the model
-const Team = model<Teams>("Team", teamSchema);
+const Team = models.Team || model<Teams>("Team", teamSchema);
 
 export default Team;
