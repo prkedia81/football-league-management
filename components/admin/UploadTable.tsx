@@ -32,8 +32,8 @@ function UploadTable<T>({ caption, headings, data, cellNames }: Props) {
       <TableBody>
         {data.map((row, i) => (
           <TableRow key={i}>
-            {cellNames.map((cell, j) => (
-              <TableCell key={j}>{row[cell]}</TableCell>
+            {row.map((item: any, j: number) => (
+              <TableCell key={j}>{item}</TableCell>
             ))}
           </TableRow>
         ))}

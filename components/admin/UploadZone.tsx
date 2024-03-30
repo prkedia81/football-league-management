@@ -25,20 +25,19 @@ function UploadZone<T>({ setHeadings, setData, text }: Props) {
       // TODO: Check Type Safety here
       const tableHeadings = sheetData.shift() as string[];
       setHeadings(tableHeadings);
-      const tableData: any[] = [];
-      // TODO: Edit this
-      sheetData.forEach((row) => {
-        if (Array.isArray(row) && row?.length == 6)
-          tableData.push({
-            srNum: row[0],
-            team1Id: row[1],
-            team2Id: row[2],
-            date: row[3],
-            time: row[4],
-            location: row[5],
-          });
-      });
-      setData(tableData);
+      // const tableData: any[] = [];
+      // sheetData.forEach((row) => {
+      //   if (Array.isArray(row) && row?.length == 6)
+      //     tableData.push({
+      //       srNum: row[0],
+      //       team1Id: row[1],
+      //       team2Id: row[2],
+      //       date: row[3],
+      //       time: row[4],
+      //       location: row[5],
+      //     });
+      // });
+      setData(sheetData);
     };
     reader.readAsBinaryString(file);
   };

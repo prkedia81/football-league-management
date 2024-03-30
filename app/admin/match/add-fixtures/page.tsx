@@ -19,11 +19,37 @@ const page = () => {
   const handleFixtureUpload = async (data: MatchFixtureUpload[]) => {
     "use server";
     console.log(data);
+    return false;
   };
 
   const handleSingleUpload = async (data: AddMatchInputs) => {
     "use server";
     console.log(data);
+    return true;
+  };
+
+  const bulkSuccessFailModal = {
+    modalSuccessHeading: "All match fixtures added",
+    modalSuccessBody:
+      "All match fixtures uploaded via the excel file have been added.",
+    modalSuccessButtonText: "Go to home",
+    modalSuccessButtonLink: "/admin",
+    modalFailHeading: "There was some error",
+    modalFailBody:
+      "The match fixture could not be added. Please make sure you added them in the format that was provided and try again.",
+    modalFailButtonText: "Try Again",
+    modalFailButtonLink: "/admin",
+  };
+
+  const singleSuccessFailModal = {
+    modalSuccessHeading: "Match fixtures added",
+    modalSuccessBody: "The match fixture has been added.",
+    modalSuccessButtonText: "Go to home",
+    modalSuccessButtonLink: "/admin",
+    modalFailHeading: "There was some error",
+    modalFailBody: "The match fixture could not be added. Please try again.",
+    modalFailButtonText: "Try Again",
+    modalFailButtonLink: "/admin",
   };
 
   return (
@@ -32,12 +58,16 @@ const page = () => {
         pageHeading="Add Match Fixtures"
         uploadZoneText="Upload file with match fixtures (.xls, .xlsx)"
         addSingleElementForm={
-          <AddSingleMatch handleAddFn={handleSingleUpload} />
+          <AddSingleMatch
+            handleAddFn={handleSingleUpload}
+            {...singleSuccessFailModal}
+          />
         }
         uploadTableCaption="A list of the match fixtures."
         uploadButtonText="Upload Match Fixtures"
         handleUploadFn={handleFixtureUpload}
         cellNames={cellNames}
+        {...bulkSuccessFailModal}
       />
     </>
   );
