@@ -25,7 +25,7 @@ class MatchClass {
       // TODO: Add time
       time: new Date(data.date).getTime(),
       // Get venue from ID
-      venue: "asdasd",
+      venue: { venueRegId: data.location },
     };
   }
 
@@ -48,7 +48,10 @@ class MatchClass {
     // @ts-ignore-ignore
     const match = await Match.create(dbEntries)
       .then(() => true)
-      .catch(() => false);
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
 
     return match;
   }
@@ -58,6 +61,12 @@ class MatchClass {
     const match = await Match.create(this.formatInputForDb(data))
       .then(() => true)
       .catch(() => false);
+    return match;
+  }
+
+  async getAllMatches() {
+    await connectMongo();
+    const match = await Match.find();
     return match;
   }
 
