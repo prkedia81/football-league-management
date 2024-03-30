@@ -10,7 +10,6 @@ import SuccessFailModal from "@/components/admin/SuccessFailModal";
 import LoadingSpinner from "@/components/admin/LoadingSpinner";
 
 interface Props {
-  // TODO: Fix type
   handleAddFn: (data: any) => Promise<boolean>;
   modalSuccessHeading: string;
   modalSuccessBody: string;
@@ -41,30 +40,40 @@ function AddSingleTeam({ handleAddFn, ...props }: Props) {
   return (
     <>
       <AddIndividualEntryCard
-        title="Add A Club"
+        title="Add a Club"
         description="Use this form to add a single Team to the League">
         <FormProvider {...methods}>
           <form className="space-y-2" onSubmit={methods.handleSubmit(onSubmit)}>
             <InputField
-              label="Team Registration ID"
-              isRequired={true}
-              name="teamRegId"
-              id="teamRegId"
-              placeholder="Enter team 1's Registration ID"
-            />
-            <InputField
               label="Club Name"
               isRequired={true}
-              name="teamname"
-              id="teamname"
+              name="name"
+              id="name"
               placeholder="Enter Club's Name"
             />
             <InputField
-              label="Team Short Hand"
+              label="Team Registration ID"
               isRequired={true}
-              name="teamShortHand"
-              id="teamShortHand"
+              name="regId"
+              id="regId"
+              placeholder="Enter team 1's Registration ID"
+            />
+            <InputField
+              label="Team Tournament Code"
+              isRequired={true}
+              name="teamCode"
+              id="teamCode"
               placeholder="Add a short hand for the team (For eg, RMA or BAR or LIV etc)"
+            />
+            <InputField
+              label="Club Email"
+              type="email"
+              isRequired={true}
+              name="email"
+              id="email"
+              placeholder="Enter Club's Email"
+              withAddOn={true}
+              addOnText="@"
             />
             <Button type="submit">
               {uploadLoading == false ? (
@@ -98,4 +107,4 @@ function AddSingleTeam({ handleAddFn, ...props }: Props) {
     </>
   );
 }
-export default AddSingleTeam
+export default AddSingleTeam;

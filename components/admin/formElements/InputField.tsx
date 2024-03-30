@@ -37,7 +37,7 @@ const InputField = ({
           {label} {isRequired && <span className="text-red-500">*</span>}
         </label>
         <div className="mt-1 flex-col gap-1 sm:mt-0 sm:col-span-4">
-          <div>
+          <div className="flex flex-row">
             {withAddOn ? (
               <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                 {addOnText}

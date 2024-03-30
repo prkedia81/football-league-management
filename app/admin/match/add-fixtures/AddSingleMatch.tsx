@@ -69,14 +69,14 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
               id="date"
             />
             {/* TODO: Time Picker */}
-            {/* <InputField
+            <InputField
               label="Time"
               isRequired={true}
               name="time"
               id="time"
               placeholder="Select a time for the match"
-            /> */}
-            <TimePicker12/>
+            />
+            {/* <TimePicker12/> */}
             {/* TODO: Get from drop down */}
             <InputField
               label="Location"

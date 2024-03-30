@@ -5,12 +5,14 @@ export interface Matches extends Document {
   team1: {
     teamCode: string;
     teamId?: string;
+    teamName?: string;
     goalsScored?: string[];
     players?: string[];
   };
   team2: {
     teamCode: string;
     teamId?: string;
+    teamName?: string;
     goalsScored?: string[];
     players?: string[];
   };
@@ -18,7 +20,11 @@ export interface Matches extends Document {
   team2Score: number;
   result: number;
   time: number;
-  venue: string;
+  status: string;
+  venue: {
+    venueRegId: string;
+    venueName: string;
+  };
   referee?: {
     position: string;
     refereeId: string;
@@ -32,12 +38,14 @@ const matchSchema = new Schema({
   team1: {
     teamCode: { type: String, required: true },
     teamId: String,
+    teamName: String,
     goalsScored: [{ type: String }],
     players: [{ type: String }],
   },
   team2: {
     teamCode: { type: String, required: true },
     teamId: String,
+    teamName: String,
     goalsScored: [{ type: String }],
     players: [{ type: String }],
   },
@@ -53,13 +61,17 @@ const matchSchema = new Schema({
     type: Number,
     default: -1,
   },
+  status: {
+    type: String,
+    default: "unplayed",
+  },
   time: {
     type: Number,
     required: true,
   },
   venue: {
-    type: String,
-    required: true,
+    venueRegId: { type: String, required: true },
+    venueName: { type: String, required: false },
   },
   referee: [
     {
