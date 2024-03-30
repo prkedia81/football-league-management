@@ -1,40 +1,31 @@
 import EmptyState from "@/components/admin/EmptyState";
 import PageHeading from "@/components/admin/Heading";
-import TeamCard from "@/components/admin/TeamCard";
+import VenueCard from "@/components/admin/VenueCard";
+import { Venues } from "@/model/Venue";
+import { getAllVenues } from "@/services/venues";
 
-function page() {
-  // TODO: Get list of Venues from DB Call
-  // If DB call empty -> display empty state
-
-  // TODO: In page heading, pass a button to add a button called add-team
-
-  // TODO: Edit the UI of Venues into a table
-
-  const teamCards = [
-    {
-      id: "1234",
-      name: "East Bengal",
-      matchesPlayed: ["123", 23, 234] as string[],
-      playersList: ["123", 123, 123] as string[],
-    },
-    {
-      id: "1234",
-      name: "East Bengal",
-      matchesPlayed: ["123", 23, 234] as string[],
-      playersList: ["123", 123, 123] as string[],
-    },
-  ];
+async function page() {
+  // const teams = JSON.parse(JSON.stringify(await getAllTeams())) as Teams[];
+  // const venues: any[] = [];
+  const venues = JSON.parse(JSON.stringify(await getAllVenues())) as Venues[];
 
   return (
     <>
-      <PageHeading heading="League Venues" />
-      <EmptyState
-        text="No venues added, click here to add venues"
-        link={"/admin/venues/add-venues"}
+      <PageHeading
+        heading="League Venues"
+        isPrimaryButton={true}
+        primaryButtonLink="/admin/venues/add-venues"
+        primaryButtonText="Add Venues"
       />
-      <div className="mx-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {teamCards.map((team) => (
-          <TeamCard {...team} />
+      {venues.length === 0 && (
+        <EmptyState
+          text="No venues added, click here to add venues"
+          link={"/admin/venues/add-venues"}
+        />
+      )}
+      <div className="mt-4 mx-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {venues.map((venue, i) => (
+          <VenueCard key={i} {...venue} />
         ))}
       </div>
     </>
