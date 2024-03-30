@@ -14,16 +14,28 @@ interface TimePickerProps {
   onChange: (...event: any[]) => void;
 }
 const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
+  const [hourValue, setHourValue] = useState("00");
+  const [minuteValue, setMinuteValue] = useState("00");
   const [selectedTime, setSelectedTime] = useState(value || "12:00 PM");
 
-  const handleTimeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const time = event.target.value;
-    setSelectedTime(time);
-    onChange(time);
+  const handleHourChange = (selectedValue: string) => {
+    setHourValue(selectedValue);
+    onChange(hourValue + ":" + minuteValue);
+    // handleTimeChange();
+  };
+
+  const handleMinuteChange = (selectedValue: string) => {
+    setMinuteValue(selectedValue);
+    onChange(hourValue + ":" + minuteValue);
+  };
+
+  const handleTimeChange = () => {
+    value = hourValue + ":" + minuteValue;
+    onChange(value);
   };
   return (
-    <div className="flex w-full">
-      <Select>
+    <div className="flex w-full gap-2">
+      <Select onValueChange={handleHourChange}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Hours" />
         </SelectTrigger>
@@ -57,7 +69,7 @@ const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <Select>
+      <Select onValueChange={handleMinuteChange}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Minutes" />
         </SelectTrigger>

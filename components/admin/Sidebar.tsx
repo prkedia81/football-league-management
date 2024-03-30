@@ -18,7 +18,7 @@ const navigation = [
   { name: "Matches", href: "/admin", icon: HomeIcon, current: false },
   { name: "Teams", href: "/admin/teams", icon: UserGroupIcon, current: false },
   { name: "Venues", href: "/admin/venues", icon: CalendarIcon, current: false },
-  { name: "Official", href: "/admin/officials", icon: MapIcon, current: false },
+  // { name: "Official", href: "/admin/officials", icon: MapIcon, current: false },
 ];
 
 export default function Sidebar({

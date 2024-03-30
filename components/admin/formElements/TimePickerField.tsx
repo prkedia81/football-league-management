@@ -30,8 +30,7 @@ const InputField = ({
       <div className="sm:grid sm:grid-cols-5 sm:gap-1 sm:items-start">
         <label
           htmlFor={props.id}
-          className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-        >
+          className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
           {label} {isRequired && <span className="text-red-500">*</span>}
         </label>
         <div className="mt-1 flex-col gap-1 sm:mt-0 sm:col-span-4">
