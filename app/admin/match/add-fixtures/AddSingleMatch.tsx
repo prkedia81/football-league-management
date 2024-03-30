@@ -28,10 +28,10 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
   const methods = useForm<AddMatchInputs>();
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
   const [statusModal, setStatusModal] = useState<boolean | undefined>();
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<AddMatchInputs> = async (data) => {
     setUploadLoading(true);
+    console.log(data);
     const response = await handleAddFn(data);
     setUploadLoading(false);
     if (response == true) {
@@ -45,8 +45,7 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
     <>
       <AddIndividualEntryCard
         title="Add Single Match"
-        description="Use this form to add a single match to all fixtures"
-      >
+        description="Use this form to add a single match to all fixtures">
         <FormProvider {...methods}>
           <form className="space-y-2" onSubmit={methods.handleSubmit(onSubmit)}>
             <InputField
@@ -69,17 +68,10 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
               name="date"
               id="date"
             />
-            {/* TODO: Time Picker */}
-            <TimePickerField
+            {/* TODO: Fix This */}
+            <TimePickerField label="Time" name="time" />
             <InputField
-              label="Time"
-              isRequired={true}
-              name="time"
-              id="time"
-            />
-            {/* TODO: Get from drop down */}
-            <InputField
-              label="Location"
+              label="Venue"
               isRequired={true}
               name="location"
               id="location"
