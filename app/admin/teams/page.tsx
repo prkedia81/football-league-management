@@ -2,14 +2,10 @@ import EmptyState from "@/components/admin/EmptyState";
 import PageHeading from "@/components/admin/Heading";
 import TeamCard from "@/components/admin/TeamCard";
 import { Teams } from "@/model/Team";
-import connectMongo from "@/services/mongoConnect";
-import TeamClass from "@/services/teams";
+import { getAllTeams } from "@/services/teams";
 
 async function page() {
-  const teamClass = new TeamClass();
-  const teams = JSON.parse(
-    JSON.stringify(await teamClass.getAllTeams())
-  ) as Teams[];
+  const teams = JSON.parse(JSON.stringify(await getAllTeams())) as Teams[];
 
   return (
     <>
@@ -19,7 +15,7 @@ async function page() {
         primaryButtonLink="/admin/teams/add-teams"
         primaryButtonText="Add teams"
       />
-      {!teams && (
+      {teams.length === 0 && (
         <EmptyState
           text="No teams added, click here to add teams"
           link={"/admin/teams/add-teams"}

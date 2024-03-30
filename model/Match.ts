@@ -46,8 +46,8 @@ const matchSchema = new Schema({
     teamCode: { type: String, required: true },
     teamId: String,
     teamName: String,
-    goalsScored: [{ type: String }],
-    players: [{ type: String }],
+    goalsScored: [{ type: String, default: [] }],
+    players: [{ type: String, default: [] }],
   },
   team1Score: {
     type: Number,

@@ -1,10 +1,12 @@
 import { Document, Schema, model, models } from "mongoose";
 
 // Define the TypeScript interface for the Venue document
-interface Venues extends Document {
+export interface Venues extends Document {
   name: string;
-  regNumber?: string;
+  regId?: string;
   email: string;
+  matchesScheduled: string[];
+  matchesPlayed: string[];
 }
 
 // Define the schema
@@ -13,13 +15,25 @@ const venueSchema = new Schema({
     type: String,
     required: true,
   },
-  regNumber: {
+  regId: {
     type: String,
   },
   email: {
     type: String,
     required: true,
   },
+  matchesScheduled: [
+    {
+      type: String,
+      default: [],
+    },
+  ],
+  matchesPlayed: [
+    {
+      type: String,
+      default: [],
+    },
+  ],
 });
 
 // Create the model

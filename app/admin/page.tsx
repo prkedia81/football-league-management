@@ -2,12 +2,11 @@ import EmptyState from "@/components/admin/EmptyState";
 import PageHeading from "@/components/admin/Heading";
 import MatchCard from "@/components/admin/MatchCard";
 import { Matches } from "@/model/Match";
-import MatchClass from "@/services/matches";
+import { getAllMatches } from "@/services/matches";
 
 async function page() {
-  const matchClass = new MatchClass();
   const matches = JSON.parse(
-    JSON.stringify(await matchClass.getAllMatches())
+    JSON.stringify(await getAllMatches())
   ) as Matches[];
 
   return (
@@ -24,7 +23,7 @@ async function page() {
           link={"/admin/match/add-fixtures"}
         />
       )}
-      <div className="mt-4 mx-4 flex flex-row flex-wrap gap-4">
+      <div className="mt-4 w-full mx-4 flex flex-row flex-wrap gap-4">
         {matches.map((match, i) => (
           <MatchCard key={i} {...match} />
         ))}
