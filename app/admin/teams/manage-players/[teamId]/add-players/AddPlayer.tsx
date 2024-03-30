@@ -4,13 +4,10 @@ import { Button } from "@/components/ui/button";
 import AddIndividualEntryCard from "@/components/admin/AddIndividualEntryCard";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import InputField from "@/components/admin/formElements/InputField";
-import DatePickerField from "@/components/admin/formElements/DatePickerField";
 import { AddMatchInputs } from "@/app/admin/match/add-fixtures/page";
 import { useState } from "react";
 import SuccessFailModal from "@/components/admin/SuccessFailModal";
 import LoadingSpinner from "@/components/admin/LoadingSpinner";
-import TimePicker12 from "@/components/admin/TimePicker12";
-import TimePicker from "@/components/admin/TimePicker";
 
 interface Props {
   // TODO: Fix type
@@ -25,7 +22,7 @@ interface Props {
   modalFailButtonLink: string;
 }
 
-function AddSingleMatch({ handleAddFn, ...props }: Props) {
+function AddPlayer({ handleAddFn, ...props }: Props) {
   const methods = useForm<AddMatchInputs>();
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
   const [statusModal, setStatusModal] = useState<boolean | undefined>();
@@ -44,50 +41,41 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
   return (
     <>
       <AddIndividualEntryCard
-        title="Add Single Match"
-        description="Use this form to add a single match to all fixtures">
+        title="Add A Player"
+        description="Use this form to add an individual to the League">
         <FormProvider {...methods}>
           <form className="space-y-2" onSubmit={methods.handleSubmit(onSubmit)}>
             <InputField
-              label="Team 1 ID"
+              label="Player ID"
               isRequired={true}
-              name="team1Id"
-              id="team1Id"
-              placeholder="Enter team 1's ID (For eg, A or B or C etc)"
+              name="playerId"
+              id="playerId"
+              placeholder="Enter Player's ID"
             />
             <InputField
-              label="Team 2 ID"
+              label="Name"
               isRequired={true}
-              name="team2Id"
-              id="team2Id"
-              placeholder="Enter team 2's ID (For eg, A or B or C etc)"
+              name="playerName"
+              id="playerName"
+              placeholder="Enter Player's's Name"
             />
-            <DatePickerField
-              label="Date"
-              isRequired={true}
-              name="date"
-              id="date"
-            />
-            {/* TODO: Time Picker */}
-            {/* <InputField
-              label="Time"
-              isRequired={true}
-              name="time"
-              id="time"
-              placeholder="Select a time for the match"
-            /> */}
-            <TimePicker12/>
-            {/* TODO: Get from drop down */}
             <InputField
-              label="Location"
+              label="Position"
               isRequired={true}
-              name="location"
-              id="location"
-              placeholder="Select a venue for the match"
+              name="playerPosition"
+              id="playerPosition"
+              placeholder="Add Player's Playing Position (For eg, RM, CF, CB, DM etc)"
+            />
+            <InputField
+              label="Jersey Number"
+              isRequired={true}
+              name="jerno"
+              id="jerno"
+              placeholder="Player's Jersey Number"
             />
             <Button type="submit">
               {uploadLoading == false ? (
-                "Add Match"
+                "Add Team"
               ) : (
                 <LoadingSpinner color="text-white" />
               )}
@@ -117,4 +105,4 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
     </>
   );
 }
-export default AddSingleMatch;
+export default AddPlayer
