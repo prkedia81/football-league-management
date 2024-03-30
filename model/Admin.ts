@@ -1,4 +1,4 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, model, models } from "mongoose";
 
 // Define the TypeScript interface for the Goal document
 interface Admins extends Document {
@@ -30,6 +30,6 @@ const adminSchema = new Schema({
 });
 
 // Create the model
-const Admin = model<Admins>("Admin", adminSchema);
+const Admin = models.Admin || model<Admins>("Admin", adminSchema);
 
 export default Admin;

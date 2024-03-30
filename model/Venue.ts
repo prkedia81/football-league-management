@@ -1,4 +1,4 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, model, models } from "mongoose";
 
 // Define the TypeScript interface for the Venue document
 interface Venues extends Document {
@@ -23,6 +23,6 @@ const venueSchema = new Schema({
 });
 
 // Create the model
-const Venue = model<Venues>("Venue", venueSchema);
+const Venue = models.Venue || model<Venues>("Venue", venueSchema);
 
 export default Venue;

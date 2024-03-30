@@ -1,7 +1,7 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, model, models } from "mongoose";
 
 // Define the TypeScript interface for the Match document
-interface Matches extends Document {
+export interface Matches extends Document {
   team1: {
     teamCode: string;
     teamId?: string;
@@ -18,7 +18,7 @@ interface Matches extends Document {
   team2Score: number;
   result: number;
   time: number;
-  venue: number;
+  venue: string;
   referee?: {
     position: string;
     refereeId: string;
@@ -58,7 +58,7 @@ const matchSchema = new Schema({
     required: true,
   },
   venue: {
-    type: Number,
+    type: String,
     required: true,
   },
   referee: [
@@ -72,6 +72,6 @@ const matchSchema = new Schema({
 });
 
 // Create the model
-const Match = model<Matches>("Match", matchSchema);
+const Match = models.Match || model<Matches>("Match", matchSchema);
 
 export default Match;
