@@ -21,7 +21,7 @@ interface Props {
   modalFailButtonLink: string;
 }
 
-function AddSingleTeam({ handleAddFn, ...props }: Props) {
+function AddSinglePlayer({ handleAddFn, ...props }: Props) {
   const methods = useForm<AddMatchInputs>();
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
   const [statusModal, setStatusModal] = useState<boolean | undefined>();
@@ -40,44 +40,40 @@ function AddSingleTeam({ handleAddFn, ...props }: Props) {
   return (
     <>
       <AddIndividualEntryCard
-        title="Add a Club"
-        description="Use this form to add a single Team to the League">
+        title="Add A player"
+        description="Use this form to add an individual to the team">
         <FormProvider {...methods}>
           <form className="space-y-2" onSubmit={methods.handleSubmit(onSubmit)}>
             <InputField
-              label="Club Name"
+              label="Name"
               isRequired={true}
               name="name"
               id="name"
-              placeholder="Enter Club's Name"
+              placeholder="Enter Player's Name"
             />
             <InputField
-              label="Team Registration ID"
+              label="Registration Number"
               isRequired={true}
               name="regId"
               id="regId"
-              placeholder="Enter team 1's Registration ID"
+              placeholder="Enter Player's Registration Number"
             />
-            <InputField
-              label="Team Tournament Code"
+            {/* <InputField
+              label="Position"
+              name="position"
+              id="position"
+              placeholder="Add Player's Playing Position (For eg, RM, CF, CB, DM etc)"
+            /> */}
+            {/* <InputField
+              label="Jersey Number"
               isRequired={true}
-              name="teamCode"
-              id="teamCode"
-              placeholder="Add a short hand for the team (For eg, RMA or BAR or LIV etc)"
-            />
-            <InputField
-              label="Club Email"
-              type="email"
-              isRequired={true}
-              name="email"
-              id="email"
-              placeholder="Enter Club's Email"
-              withAddOn={true}
-              addOnText="@"
-            />
+              name="jerno"
+              id="jerno"
+              placeholder="Player's Jersey Number"
+            /> */}
             <Button type="submit">
               {uploadLoading == false ? (
-                "Add Team"
+                "Add Player"
               ) : (
                 <LoadingSpinner color="text-white" />
               )}
@@ -107,4 +103,4 @@ function AddSingleTeam({ handleAddFn, ...props }: Props) {
     </>
   );
 }
-export default AddSingleTeam;
+export default AddSinglePlayer;

@@ -1,9 +1,10 @@
 import { Document, Schema, model, models } from "mongoose";
 
 // Define the TypeScript interface for the Player document
-interface Players extends Document {
+export interface Players extends Document {
   name: string;
-  regNumber: string;
+  regId: string;
+  teamId: string;
   goal: string[];
   yellowCards: {
     matchId: string;
@@ -22,7 +23,11 @@ const playerSchema = new Schema({
     type: String,
     required: true,
   },
-  regNumber: {
+  regId: {
+    type: String,
+    required: true,
+  },
+  teamId: {
     type: String,
     required: true,
   },

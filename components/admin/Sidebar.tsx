@@ -15,7 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const navigation = [
-  { name: "Matches", href: "/admin", icon: HomeIcon, current: true },
+  { name: "Matches", href: "/admin", icon: HomeIcon, current: false },
   { name: "Teams", href: "/admin/teams", icon: UserGroupIcon, current: false },
   { name: "Venues", href: "/admin/venues", icon: CalendarIcon, current: false },
   { name: "Official", href: "/admin/officials", icon: MapIcon, current: false },
@@ -142,9 +142,9 @@ export default function Sidebar({
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:flex lg:flex-shrink-0">
-          <div className="flex flex-col w-64">
+          <div className="flex flex-col w-60">
             {/* Sidebar component, swap this element with another sidebar if you like */}
-            <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-gray-100">
+            <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-gray-50">
               <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                 <div className="flex items-center flex-shrink-0 px-4">
                   <img

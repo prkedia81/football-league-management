@@ -10,10 +10,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 interface Props {
-  id: string;
+  _id?: string;
   name: string;
-  matchesPlayed: string[];
-  playersList: string[];
+  matchesPlayed?: string[];
+  playerList?: string[];
+  teamCode: string;
 }
 
 function TeamCard(props: Props) {
@@ -24,25 +25,31 @@ function TeamCard(props: Props) {
       </CardHeader>
       <CardContent className="p-4 grid gap-1.5">
         <p className="text-sm">
+          <span className="font-semibold">Team Code: </span>
+          {props.teamCode}
+        </p>
+        <p className="text-sm">
           <span className="font-semibold">Matches Played: </span>
-          {props.matchesPlayed.length}
+          {props.matchesPlayed ? props.matchesPlayed.length : 0}
         </p>
         <p className="text-sm">
           <span className="font-semibold">Number of Players: </span>
-          {props.playersList.length}
+          {props.playerList ? props.playerList.length : 0}
         </p>
       </CardContent>
       <CardFooter className="p-4 flex justify-center gap-2">
-        {/* EDIT Team: Name, email, reg num etc  */}
+        {/* TODO: EDIT or Delete Team: Name, email, reg num etc  */}
         {/* <Link href={"/admin/team/edit/" + props.id} className="w-full">
           <Button type="button" className="w-full" variant="outline">
             Edit Team
           </Button>
         </Link> */}
         <Link
-          href={"/admin/team/manage-players/" + props.id}
+          href={"/admin/teams/manage-players/" + props._id}
           className="w-full">
-          <Button className="w-full">Manage Players</Button>
+          <Button variant="outline" className="w-full">
+            Manage Players
+          </Button>
         </Link>
       </CardFooter>
     </Card>

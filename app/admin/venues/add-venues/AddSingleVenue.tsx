@@ -10,7 +10,6 @@ import SuccessFailModal from "@/components/admin/SuccessFailModal";
 import LoadingSpinner from "@/components/admin/LoadingSpinner";
 
 interface Props {
-  // TODO: Fix type
   handleAddFn: (data: any) => Promise<boolean>;
   modalSuccessHeading: string;
   modalSuccessBody: string;
@@ -22,7 +21,7 @@ interface Props {
   modalFailButtonLink: string;
 }
 
-function AddPlayer({ handleAddFn, ...props }: Props) {
+function AddSingleVenue({ handleAddFn, ...props }: Props) {
   const methods = useForm<AddMatchInputs>();
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
   const [statusModal, setStatusModal] = useState<boolean | undefined>();
@@ -41,41 +40,37 @@ function AddPlayer({ handleAddFn, ...props }: Props) {
   return (
     <>
       <AddIndividualEntryCard
-        title="Add A Player"
-        description="Use this form to add an individual to the League">
+        title="Add a Venue"
+        description="Use this form to add a single venue to the League">
         <FormProvider {...methods}>
           <form className="space-y-2" onSubmit={methods.handleSubmit(onSubmit)}>
             <InputField
-              label="Player ID"
+              label="Venue Name"
               isRequired={true}
-              name="playerId"
-              id="playerId"
-              placeholder="Enter Player's ID"
+              name="name"
+              id="name"
+              placeholder="Enter Venue's Name"
             />
             <InputField
-              label="Name"
+              label="Venue Registration ID"
               isRequired={true}
-              name="playerName"
-              id="playerName"
-              placeholder="Enter Player's's Name"
+              name="regId"
+              id="regId"
+              placeholder="Enter Venue's Registration ID"
             />
             <InputField
-              label="Position"
+              label="Club Email"
+              type="email"
               isRequired={true}
-              name="playerPosition"
-              id="playerPosition"
-              placeholder="Add Player's Playing Position (For eg, RM, CF, CB, DM etc)"
-            />
-            <InputField
-              label="Jersey Number"
-              isRequired={true}
-              name="jerno"
-              id="jerno"
-              placeholder="Player's Jersey Number"
+              name="email"
+              id="email"
+              placeholder="Enter Venue's Email"
+              withAddOn={true}
+              addOnText="@"
             />
             <Button type="submit">
               {uploadLoading == false ? (
-                "Add Team"
+                "Add Venue"
               ) : (
                 <LoadingSpinner color="text-white" />
               )}
@@ -105,4 +100,4 @@ function AddPlayer({ handleAddFn, ...props }: Props) {
     </>
   );
 }
-export default AddPlayer
+export default AddSingleVenue;

@@ -1,11 +1,11 @@
 import { Document, Schema, model, models } from "mongoose";
 
 // Define the TypeScript interface for the Team document
-interface Teams extends Document {
+export interface Teams extends Document {
   name: string;
   email: string;
   teamCode: string;
-  regNumber: string;
+  regId: string;
   goalScoredFor: number;
   goalScoredAgainst: number;
   matchesWon: string[];
@@ -16,7 +16,7 @@ interface Teams extends Document {
     matchId: string;
     amount: number;
   }[];
-  playerList: number[];
+  playerList: string[];
 }
 
 // Define the schema
@@ -32,18 +32,19 @@ const teamSchema = new Schema({
   teamCode: {
     type: String,
     required: true,
+    unique: true,
   },
-  regNumber: {
+  regId: {
     type: String,
     required: true,
   },
   goalScoredFor: {
     type: Number,
-    default: [],
+    default: 0,
   },
   goalScoredAgainst: {
     type: Number,
-    default: [],
+    default: 0,
   },
   matchesWon: [
     {
@@ -76,12 +77,13 @@ const teamSchema = new Schema({
   ],
   playerList: [
     {
-      type: Number,
+      type: String,
       default: [],
     },
   ],
 });
 
+// teamSchema.index({ regId: 1, teamCode: 1 }, { unique: true });
 // Create the model
 const Team = models.Team || model<Teams>("Team", teamSchema);
 
