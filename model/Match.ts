@@ -23,6 +23,7 @@ export interface Matches extends Document {
   status: string;
   venue: {
     venueRegId: string;
+    venueId: string;
     venueName: string;
   };
   referee?: {
@@ -71,6 +72,7 @@ const matchSchema = new Schema({
   },
   venue: {
     venueRegId: { type: String, required: true },
+    venueId: { type: String, required: false },
     venueName: { type: String, required: false },
   },
   referee: [

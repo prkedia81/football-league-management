@@ -28,7 +28,7 @@ function formatInputForDb(data: AddMatchInputs) {
   };
 }
 
-export async function updateAllMatchFixture(
+export async function updateTeamAllMatchFixtures(
   teamCode: string,
   teamId: string,
   teamName: string
@@ -36,7 +36,6 @@ export async function updateAllMatchFixture(
   await connectMongo();
 
   // Team 1:
-  // TODO: Do in one step findOneAndUpdate
   const matches1 = await Match.find({
     "team1.teamCode": teamCode,
   });
@@ -59,6 +58,25 @@ export async function updateAllMatchFixture(
       { "team2.teamName": teamName, "team2.teamId": teamId }
     );
   });
+}
+
+export async function updateVenueAllMatchFixtures(
+  venueId: string,
+  venueRegId: string,
+  venueName: string
+) {
+  await connectMongo();
+
+  const updatedMatch = await Match.findOneAndUpdate(
+    { venue: { venueRegId: venueRegId } },
+    {
+      venue: {
+        venueRegId: venueRegId,
+        venueName: venueName,
+        venueId: venueId,
+      },
+    }
+  );
 }
 
 export async function createBulkNewMatch(data: any[]) {

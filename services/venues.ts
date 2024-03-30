@@ -1,7 +1,8 @@
 import connectMongo from "./mongoConnect";
-import { updateAllMatchFixture } from "./matches";
-import Venue from "@/model/Venue";
+import Venue, { Venues } from "@/model/Venue";
 import { AddVenueInput } from "@/app/admin/venues/add-venues/page";
+import { updateVenueAllMatchFixtures } from "./matches";
+import Match from "@/model/Match";
 
 export async function createBulkNewVenue(data: any[]) {
   // @ts-ignore
@@ -25,10 +26,11 @@ export async function createBulkNewVenue(data: any[]) {
       throw Error(err);
     });
 
-    // Check if the particular teamCode has any matches and add to that
-    // teams.forEach((team) =>
-    //   updateAllMatchFixture(team.teamCode, team._id, team.name)
-    // );
+    // Check if the particular venueCode has any matches and add to that
+    venues.forEach((venue: Venues) => {
+      updateVenueAllMatchFixtures(venue._id, venue.regId || "", venue.name);
+      addAllMatchToVenue(venue.regId || "");
+    });
 
     return true;
   } catch (err) {
@@ -50,11 +52,31 @@ export async function createNewVenue(data: AddVenueInput) {
     });
 
     // Check if the particular venueCode has any matches and add to that
-    // updateAllMatchFixture(data.venueCode, venue._id, venue.name);
+    updateVenueAllMatchFixtures(venue._id, venue.regId, venue.name);
+    addAllMatchToVenue(venue.regId);
     return true;
   } catch (err) {
     return false;
   }
+}
+
+export async function addAllMatchToVenue(venueRegId: string) {
+  await connectMongo();
+
+  const matches = await Match.find({
+    "venue.venueRegId": venueRegId,
+  });
+  matches.forEach(
+    async (match) =>
+      await Venue.findOneAndUpdate(
+        {
+          regId: venueRegId,
+        },
+        {
+          $addToSet: { matchesScheduled: match._id },
+        }
+      )
+  );
 }
 
 export async function getAllVenues() {
