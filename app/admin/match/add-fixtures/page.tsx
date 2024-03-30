@@ -1,6 +1,6 @@
 import AddElement from "@/components/admin/AddElement";
 import AddSingleMatch from "@/app/admin/match/add-fixtures/AddSingleMatch";
-import MatchClass from "@/services/matches";
+import { createBulkNewMatch, createNewMatch } from "@/services/matches";
 
 export interface AddMatchInputs {
   team1Id: string;
@@ -19,15 +19,13 @@ const page = () => {
 
   const handleFixtureUpload = async (data: MatchFixtureUpload[]) => {
     "use server";
-    const matchClass = new MatchClass();
-    const response = await matchClass.createBulkNewMatch(data);
+    const response = await createBulkNewMatch(data);
     return response;
   };
 
   const handleSingleUpload = async (data: AddMatchInputs) => {
     "use server";
-    const matchClass = new MatchClass();
-    const response = await matchClass.createNewMatch(data);
+    const response = await createNewMatch(data);
     return response;
   };
 

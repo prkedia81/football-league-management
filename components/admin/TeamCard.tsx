@@ -45,7 +45,7 @@ function TeamCard(props: Props) {
           </Button>
         </Link> */}
         <Link
-          href={"/admin/team/manage-players/" + props._id}
+          href={"/admin/teams/manage-players/" + props._id}
           className="w-full">
           <Button variant="outline" className="w-full">
             Manage Players

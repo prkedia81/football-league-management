@@ -77,7 +77,7 @@ const teamSchema = new Schema({
   ],
   playerList: [
     {
-      type: Number,
+      type: String,
       default: [],
     },
   ],

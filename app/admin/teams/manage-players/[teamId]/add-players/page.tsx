@@ -1,29 +1,38 @@
 import AddElement from "@/components/admin/AddElement";
-import AddPlayer from "./AddPlayer";
+import AddSinglePlayer from "./AddSinglePlayer";
+import { getTeamFromId } from "@/services/teams";
+import { createBulkNewPlayers, createNewPlayer } from "@/services/players";
 
-export interface PlayerUpload {
-  srNum: number;
+export interface AddPlayerInputs {
   name: string;
   regId: string;
   position: string;
   jerseyNumber: number;
 }
+
+export interface PlayerListUpload extends AddPlayerInputs {
+  srNum: number;
+}
+
 interface Props {
   params: { teamId: string };
 }
 
-const page=()=> {
-  const cellNames = ["srNum", "name", "regId", "position", "jerseyNumber"];
+const page = async ({ params: { teamId } }: Props) => {
+  const cellNames = ["srNum", "name", "regId", "position"];
 
-  const handleUpload = async (data: PlayerUpload[]) => {
+  const team = await getTeamFromId(teamId);
+
+  const handleUpload = async (data: PlayerListUpload[]) => {
     "use server";
-    console.log(data);
+    const response = await createBulkNewPlayers(data, teamId);
+    return response;
   };
 
-  const handleSingleUpload = async (data: PlayerUpload) => {
+  const handleSingleUpload = async (data: AddPlayerInputs) => {
     "use server";
-    console.log(data);
-    return true;
+    const response = await createNewPlayer(data, teamId);
+    return response;
   };
 
   const bulkSuccessFailModal = {
@@ -31,38 +40,37 @@ const page=()=> {
     modalSuccessBody:
       "All Players uploaded via the excel file have been added.",
     modalSuccessButtonText: "Go to home",
-    modalSuccessButtonLink: "/admin",
+    modalSuccessButtonLink: "/admin/teams/manage-players/" + teamId,
     modalFailHeading: "There was some error",
     modalFailBody:
-      "The Squad List could not be added. Please make sure you added them in the format that was provided and try again.",
+      "The player list could not be added. Please make sure you added them in the format that was provided and try again.",
     modalFailButtonText: "Try Again",
-    modalFailButtonLink: "/admin",
+    modalFailButtonLink: "/admin/teams/manage-players/" + teamId,
   };
 
   const singleSuccessFailModal = {
     modalSuccessHeading: "Player added",
     modalSuccessBody: "The Player has been added.",
     modalSuccessButtonText: "Go to home",
-    modalSuccessButtonLink: "/admin",
+    modalSuccessButtonLink: "/admin/teams/manage-players/" + teamId,
     modalFailHeading: "There was some error",
-    modalFailBody: "The Player could not be added. Please try again.",
+    modalFailBody: "The player could not be added. Please try again.",
     modalFailButtonText: "Try Again",
-    modalFailButtonLink: "/admin",
+    modalFailButtonLink: "/admin/teams/manage-players/" + teamId,
   };
-
 
   return (
     <>
-    <AddElement
-        pageHeading="Add Players"
-        uploadZoneText="Upload file with match fixtures (.xls, .xlsx)"
+      <AddElement
+        pageHeading={"Add Players - " + team.name}
+        uploadZoneText="Upload file with players list (.xls, .xlsx)"
         addSingleElementForm={
-          <AddPlayer
+          <AddSinglePlayer
             handleAddFn={handleSingleUpload}
             {...singleSuccessFailModal}
           />
         }
-        uploadTableCaption="A list of Added Players."
+        uploadTableCaption="A list of added players."
         uploadButtonText="Upload Player in the team"
         handleUploadFn={handleUpload}
         cellNames={cellNames}
@@ -70,5 +78,5 @@ const page=()=> {
       />
     </>
   );
-}
-export default page
+};
+export default page;

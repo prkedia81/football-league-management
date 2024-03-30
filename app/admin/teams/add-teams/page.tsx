@@ -1,6 +1,6 @@
 import AddElement from "@/components/admin/AddElement";
 import AddSingleTeam from "./AddSingleTeam";
-import TeamClass from "@/services/teams";
+import { createBulkNewTeam, createNewTeam } from "@/services/teams";
 
 export interface AddTeamInput {
   name: string;
@@ -18,15 +18,13 @@ const page = () => {
 
   const handleUpload = async (data: TeamListUpload[]) => {
     "use server";
-    const teamClass = new TeamClass();
-    const response = await teamClass.createBulkNewTeam(data);
+    const response = await createBulkNewTeam(data);
     return response;
   };
 
   const handleSingleUpload = async (data: AddTeamInput) => {
     "use server";
-    const teamClass = new TeamClass();
-    const response = await teamClass.createNewTeam(data);
+    const response = await createNewTeam(data);
     return response;
   };
 
