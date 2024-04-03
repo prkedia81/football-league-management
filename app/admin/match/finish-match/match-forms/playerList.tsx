@@ -1,34 +1,54 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Checkbox } from "@/components/ui/checkbox";
+import { getAllPlayers } from '@/services/players';
 
 // Define the list of people
 interface Person {
- playerID: number;
- name: string;
- selected: boolean;
+  playerID: string; // Changed from number to string, assuming playerID is a string in the backend
+  name: string;
+  selected: boolean;
 }
 
 // Main component
-export function playerList() {
- // Initialize state for the people array
- const [people, setPeople] = useState<Person[]>([
-    { playerID: 1, name: "John Doe", selected: false },
-    { playerID: 2, name: "Jane Smith", selected: false },
-    { playerID: 3, name: "Bob Johnson", selected: false },
- ]);
+export function PlayerList() {
+  // Initialize state for the people array
+  const [people, setPeople] = useState<Person[]>([]);
 
- // Function to handle the checkbox change
- const handleCheckboxChange = (id: number) => {
+  // Function to fetch player data from the backend
+  const fetchPlayerData = async () => {
+    try {
+      // Fetch player data from the backend
+      const players = await getAllPlayers();
+      // Map the fetched player data to the Person interface
+      const peopleData: Person[] = players.map((player: any) => ({
+        playerID: player._id, // Assuming player._id is the unique identifier for players
+        name: player.name,
+        selected: false // Assuming initially no player is selected
+      }));
+      // Update the state with the fetched player data
+      setPeople(peopleData);
+    } catch (error) {
+      console.error('Error fetching player data:', error);
+    }
+  };
+
+  // Fetch player data from the backend when the component mounts
+  useEffect(() => {
+    fetchPlayerData();
+  }, []); // Empty dependency array ensures the effect runs only once on mount
+
+  // Function to handle the checkbox change
+  const handleCheckboxChange = (id: string) => {
     setPeople(
       people.map((person) =>
         person.playerID === id ? { ...person, selected: !person.selected } : person
       )
     );
- };
+  };
 
- // Function to render the list of people with checkboxes
- const renderPeople = () => {
+  // Function to render the list of people with checkboxes
+  const renderPeople = () => {
     return people.map((person) => (
       <div key={person.playerID} className="flex items-center space-x-2">
         <Checkbox
@@ -43,12 +63,9 @@ export function playerList() {
           {person.name}
         </label>
       </div>
-    ))
- }
+    ));
+  };
 
- return (
- <>
- {renderPeople()}
- </>
- )
+  // Render the list of people
+  return <>{renderPeople()}</>;
 }
