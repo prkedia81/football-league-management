@@ -27,7 +27,7 @@ export default function scoreLogic() {
       </label>
       <input
         type="number"
-        name="goals"
+        id="goals"
         placeholder="Enter the number of goals"
         {...register("goals", { required: true, valueAsNumber: true })}
         className="block w-full appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
