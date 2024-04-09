@@ -22,11 +22,12 @@ const adminSchema = new Schema({
     type: String,
     required: true,
   },
-  type: {
-    type: String,
-    default: "admin",
-    // admin or super-admin
-  },
+  // would connect this later, checking if it works
+  // type: {
+  //   type: String,
+  //   default: "admin",
+  //   // admin or super-admin
+  // },
 });
 
 // Create the model

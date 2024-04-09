@@ -25,6 +25,7 @@
     "lucide-react": "^0.363.0",
     "mongoose": "^8.2.3",
     "next": "14.1.4",
+    "next-auth": "^4.24.7",
     "react": "^18",
     "react-day-picker": "^8.10.0",
     "react-dom": "^18",
@@ -35,6 +36,8 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@types/mongoose": "^5.11.97",
+    "@types/next": "^9.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
