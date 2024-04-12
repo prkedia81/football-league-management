@@ -13,6 +13,8 @@ import EmptyState from "../EmptyState";
 import { Players } from "@/model/Player";
 import { Matches } from "@/model/Match";
 import GoalsScored from "./normalMatch/GoalsScored";
+import YellowCards from "./normalMatch/YellowCards";
+import RedCards from "./normalMatch/RedCards";
 
 interface Props {
   team1: Teams;
@@ -67,6 +69,8 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
   const t1Squad = methods.watch("team1players");
   const t2Squad = methods.watch("team2players");
 
+  console.log(methods.getValues());
+
   const steps = [
     {
       id: "Step 1",
@@ -106,6 +110,8 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
       fields: ["goalsAgainstTeam1", "scorerAgainstTeam1"],
       component: (
         <GoalsScored
+          numberName="scorerAgainstTeam1"
+          inputName="goalsAgainstTeam1"
           t1Squad={t1Squad}
           t2Squad={t2Squad}
           team1Players={props.team1Players}
@@ -120,6 +126,36 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
       fields: ["goalsAgainstTeam2", "scorerAgainstTeam2"],
       component: (
         <GoalsScored
+          numberName="scorerAgainstTeam2"
+          inputName="goalsAgainstTeam2"
+          t1Squad={t1Squad}
+          t2Squad={t2Squad}
+          team1Players={props.team1Players}
+          team2Players={props.team2Players}
+        />
+      ),
+    },
+    {
+      id: "Step 7",
+      name: "Yellow Cards ",
+      subheading: "Choose all the yellow cards in the match",
+      fields: ["yellowCards"],
+      component: (
+        <YellowCards
+          t1Squad={t1Squad}
+          t2Squad={t2Squad}
+          team1Players={props.team1Players}
+          team2Players={props.team2Players}
+        />
+      ),
+    },
+    {
+      id: "Step 8",
+      name: "Red Cards ",
+      subheading: "Choose all the red cards in the match",
+      fields: ["redCards"],
+      component: (
+        <RedCards
           t1Squad={t1Squad}
           t2Squad={t2Squad}
           team1Players={props.team1Players}

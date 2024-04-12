@@ -1,26 +1,16 @@
 "use client";
-
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Players } from "@/model/Player";
 
 interface Props {
-  numberName: string;
-  inputName: string;
   t1Squad: string[];
   t2Squad: string[];
   team1Players: Players[];
   team2Players: Players[];
 }
 
-function GoalsScored({
-  numberName,
-  inputName,
-  t1Squad,
-  t2Squad,
-  team1Players,
-  team2Players,
-}: Props) {
+function YellowCards({ t1Squad, t2Squad, team1Players, team2Players }: Props) {
   const {
     register,
     control,
@@ -29,7 +19,7 @@ function GoalsScored({
   } = useFormContext();
 
   const { fields, append } = useFieldArray({
-    name: numberName,
+    name: "yellowCards",
     control,
   });
 
@@ -46,19 +36,19 @@ function GoalsScored({
       <div className="flex flex-col gap-2">
         <input
           className="form-input focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300"
-          {...register(numberName)}
+          {...register("goalsAgainstTeam1")}
         />
         <Button
           type="button"
           onClick={() => {
-            const numFields = parseInt(getValues(numberName), 10);
+            const numFields = parseInt(getValues("goalsAgainstTeam1"), 10);
             for (let i = 0; i < numFields; i++) {
               append({ goal: "" });
             }
           }}>
           Add Goals
         </Button>
-        {errors[numberName] && (
+        {errors["goalsAgainstTeam1"] && (
           <span className="text-red-600 text-sm mt-0.5">
             {"This field is required"}
           </span>
@@ -72,7 +62,7 @@ function GoalsScored({
             }`}</p>
             <div className="flex flex-row w-full gap-2">
               <select
-                {...register(`${inputName}.${index}.goal`)}
+                {...register(`yellowCards.${index}.goal`)}
                 className="shadow-sm form-input focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                 <option disabled defaultChecked>
                   Choose player who scored the goal
@@ -86,7 +76,7 @@ function GoalsScored({
             </div>
           </div>
         ))}
-        {errors[inputName]?.message && (
+        {errors["goalsAgainstTeam1"] && (
           <span className="text-red-600 text-sm mt-0.5">
             {"This field is required"}
           </span>
@@ -96,4 +86,4 @@ function GoalsScored({
   );
 }
 
-export default GoalsScored;
+export default YellowCards;
