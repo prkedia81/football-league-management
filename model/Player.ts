@@ -31,12 +31,7 @@ const playerSchema = new Schema({
     type: String,
     required: true,
   },
-  goal: [
-    {
-      type: String,
-      default: 0,
-    },
-  ],
+  goal: [String],
   yellowCards: [
     {
       matchId: String,
@@ -58,6 +53,7 @@ const playerSchema = new Schema({
 });
 
 // Create the model
+// const Player = model<Players>("Player", playerSchema);
 const Player = models.Player || model<Players>("Player", playerSchema);
 
 export default Player;

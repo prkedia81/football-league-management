@@ -59,6 +59,7 @@ const matchSchema = new Schema({
     default: 0,
   },
   result: {
+    // 0 - draw, 1 - team 1, 2 - team 2
     type: Number,
     default: -1,
   },

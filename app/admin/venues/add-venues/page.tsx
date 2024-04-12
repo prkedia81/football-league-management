@@ -1,6 +1,6 @@
 import AddElement from "@/components/admin/AddElement";
 import { createBulkNewVenue, createNewVenue } from "@/services/venues";
-import AddSingleVenue from "./AddSinglevenue";
+import AddSingleVenue from "./AddSingleVenue";
 
 export interface AddVenueInput {
   name: string;
