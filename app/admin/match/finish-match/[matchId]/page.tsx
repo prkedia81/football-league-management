@@ -10,6 +10,7 @@ import { getAllPlayerDataFromTeamId } from "@/services/players";
 import { getTeamFromId } from "@/services/teams";
 import { ClockIcon, WifiIcon } from "@heroicons/react/24/outline";
 import { CodeIcon } from "lucide-react";
+import Link from "next/link";
 
 interface Props {
   params: { matchId: string };
@@ -29,74 +30,62 @@ export default async function page({ params: { matchId } }: Props) {
 
   const team1: Teams = JSON.parse(JSON.stringify(await getTeamFromId(team1Id)));
   const team2: Teams = JSON.parse(JSON.stringify(await getTeamFromId(team2Id)));
-  console.log("Got Teams");
 
-  const team1Players: Players[] = JSON.parse(
-    JSON.stringify(await getAllPlayerDataFromTeamId(team1Id))
-  );
-
-  const team2Players: Players[] = JSON.parse(
-    JSON.stringify(await getAllPlayerDataFromTeamId(team2Id))
-  );
-  console.log("Got team players");
-
-  const props = {
-    match: match,
-    team1Players: team1Players,
-    team1: team1,
-    team2Players: team2Players,
-    team2: team2,
-  };
-
-  // TODO: Do a long multi-form submission for the user
   return (
     <>
       <PageHeading heading={team1.name + " v/s " + team2.name} />
-      <NormalMatchForm {...props} />
-      {/* <h1 className="mx-4 mt-4 scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-2xl">
+      <h1 className="mx-4 mt-4 scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-2xl">
         Choose the outcome of the match:
       </h1>
       <div className="flex flex-col gap-4 justify-center w-full p-4">
-        <Card>
-          <CardHeader className="p-4">
-            <div className="flex items-center gap-2">
-              <CodeIcon className="h-6 w-6" />
-              <div className="text-sm font-bold leading-none">Manual</div>
-            </div>
-          </CardHeader>
-          <CardContent className="p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              You can manually refresh your data at any time.
-            </p>
-          </CardContent>
-        </Card>
+        <Link href={"/admin/match/normal-finish/" + matchId}>
+          <Card>
+            <CardHeader className="p-4">
+              <div className="flex items-center gap-2">
+                {/* <CodeIcon className="h-6 w-6" /> */}
+                <div className="text-sm font-bold leading-none">
+                  Normal Match
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="p-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                The match ended without any hiccups
+              </p>
+            </CardContent>
+          </Card>
+        </Link>
         <Card className="border border-gray-200">
           <CardHeader className="p-4">
             <div className="flex items-center gap-2">
-              <ClockIcon className="h-6 w-6" />
-              <div className="text-sm font-bold leading-none">Automatic</div>
+              {/* <ClockIcon className="h-6 w-6" /> */}
+              <div className="text-sm font-bold leading-none">
+                Match Cancelled
+              </div>
             </div>
           </CardHeader>
           <CardContent className="p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Your data will be automatically refreshed every 5 minutes.
+              The match got cancelled with no winners or losers.
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="p-4">
             <div className="flex items-center gap-2">
-              <WifiIcon className="h-6 w-6" />
-              <div className="text-sm font-bold leading-none">Real-time</div>
+              {/* <WifiIcon className="h-6 w-6" /> */}
+              <div className="text-sm font-bold leading-none">
+                Match Walk-over
+              </div>
             </div>
           </CardHeader>
           <CardContent className="p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Your data will be updated in real-time as changes occur.
+              There was a walkover with one team winning
             </p>
           </CardContent>
         </Card>
-      </div> */}
+      </div>
     </>
   );
 }

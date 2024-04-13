@@ -29,7 +29,7 @@ function GoalsScored({
   } = useFormContext();
 
   const { fields, append } = useFieldArray({
-    name: numberName,
+    name: inputName,
     control,
   });
 

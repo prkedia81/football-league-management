@@ -15,6 +15,8 @@ import { Matches } from "@/model/Match";
 import GoalsScored from "./normalMatch/GoalsScored";
 import YellowCards from "./normalMatch/YellowCards";
 import RedCards from "./normalMatch/RedCards";
+import Officials from "./normalMatch/Officials";
+import Remarks from "./normalMatch/Remarks";
 
 interface Props {
   team1: Teams;
@@ -81,11 +83,12 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
     },
     {
       id: "Step 2",
-      name: "Player List - " + team1.name,
+      name: "Players - " + team1.name,
       subheading: "Choose the players for this team",
       fields: ["team1players"],
       component: (
         <PlayerSelect
+          key="team1"
           inputName="team1players"
           playerList={props.team1Players}
         />
@@ -93,11 +96,12 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
     },
     {
       id: "Step 3",
-      name: "Player List - " + team2.name,
+      name: "Players - " + team2.name,
       subheading: "Choose the players for this team",
       fields: ["team2players"],
       component: (
         <PlayerSelect
+          key="team2"
           inputName="team2players"
           playerList={props.team2Players}
         />
@@ -105,13 +109,14 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
     },
     {
       id: "Step 5",
-      name: "Goals Scored Against - " + team1.name,
+      name: "Goals - " + team1.name,
       subheading: "Choose goals scored against - " + team1.name,
       fields: ["goalsAgainstTeam1", "scorerAgainstTeam1"],
       component: (
         <GoalsScored
-          numberName="scorerAgainstTeam1"
-          inputName="goalsAgainstTeam1"
+          key="againstTeam1"
+          numberName="goalsAgainstTeam1"
+          inputName="scorerAgainstTeam1"
           t1Squad={t1Squad}
           t2Squad={t2Squad}
           team1Players={props.team1Players}
@@ -121,13 +126,14 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
     },
     {
       id: "Step 6",
-      name: "Goals Scored Against - " + team2.name,
+      name: "Goals - " + team2.name,
       subheading: "Choose goals scored against - " + team2.name,
       fields: ["goalsAgainstTeam2", "scorerAgainstTeam2"],
       component: (
         <GoalsScored
-          numberName="scorerAgainstTeam2"
-          inputName="goalsAgainstTeam2"
+          key="againstTeam2"
+          numberName="goalsAgainstTeam2"
+          inputName="scorerAgainstTeam2"
           t1Squad={t1Squad}
           t2Squad={t2Squad}
           team1Players={props.team1Players}
@@ -137,11 +143,12 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
     },
     {
       id: "Step 7",
-      name: "Yellow Cards ",
+      name: "Yellow Cards",
       subheading: "Choose all the yellow cards in the match",
       fields: ["yellowCards"],
       component: (
         <YellowCards
+          key="yellowCards"
           t1Squad={t1Squad}
           t2Squad={t2Squad}
           team1Players={props.team1Players}
@@ -151,17 +158,39 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
     },
     {
       id: "Step 8",
-      name: "Red Cards ",
+      name: "Red Cards",
       subheading: "Choose all the red cards in the match",
       fields: ["redCards"],
       component: (
         <RedCards
+          key="redCards"
           t1Squad={t1Squad}
           t2Squad={t2Squad}
           team1Players={props.team1Players}
           team2Players={props.team2Players}
         />
       ),
+    },
+    {
+      id: "Step 9",
+      name: "Officials",
+      subheading: "Add all officials in the match",
+      fields: [
+        "referee",
+        "lineJudge",
+        "umpire",
+        "backJudge",
+        "sideJudge",
+        "fieldJudge",
+      ],
+      component: <Officials />,
+    },
+    {
+      id: "Step 10",
+      name: "Remarks",
+      subheading: "Add any remarks for the match",
+      fields: ["remarks"],
+      component: <Remarks />,
     },
     {
       id: "Step 4",
@@ -183,7 +212,7 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
                   <span className="text-sm font-medium text-sky-600 transition-colors ">
                     {step.id}
                   </span>
-                  <span className="text-sm font-medium">{step.name}</span>
+                  <span className="text-xs font-medium">{step.name}</span>
                 </div>
               ) : currentStep === index ? (
                 <div
@@ -192,14 +221,14 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
                   <span className="text-sm font-medium text-sky-600">
                     {step.id}
                   </span>
-                  <span className="text-sm font-medium">{step.name}</span>
+                  <span className="text-xs font-medium">{step.name}</span>
                 </div>
               ) : (
                 <div className="group flex w-full flex-col border-l-4 border-gray-200 py-2 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4">
                   <span className="text-sm font-medium text-gray-500 transition-colors">
                     {step.id}
                   </span>
-                  <span className="text-sm font-medium">{step.name}</span>
+                  <span className="text-xs font-medium">{step.name}</span>
                 </div>
               )}
             </li>
@@ -250,7 +279,8 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
             type="button"
             onClick={next}
             disabled={currentStep === steps.length - 1}
-            className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50">
+            className="rounded inline-flex items-center bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50">
+            <span className="text-gray-900 text-sm">Next</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

@@ -19,7 +19,7 @@ function RedCards({ t1Squad, t2Squad, team1Players, team2Players }: Props) {
   } = useFormContext();
 
   const { fields, append } = useFieldArray({
-    name: "yellowCards",
+    name: "redCards",
     control,
   });
 
@@ -36,19 +36,19 @@ function RedCards({ t1Squad, t2Squad, team1Players, team2Players }: Props) {
       <div className="flex flex-col gap-2">
         <input
           className="form-input focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300"
-          {...register("goalsAgainstTeam1")}
+          {...register("numRedCards")}
         />
         <Button
           type="button"
           onClick={() => {
-            const numFields = parseInt(getValues("goalsAgainstTeam1"), 10);
+            const numFields = parseInt(getValues("numRedCards"), 10);
             for (let i = 0; i < numFields; i++) {
-              append({ goal: "" });
+              append({ redCard: "" });
             }
           }}>
-          Add Goals
+          Add Red Cards
         </Button>
-        {errors["goalsAgainstTeam1"] && (
+        {errors["numRedCards"] && (
           <span className="text-red-600 text-sm mt-0.5">
             {"This field is required"}
           </span>
@@ -57,15 +57,15 @@ function RedCards({ t1Squad, t2Squad, team1Players, team2Players }: Props) {
       <div className="mt-1 flex flex-col gap-2 rounded-md ">
         {fields.map((field, index) => (
           <div className="flex flex-col gap-1" key={field.id}>
-            <p className="ml-0.5 text-xs text-gray-700">{`Goal ${
+            <p className="ml-0.5 text-xs text-gray-700">{`Red Card ${
               index + 1
             }`}</p>
             <div className="flex flex-row w-full gap-2">
               <select
-                {...register(`yellowCards.${index}.goal`)}
+                {...register(`redCards.${index}.goal`)}
                 className="shadow-sm form-input focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                 <option disabled defaultChecked>
-                  Choose player who scored the goal
+                  Choose player who got the red card
                 </option>
                 {players.map((player, index) => (
                   <option value={player._id} key={index}>
@@ -76,7 +76,7 @@ function RedCards({ t1Squad, t2Squad, team1Players, team2Players }: Props) {
             </div>
           </div>
         ))}
-        {errors["goalsAgainstTeam1"] && (
+        {errors["redCards"] && (
           <span className="text-red-600 text-sm mt-0.5">
             {"This field is required"}
           </span>
