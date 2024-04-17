@@ -1,6 +1,9 @@
+'use client'
 import Custom404 from "@/app/500";
+import CancelModal from "@/components/CancelModal";
 import PageHeading from "@/components/admin/Heading";
 import NormalMatchForm from "@/components/admin/finishMatch/MultiForm";
+import { Button } from "@/components/ui/button";
 import { CardHeader, CardContent, Card } from "@/components/ui/card";
 import Match, { Matches } from "@/model/Match";
 import { Players } from "@/model/Player";
@@ -11,12 +14,19 @@ import { getTeamFromId } from "@/services/teams";
 import { ClockIcon, WifiIcon } from "@heroicons/react/24/outline";
 import { CodeIcon } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react"
 
 interface Props {
   params: { matchId: string };
 }
 
+
 export default async function page({ params: { matchId } }: Props) {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+     setShowModal(true);
+  }
   console.log("HERE");
   const match: Matches = JSON.parse(
     JSON.stringify(await getMatchFromId(matchId))
@@ -55,6 +65,7 @@ export default async function page({ params: { matchId } }: Props) {
             </CardContent>
           </Card>
         </Link>
+        <button onClick={handleOpenModal} className="mt-8 bg-white border border-transparent rounded-md shadow px-5 py-3">
         <Card className="border border-gray-200">
           <CardHeader className="p-4">
             <div className="flex items-center gap-2">
@@ -70,7 +81,10 @@ export default async function page({ params: { matchId } }: Props) {
             </p>
           </CardContent>
         </Card>
+        </button>
+        {showModal && <CancelModal onClose={() => setShowModal(false)} />}
         <Card>
+                    {/*TODO: Connect Cancel match to db*/} 
           <CardHeader className="p-4">
             <div className="flex items-center gap-2">
               {/* <WifiIcon className="h-6 w-6" /> */}
