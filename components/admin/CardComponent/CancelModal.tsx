@@ -3,7 +3,7 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Link from 'next/link'
-import { Button } from './ui/button';
+import { Button } from '../../ui/button';
 
 interface CancelModalProps {
     onClose: () => void;
@@ -78,7 +78,7 @@ interface CancelModalProps {
                 {/* TODO: Link Cancel Match to db */}
                 <Link href="/admin/match">
                 <Button
-                  type="button" className='bg-white'   
+                  type="button" className='bg-white text-black border-black border-2'   
                   onClick={handleClose}
                   ref={cancelButtonRef}>
                   Reschedule
