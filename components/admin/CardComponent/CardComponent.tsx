@@ -24,7 +24,7 @@ const CardComponent = () => {
     }
   return (
     <>
-    <div className="flex flex-col gap-4 justify-center w-full p-4">
+    <div className="flex flex-col justify-left w-full ">
         {/* <Link href="#">
           <Card>
             <CardHeader className="p-4">
@@ -41,7 +41,7 @@ const CardComponent = () => {
             </CardContent>
           </Card>
         </Link> */}
-        <button onClick={handleOpenModal} className="mt-8 bg-white border border-transparent rounded-md shadow px-5 py-3">
+        <button onClick={handleOpenModal} >
         <Card className="border border-gray-200">
           <CardHeader className="p-4">
             <div className="flex items-center gap-2">
@@ -59,22 +59,7 @@ const CardComponent = () => {
         </Card>
         </button>
         {showModal && <CancelModal onClose={() => setShowModal(false)} />}
-        <Card>
-                    {/*TODO: Connect Cancel match to db*/} 
-          <CardHeader className="p-4">
-            <div className="flex items-center gap-2">
-              {/* <WifiIcon className="h-6 w-6" /> */}
-              <div className="text-sm font-bold leading-none">
-                Match Walk-over
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              There was a walkover with one team winning
-            </p>
-          </CardContent>
-        </Card>
+        {/*TODO: Connect Cancel match to db*/} 
       </div>
     </>
   )

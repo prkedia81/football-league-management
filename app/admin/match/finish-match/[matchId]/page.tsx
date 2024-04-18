@@ -62,6 +62,23 @@ export default async function page({ params: { matchId } }: Props) {
         </Link>
        <CardComponent/>
        {/* Using the client side for modals: Just a quick fix */}
+       <Link href={"/admin/match/walkover/" + matchId}>
+        <Card>
+          <CardHeader className="p-4">
+            <div className="flex items-center gap-2">
+              {/* <WifiIcon className="h-6 w-6" /> */}
+              <div className="text-sm font-bold leading-none">
+                Match Walk-over
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="p-4">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              There was a walkover with one team winning
+            </p>
+          </CardContent>
+        </Card>
+        </Link>
       </div>
     </>
   );
