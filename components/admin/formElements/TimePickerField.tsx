@@ -14,7 +14,7 @@ interface Props
   name: string;
 }
 
-const InputField = ({
+const TimePickerField = ({
   errorMessage,
   label,
   isRequired = false,
@@ -53,4 +53,4 @@ const InputField = ({
   );
 };
 
-export default InputField;
+export default TimePickerField;

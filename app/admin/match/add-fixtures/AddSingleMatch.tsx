@@ -8,7 +8,7 @@ import DatePickerField from "@/components/admin/formElements/DatePickerField";
 import { AddMatchInputs } from "@/app/admin/match/add-fixtures/page";
 import { useState } from "react";
 import SuccessFailModal from "@/components/admin/SuccessFailModal";
-import LoadingSpinner from "@/components/admin/LoadingSpinner";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import TimePickerField from "@/components/admin/formElements/TimePickerField";
 
 interface Props {
@@ -68,8 +68,7 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
               name="date"
               id="date"
             />
-            {/* TODO: Fix This */}
-            <TimePickerField label="Time" name="time" />
+            <TimePickerField isRequired={true} label="Time" name="time" />
             <InputField
               label="Venue"
               isRequired={true}

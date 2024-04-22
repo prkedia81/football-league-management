@@ -5,7 +5,7 @@ import UploadTable from "@/components/admin/UploadTable";
 import UploadZone from "@/components/admin/UploadZone";
 import { Button } from "@/components/ui/button";
 import { ReactNode, useState } from "react";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../LoadingSpinner";
 import SuccessFailModal from "./SuccessFailModal";
 
 interface Props<T> {

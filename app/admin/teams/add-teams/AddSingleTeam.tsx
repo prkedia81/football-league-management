@@ -7,7 +7,7 @@ import InputField from "@/components/admin/formElements/InputField";
 import { AddMatchInputs } from "@/app/admin/match/add-fixtures/page";
 import { useState } from "react";
 import SuccessFailModal from "@/components/admin/SuccessFailModal";
-import LoadingSpinner from "@/components/admin/LoadingSpinner";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface Props {
   handleAddFn: (data: any) => Promise<boolean>;

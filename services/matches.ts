@@ -7,9 +7,14 @@ function formatInputForDb(data: AddMatchInputs) {
   //     team1Id: 'asd',
   //     team2Id: 'asd',
   //     date: 2024-03-30T18:30:00.000Z,
-  //     time: 'asd',
+  //     time: '00:00',
   //     location: 'asd'
   //   }
+
+  const time = new Date(data.date);
+  const [hour, min] = data.time.split(":");
+  time.setHours(parseInt(hour));
+  time.setMinutes(parseInt(min));
 
   return {
     team1: {
@@ -21,8 +26,7 @@ function formatInputForDb(data: AddMatchInputs) {
     team1Score: 0,
     team2Score: 0,
     result: -1,
-    // TODO: Add time
-    time: new Date(data.date).getTime(),
+    time: time.getTime(),
     // Get venue from ID
     venue: { venueRegId: data.location },
   };
@@ -84,7 +88,7 @@ export async function createBulkNewMatch(data: any[]) {
   const dbEntries = [];
 
   data.forEach((item) => {
-    // [ '1', 'A', 'E', '1/2/23', '7:00 PM', 'Rabindra Sarovar Stadium' ],
+    // [ '1', 'A', 'E', '1/2/23', '07:00', 'Rabindra Sarovar Stadium' ],
     if (item.length == 0) return;
     const row = {
       team1Id: item[1],
