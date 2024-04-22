@@ -14,9 +14,16 @@ function RadioElement({ ...props }: Props) {
   return (
     <label
       htmlFor={props.id}
-      className="flex flex-row items-center gap-3 px-4 py-4 border border-black rounded">
-      <input type="radio" {...props} {...register("winner")} />
-      <label htmlFor={props.id}>{props.display}</label>
+      className="cursor-pointer flex flex-row items-center gap-3 px-4 py-4 border border-gray-300 rounded">
+      <input
+        className="cursor-pointer"
+        type="radio"
+        {...props}
+        {...register("winner")}
+      />
+      <label className="cursor-pointer text-sm" htmlFor={props.id}>
+        {props.display}
+      </label>
     </label>
   );
 }

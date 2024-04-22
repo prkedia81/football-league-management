@@ -7,8 +7,6 @@ import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import Winner from "../normalMatch/Winner";
 import { Teams } from "@/model/Team";
-import EmptyState from "../../EmptyState";
-import { Players } from "@/model/Player";
 import { Matches } from "@/model/Match";
 import Officials from "../normalMatch/Officials";
 import Remarks from "../normalMatch/Remarks";
@@ -49,7 +47,7 @@ export default function WalkoverForm({ team1, team2, ...props }: Props) {
 
     if (currentStep < steps.length - 1) {
       if (currentStep === steps.length - 2) {
-        await methods.handleSubmit(processForm)();
+        processForm(methods.getValues());
       }
       setPreviousStep(currentStep);
       setCurrentStep((step) => step + 1);
@@ -63,8 +61,6 @@ export default function WalkoverForm({ team1, team2, ...props }: Props) {
     }
   };
 
-  console.log(methods.getValues());
-
   const steps = [
     {
       id: "Step 1",
@@ -77,19 +73,16 @@ export default function WalkoverForm({ team1, team2, ...props }: Props) {
       id: "Step 2",
       name: "Reasons For Walkover",
       subheading: "Why was there a walkover?",
-      fields: ["WalkOverReason"],
-      component: (
-        <WalkOverReason/>
-      ),
+      fields: ["walkoverReason"],
+      component: <WalkOverReason />,
     },
     {
       id: "Step 3",
       name: "Select Point Deduction for the losing team",
-      subheading: "For an Informed Walkover select 0,\nFor a No Show select -2.\nFor an Unruly Behaviour select on the basis of the comitee report",
+      subheading:
+        "For an Informed Walkover select 0,\nFor a No Show select -2.\nFor an Unruly Behaviour select on the basis of the comitee report",
       fields: ["pointDeduction"],
-      component: (
-        <PointDeduction/>
-      ),
+      component: <PointDeduction />,
     },
     {
       id: "Step 4",

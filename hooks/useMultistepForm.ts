@@ -1,40 +1,58 @@
+import { NormalMatchFormSchema } from "@/lib/finishMatchSchema";
 import { ReactElement, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm, useFormContext } from "react-hook-form";
+import { z } from "zod";
 
-export function useMultistepForm(steps: ReactElement[]) {
-  const { trigger } = useFormContext();
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+type Inputs = z.infer<typeof NormalMatchFormSchema>;
 
-  async function next(fields: string[]) {
-    const output = await trigger(fields, { shouldFocus: true });
+interface Step {
+  id: string;
+  name: string;
+  subheading: string;
+  fields: string[];
+  component: ReactElement;
+}
+
+export function useMultistepForm(steps: Step[]) {
+  const [previousStep, setPreviousStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
+  const delta = currentStep - previousStep;
+
+  const methods = useForm<Inputs>({
+    resolver: zodResolver(NormalMatchFormSchema),
+  });
+
+  const processForm: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+    methods.reset();
+  };
+
+  type FieldName = keyof Inputs;
+
+  const next = async () => {
+    const fields = steps[currentStep].fields;
+    const output = await methods.trigger(fields as FieldName[], {
+      shouldFocus: true,
+    });
 
     if (!output) return;
 
-    setCurrentStepIndex((i) => {
-      if (i >= steps.length - 1) return i;
-      return i + 1;
-    });
-  }
-
-  function back() {
-    setCurrentStepIndex((i) => {
-      if (i <= 0) return i;
-      return i - 1;
-    });
-  }
-
-  function goTo(index: number) {
-    setCurrentStepIndex(index);
-  }
-
-  return {
-    currentStepIndex,
-    step: steps[currentStepIndex],
-    steps,
-    isFirstStep: currentStepIndex === 0,
-    isLastStep: currentStepIndex === steps.length - 1,
-    goTo,
-    next,
-    back,
+    if (currentStep < steps.length - 1) {
+      if (currentStep === steps.length - 2) {
+        await methods.handleSubmit(processForm)();
+      }
+      setPreviousStep(currentStep);
+      setCurrentStep((step) => step + 1);
+    }
   };
+
+  const prev = () => {
+    if (currentStep > 0) {
+      setPreviousStep(currentStep);
+      setCurrentStep((step) => step - 1);
+    }
+  };
+
+  return { methods, previousStep, currentStep, processForm, next, prev };
 }

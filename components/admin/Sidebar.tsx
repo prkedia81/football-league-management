@@ -142,7 +142,7 @@ export default function Sidebar({
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:flex lg:flex-shrink-0">
-          <div className="flex flex-col w-60">
+          <div className="flex flex-col w-52">
             {/* Sidebar component, swap this element with another sidebar if you like */}
             <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-gray-50">
               <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">

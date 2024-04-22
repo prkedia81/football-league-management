@@ -5,10 +5,18 @@ export const NormalMatchFormSchema = z.object({
   // TODO: Change back to 11
   team1players: z
     .array(z.string())
+    .min(3, "Atleast 14 players required in Playing Squad"),
+  team1Starting11: z
+    .array(z.string())
     .min(3, "Atleast 11 players required in Playing Squad"),
+  team1Bench: z.array(z.string()),
   team2players: z
     .array(z.string())
     .min(3, "Atleast 11 players required in Playing Squad"),
+  team2Starting11: z
+    .array(z.string())
+    .min(3, "Atleast 11 players required in Playing Squad"),
+  team2Bench: z.array(z.string()),
   goalsAgainstTeam1: z.string(),
   scorerAgainstTeam1: z.optional(
     z.array(
@@ -45,5 +53,6 @@ export const NormalMatchFormSchema = z.object({
   backJudge: z.string(),
   sideJudge: z.string(),
   fieldJudge: z.string(),
+  refereeReport: z.string().url(),
   remarks: z.string(),
 });

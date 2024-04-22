@@ -1,6 +1,6 @@
-import Custom404 from "@/app/500";
+import Custom404 from "@/app/(home)/500";
 import PageHeading from "@/components/admin/Heading";
-import WalkoverForm from "@/components/admin/finishMatch/walkover/MultiForm";
+import WalkoverForm from "@/components/admin/finishMatch/walkover/WalkoverMultiForm";
 import { CardHeader, CardContent, Card } from "@/components/ui/card";
 import Match, { Matches } from "@/model/Match";
 import { Players } from "@/model/Player";

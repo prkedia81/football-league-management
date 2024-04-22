@@ -1,6 +1,6 @@
-import Custom404 from "@/app/500";
+import Custom404 from "@/app/(home)/500";
 import PageHeading from "@/components/admin/Heading";
-import NormalMatchForm from "@/components/admin/finishMatch/MultiForm";
+import NormalMatchForm from "@/components/admin/finishMatch/normalMatch/NormalMatchForm";
 import { CardHeader, CardContent, Card } from "@/components/ui/card";
 import Match, { Matches } from "@/model/Match";
 import { Players } from "@/model/Player";
@@ -15,11 +15,9 @@ interface Props {
 }
 
 export default async function page({ params: { matchId } }: Props) {
-  console.log("HERE");
   const match: Matches = JSON.parse(
     JSON.stringify(await getMatchFromId(matchId))
   );
-  console.log("Got Match");
 
   const team1Id = match?.team1?.teamId;
   const team2Id = match?.team2?.teamId;
@@ -28,7 +26,6 @@ export default async function page({ params: { matchId } }: Props) {
 
   const team1: Teams = JSON.parse(JSON.stringify(await getTeamFromId(team1Id)));
   const team2: Teams = JSON.parse(JSON.stringify(await getTeamFromId(team2Id)));
-  console.log("Got Teams");
 
   const team1Players: Players[] = JSON.parse(
     JSON.stringify(await getAllPlayerDataFromTeamId(team1Id))
@@ -37,7 +34,6 @@ export default async function page({ params: { matchId } }: Props) {
   const team2Players: Players[] = JSON.parse(
     JSON.stringify(await getAllPlayerDataFromTeamId(team2Id))
   );
-  console.log("Got team players");
 
   const props = {
     match: match,
