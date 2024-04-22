@@ -1,7 +1,5 @@
 "use client";
 
-// TODO: Make this more performant
-
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {

@@ -12,7 +12,7 @@ import {
 interface Props {
   caption: string;
   headings: string[];
-  data: any[]; // TODO: Fix
+  data: any[];
   cellNames: string[];
 }
 

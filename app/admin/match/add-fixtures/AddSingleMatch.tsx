@@ -12,7 +12,6 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import TimePickerField from "@/components/admin/formElements/TimePickerField";
 
 interface Props {
-  // TODO: Fix type
   handleAddFn: (data: any) => Promise<boolean>;
   modalSuccessHeading: string;
   modalSuccessBody: string;

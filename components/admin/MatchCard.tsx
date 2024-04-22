@@ -36,7 +36,6 @@ export default function MatchCard({
   if (venue.venueName) {
     venueName = venue.venueName;
   } else {
-    // TODO: Get venue name from venue service class
     venueName = venue.venueRegId;
   }
 
