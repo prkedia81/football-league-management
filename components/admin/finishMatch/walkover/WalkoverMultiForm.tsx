@@ -1,33 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import { NormalMatchFormSchema } from "@/lib/finishMatchSchema";
+import { WalkoverMatchSchema } from "@/lib/finishMatchSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { z } from "zod";
-import Winner from "../normalMatch/Winner";
 import { Teams } from "@/model/Team";
-import { Matches } from "@/model/Match";
 import Officials from "../normalMatch/Officials";
 import Remarks from "../normalMatch/Remarks";
 import WalkOverReason from "./WalkOverReason";
 import PointDeduction from "./PointDeduction";
+import WalkoverWinner from "./WalkoverWinner";
 
 interface Props {
   team1: Teams;
   team2: Teams;
-  match: Matches;
 }
 
-type Inputs = z.infer<typeof NormalMatchFormSchema>;
+type Inputs = z.infer<typeof WalkoverMatchSchema>;
 
-export default function WalkoverForm({ team1, team2, ...props }: Props) {
+export default function WalkoverForm({ team1, team2 }: Props) {
   const [previousStep, setPreviousStep] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const delta = currentStep - previousStep;
 
   const methods = useForm<Inputs>({
-    resolver: zodResolver(NormalMatchFormSchema),
+    resolver: zodResolver(WalkoverMatchSchema),
   });
 
   const processForm: SubmitHandler<Inputs> = (data) => {
@@ -67,13 +65,15 @@ export default function WalkoverForm({ team1, team2, ...props }: Props) {
       name: "Match Outcome",
       subheading: "Choose the match outcome",
       fields: ["winner"],
-      component: <Winner team1Name={team1.name} team2Name={team2.name} />,
+      component: (
+        <WalkoverWinner team1Name={team1.name} team2Name={team2.name} />
+      ),
     },
     {
       id: "Step 2",
       name: "Reasons For Walkover",
       subheading: "Why was there a walkover?",
-      fields: ["walkoverReason"],
+      fields: ["reason"],
       component: <WalkOverReason />,
     },
     {
@@ -81,7 +81,7 @@ export default function WalkoverForm({ team1, team2, ...props }: Props) {
       name: "Select Point Deduction for the losing team",
       subheading:
         "For an Informed Walkover select 0,\nFor a No Show select -2.\nFor an Unruly Behaviour select on the basis of the comitee report",
-      fields: ["pointDeduction"],
+      fields: ["deduction"],
       component: <PointDeduction />,
     },
     {
@@ -95,6 +95,7 @@ export default function WalkoverForm({ team1, team2, ...props }: Props) {
         "backJudge",
         "sideJudge",
         "fieldJudge",
+        "refereeReport",
       ],
       component: <Officials />,
     },
@@ -109,6 +110,7 @@ export default function WalkoverForm({ team1, team2, ...props }: Props) {
       id: "Step 6",
       name: "Complete",
       subheading: "",
+      fields: [],
       component: <h1>Test</h1>,
     },
   ];
@@ -173,7 +175,7 @@ export default function WalkoverForm({ team1, team2, ...props }: Props) {
             type="button"
             onClick={prev}
             disabled={currentStep === 0}
-            className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50">
+            className="inline-flex items-center rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -187,12 +189,15 @@ export default function WalkoverForm({ team1, team2, ...props }: Props) {
                 d="M15.75 19.5L8.25 12l7.5-7.5"
               />
             </svg>
+            <span className="text-gray-900 text-sm disabled:cursor-not-allowed disabled:opacity-50">
+              Previous
+            </span>
           </button>
           <button
             type="button"
             onClick={next}
             disabled={currentStep === steps.length - 1}
-            className="rounded inline-flex items-center bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50">
+            className="rounded inline-flex items-center bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
             <span className="text-gray-900 text-sm">Next</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"

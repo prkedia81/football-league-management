@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { optional, z } from "zod";
 
 export const NormalMatchFormSchema = z.object({
   winner: z.string().min(1, "Select a winner"),
@@ -53,6 +53,20 @@ export const NormalMatchFormSchema = z.object({
   backJudge: z.string(),
   sideJudge: z.string(),
   fieldJudge: z.string(),
-  refereeReport: z.string().url(),
+  refereeReport: z.optional(z.string().url()),
+  remarks: z.string(),
+});
+
+export const WalkoverMatchSchema = z.object({
+  winner: z.string().min(1, "Select a winner"),
+  reason: z.string().min(1, "Select a reason"),
+  deduction: z.string().min(1, "Choose the number of points to be deducted"),
+  referee: z.string().min(1, "Add the referee name"),
+  lineJudge: z.string(),
+  umpire: z.string(),
+  backJudge: z.string(),
+  sideJudge: z.string(),
+  fieldJudge: z.string(),
+  refereeReport: z.optional(z.string().url()),
   remarks: z.string(),
 });

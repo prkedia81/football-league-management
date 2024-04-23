@@ -19,7 +19,7 @@ function RadioElement({ ...props }: Props) {
         className="cursor-pointer"
         type="radio"
         {...props}
-        {...register("winner")}
+        {...register(props.name)}
       />
       <label className="cursor-pointer text-sm" htmlFor={props.id}>
         {props.display}

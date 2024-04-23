@@ -30,7 +30,6 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
 
   const onSubmit: SubmitHandler<AddMatchInputs> = async (data) => {
     setUploadLoading(true);
-    console.log(data);
     const response = await handleAddFn(data);
     setUploadLoading(false);
     if (response == true) {

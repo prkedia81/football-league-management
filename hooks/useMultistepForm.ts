@@ -4,9 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm, useFormContext } from "react-hook-form";
 import { z } from "zod";
 
-type Inputs = z.infer<typeof NormalMatchFormSchema>;
-
-interface Step {
+export interface Step {
   id: string;
   name: string;
   subheading: string;
@@ -15,6 +13,8 @@ interface Step {
 }
 
 export function useMultistepForm(steps: Step[]) {
+  type Inputs = z.infer<typeof NormalMatchFormSchema>;
+
   const [previousStep, setPreviousStep] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const delta = currentStep - previousStep;
