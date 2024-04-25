@@ -34,3 +34,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+# TO DO:
+
+### Homepage:
+
+1. Today's Match
+2. Points Table
+3. All matches data
+
+## Admin:
+
+1. Login/ Sign-up
+2. Re-schedule Check Time
+3. Remove players
+4. See match data
+5. ADD PLAYERS ERROR
+6. In walkover reason, change name from Team to Opponent Team
+7. Add others in walkover
+8. Referee, Assistant Referee 1 & 2, Fourth Referee, Match Commissioner, Match Observer

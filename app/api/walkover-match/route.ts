@@ -1,11 +1,11 @@
-import { NormalMatchInputs } from "@/components/admin/finishMatch/normalMatch/NormalMatchForm";
+import { WalkoverMatchInputs } from "@/components/admin/finishMatch/walkover/WalkoverMultiForm";
 import { Matches } from "@/model/Match";
-import { finishNormalMatch, finishWalkoverMatch } from "@/services/matches";
+import { finishWalkoverMatch } from "@/services/matches";
 import { NextRequest } from "next/server";
 
 interface Data {
   match: Matches;
-  formData: NormalMatchInputs;
+  formData: WalkoverMatchInputs;
 }
 
 export async function POST(req: NextRequest) {

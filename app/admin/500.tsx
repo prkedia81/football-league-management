@@ -13,6 +13,7 @@ export default function Custom404() {
               height={100}
               className="h-16 w-auto"
               src="/images/logo1.png"
+              alt="Logo"
             />
           </a>
         </div>

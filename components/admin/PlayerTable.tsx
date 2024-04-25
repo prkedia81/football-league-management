@@ -42,7 +42,7 @@ function PlayerTable({ caption, data }: Props) {
             <TableCell>{i + 1}</TableCell>
             <TableCell>{row.name}</TableCell>
             <TableCell>{row.regId}</TableCell>
-            <TableCell>{row.goal.length}</TableCell>
+            <TableCell>{row.goals.length}</TableCell>
             <TableCell>{row.yellowCards.length}</TableCell>
             <TableCell>{row.redCards.length}</TableCell>
           </TableRow>

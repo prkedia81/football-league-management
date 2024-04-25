@@ -74,7 +74,7 @@ export default function Home() {
                 <div className="px-4 py-8 sm:px-10">
                   <div>
                     <p className="text-sm font-medium text-gray-700">
-                      Today's Matches
+                      {"Today's Matches"}
                     </p>
                   </div>
                 </div>
