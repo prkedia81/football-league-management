@@ -366,6 +366,7 @@ export async function finishNormalMatch(
 
     return true;
   } catch (err) {
+    console.error(err);
     return false;
   }
 }
@@ -499,6 +500,53 @@ export async function finishWalkoverMatch(
 
     return true;
   } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+export async function cancelMatch(id: string) {
+  try {
+    await connectMongo();
+    const match = await getMatchFromId(id);
+    const updatedMatch = await Match.findByIdAndUpdate(
+      id,
+      {
+        team1Score: 0,
+        team2Score: 0,
+        result: 0,
+        remarks: "The match was cancelled",
+        status: "cancelled",
+      },
+      { new: true }
+    );
+
+    const team1 = await Team.findByIdAndUpdate(match.team1.teamId, {
+      $push: {
+        matchesPlayed: match._id,
+        matchesDrawn: match._id,
+      },
+    });
+
+    const team2 = await Team.findByIdAndUpdate(match.team2.teamId, {
+      $push: {
+        matchesPlayed: match._id,
+        matchesDrawn: match._id,
+      },
+    });
+
+    const venue = await getVenueFromId(match.venue.venueId);
+    const matchesScheduled = venue.matchesScheduled.filter(
+      (m) => m != match._id
+    );
+    const updatedVenue = await Venue.findByIdAndUpdate(match.venue.venueId, {
+      matchesScheduled: matchesScheduled,
+      $push: { matchesPlayed: match._id },
+    });
+
+    return true;
+  } catch (err) {
+    console.error(err);
     return false;
   }
 }

@@ -13,7 +13,6 @@ export default function Custom404() {
               height={100}
               className="h-16 w-auto"
               src="/images/logo1.png"
-              alt="Manuscript AI Logo"
             />
           </a>
         </div>
@@ -30,7 +29,7 @@ export default function Custom404() {
             </p>
             <div className="mt-6">
               <a
-                href="/"
+                href="/admin"
                 className="text-base font-medium text-indigo-600 hover:text-indigo-500">
                 Go back home<span aria-hidden="true"> &rarr;</span>
               </a>
