@@ -1,6 +1,6 @@
-# TO DO:
+# Feature List & Bugs:
 
-### Homepage:
+## Homepage:
 
 1. Today's Match
 2. Points Table
@@ -12,7 +12,8 @@
 2. Remove players
 3. See match data
 4. Different colours and buttons for different outcomes
-5. End to End Testing
+5. Check Inputs and field options in complete match form for better UX
+6. End to End Testing
    - Single Upload
      - Venue
      - Match
@@ -23,6 +24,10 @@
      - Match
      - Player
      - Teams
+7. Send emails for the following:
+  - Every end match
+  - Every Re-schedule
+  - Every Match fixture
 
 # Future Versions:
 
