@@ -12,34 +12,34 @@ function Officials() {
         placeholder="Enter Referee's Name"
       />
       <InputField
-        label="Line Judge"
-        name="lineJudge"
-        id="lineJudge"
-        placeholder="Enter Line Judge's Name"
+        label="Assistant Referee 1"
+        name="assistantReferee1"
+        id="assistantReferee1"
+        placeholder="Enter Assistant Referee 1's Name"
       />
       <InputField
-        label="Umpire"
-        name="umpire"
-        id="umpire"
-        placeholder="Enter Umpire's Name"
+        label="Assistant Referee 2"
+        name="assistantReferee2"
+        id="assistantReferee2"
+        placeholder="Enter Assistant Referee 1's Name"
       />
       <InputField
-        label="Back Judge"
-        name="backJudge"
-        id="backJudge"
-        placeholder="Enter Back Judge's Name"
+        label="Fourth Referee"
+        name="fourthReferee"
+        id="fourthReferee"
+        placeholder="Enter Fourth Referee's Name"
       />
       <InputField
-        label="Side Judge"
-        name="sideJudge"
-        id="sideJudge"
-        placeholder="Enter Side Judge's Name"
+        label="Match Commissioner"
+        name="matchCommissioner"
+        id="matchCommissioner"
+        placeholder="Enter Match Commissioner's Name"
       />
       <InputField
-        label="Field Judge"
-        name="fieldJudge"
-        id="fieldJudge"
-        placeholder="Enter Field Judge's Name"
+        label="Match Observer"
+        name="matchObserver"
+        id="matchObserver"
+        placeholder="Enter Match Observer's Name"
       />
       <p>TODO: Add Upload Referee Report</p>
     </div>

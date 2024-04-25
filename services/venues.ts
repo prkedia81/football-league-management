@@ -1,7 +1,7 @@
 import connectMongo from "./mongoConnect";
 import Venue, { Venues } from "@/model/Venue";
 import { AddVenueInput } from "@/app/admin/venues/add-venues/page";
-import { updateVenueAllMatchFixtures } from "./matches";
+import { getMatchFromId, updateVenueAllMatchFixtures } from "./matches";
 import Match from "@/model/Match";
 
 export async function createBulkNewVenue(data: any[]) {
@@ -89,4 +89,32 @@ export async function getVenueFromId(id: string): Promise<Venues> {
   await connectMongo();
   const venue = await Venue.findById(id);
   return venue;
+}
+
+export async function checkSchedulingConflict(
+  id: string,
+  matchTime: number
+): Promise<boolean> {
+  const venue = await getVenueFromId(id);
+  const scheduledMatch = venue.matchesScheduled;
+  let flag = false;
+  for (let i = 0; i < scheduledMatch.length; i++) {
+    const matchId = scheduledMatch[i];
+    const match = await getMatchFromId(matchId);
+    const scheduledTime = match.time;
+
+    // Calculate the difference in milliseconds
+    const diffInMilliseconds = Math.abs(scheduledTime - matchTime);
+
+    // Convert milliseconds to minutes
+    const diffInMinutes = diffInMilliseconds / (1000 * 60);
+
+    // confirm atleast a difference of 180 minutes = 3 hours
+    if (diffInMinutes <= 180) {
+      console.log("In here");
+      flag = true;
+      break;
+    }
+  }
+  return flag;
 }

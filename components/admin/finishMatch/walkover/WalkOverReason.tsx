@@ -13,20 +13,26 @@ const WalkOverReason = () => {
         name="reason"
         value="informed"
         display={
-          "The Team Informed about the Walkover 48 hours before the match"
+          "The Opponent Team Informed about the Walkover 48 hours before the match"
         }
       />
       <RadioElement
         id="noShow"
         name="reason"
         value="noShow"
-        display={"The Team did not show up for the match"}
+        display={"The Opponent Team did not show up for the match"}
       />
       <RadioElement
         id="unruly"
         name="reason"
         value="unruly"
-        display="The Team Displayed an Unruly Behaviour on the pitch"
+        display="The Opponent Team Displayed an Unruly Behaviour on the pitch"
+      />
+      <RadioElement
+        id="othersWalkover"
+        name="reason"
+        value="othersWalkover"
+        display="Others"
       />
       {errors.reason?.message && (
         <p className="mt-2 text-sm text-red-400">{"Select one outcome"}</p>

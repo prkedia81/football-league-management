@@ -150,10 +150,41 @@ export async function getAllMatches() {
   return match;
 }
 
-export async function getMatchFromId(id: string) {
+export async function getMatchFromId(id: string): Promise<Matches> {
   await connectMongo();
   const match = await Match.findById(id);
   return match;
+}
+
+function formatRefereesForMatchFinish(
+  data: NormalMatchInputs | WalkoverMatchInputs
+) {
+  const referees = [
+    {
+      pos: "referee",
+      name: data.referee,
+    },
+    {
+      pos: "assistantReferee1",
+      name: data.assistantReferee1,
+    },
+    {
+      pos: "assistantReferee2",
+      name: data.assistantReferee2,
+    },
+    {
+      pos: "fourthReferee",
+      name: data.fourthReferee,
+    },
+    {
+      pos: "matchCommissioner",
+      name: data.matchCommissioner,
+    },
+    {
+      pos: "matchObserver",
+      name: data.matchObserver,
+    },
+  ];
 }
 
 export async function finishNormalMatch(
@@ -174,34 +205,7 @@ export async function finishNormalMatch(
     // S10: Add all Red Cards
     // S11: Update all goals Team 1
     // S12: Update all goals Team 2
-
-    const referees = [
-      {
-        pos: "referee",
-        name: data.referee,
-      },
-      {
-        pos: "lineJudge",
-        name: data.lineJudge,
-      },
-      {
-        pos: "umpire",
-        name: data.umpire,
-      },
-      {
-        pos: "backJudge",
-        name: data.backJudge,
-      },
-      {
-        pos: "sideJudge",
-        name: data.sideJudge,
-      },
-      {
-        pos: "fieldJudge",
-        name: data.fieldJudge,
-      },
-    ];
-
+    const referees = formatRefereesForMatchFinish(data);
     await connectMongo();
     const updatedMatch = await Match.findByIdAndUpdate(
       match._id,
@@ -386,32 +390,7 @@ export async function finishWalkoverMatch(
     // In Team DB (for each team):
     // S1: Update Penalty
 
-    const referees = [
-      {
-        pos: "referee",
-        name: data.referee,
-      },
-      {
-        pos: "lineJudge",
-        name: data.lineJudge,
-      },
-      {
-        pos: "umpire",
-        name: data.umpire,
-      },
-      {
-        pos: "backJudge",
-        name: data.backJudge,
-      },
-      {
-        pos: "sideJudge",
-        name: data.sideJudge,
-      },
-      {
-        pos: "fieldJudge",
-        name: data.fieldJudge,
-      },
-    ];
+    const referees = formatRefereesForMatchFinish(data);
 
     await connectMongo();
     if (parseInt(data.winner) == 1) {
@@ -547,6 +526,23 @@ export async function cancelMatch(id: string) {
     return true;
   } catch (err) {
     console.error(err);
+    return false;
+  }
+}
+
+export async function rescheduleMatch(id: string, time: number) {
+  try {
+    await connectMongo();
+    const updatedMatch = await Match.findByIdAndUpdate(
+      id,
+      {
+        time: time,
+      },
+      { new: true }
+    );
+    return true;
+  } catch (err) {
+    console.log(err);
     return false;
   }
 }

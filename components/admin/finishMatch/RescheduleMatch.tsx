@@ -21,23 +21,41 @@ import DatePickerField from "../formElements/DatePickerField";
 import InputField from "../formElements/InputField";
 import TimePickerField from "../formElements/TimePickerField";
 import { Button } from "@/components/ui/button";
+import { checkSchedulingConflict } from "@/services/venues";
 
 interface Props {
   match: Matches;
+  checkConflict: (time: number, venueId: string) => Promise<boolean>;
+  rescheduleFn: (matchId: string, time: number) => Promise<boolean>;
 }
 
-interface RescheduleMatchInputs {
+export interface RescheduleMatchInputs {
   venueId: string;
   date: string;
   time: string;
 }
 
-function RescheduleMatch({ match }: Props) {
+function RescheduleMatch({ match, checkConflict, rescheduleFn }: Props) {
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const methods = useForm<RescheduleMatchInputs>();
 
-  const onSubmit: SubmitHandler<RescheduleMatchInputs> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<RescheduleMatchInputs> = async (data) => {
+    const matchTime = new Date(data.date);
+    const [hour, min] = data.time.split(":");
+    matchTime.setHours(parseInt(hour));
+    matchTime.setMinutes(parseInt(min));
+    const time = matchTime.getTime();
+
+    const resp = await checkConflict(time, match.venue.venueId);
+
+    if (!resp) {
+      const reschedule = await rescheduleFn(match._id, time);
+      if (reschedule) setSuccess(true);
+    } else {
+      setError(true);
+    }
   };
 
   return (
@@ -66,6 +84,17 @@ function RescheduleMatch({ match }: Props) {
               id="date"
             />
             <TimePickerField isRequired={true} label="Time" name="time" />
+            {error && (
+              <p className="text-red-500 text-sm my-4">
+                There is a scheduling conflict in the venue at that time, pick
+                another time.
+              </p>
+            )}
+            {success && (
+              <p className="text-green-500 text-sm my-4">
+                The match has been rescheduled!
+              </p>
+            )}
             <Button type="submit">
               {uploadLoading == false ? (
                 "Re-schedule Match"

@@ -1,8 +1,11 @@
 import Custom404 from "@/app/admin/500";
 import PageHeading from "@/components/admin/Heading";
-import RescheduleMatch from "@/components/admin/finishMatch/RescheduleMatch";
+import RescheduleMatch, {
+  RescheduleMatchInputs,
+} from "@/components/admin/finishMatch/RescheduleMatch";
 import { Matches } from "@/model/Match";
-import { getMatchFromId } from "@/services/matches";
+import { getMatchFromId, rescheduleMatch } from "@/services/matches";
+import { checkSchedulingConflict } from "@/services/venues";
 
 interface Props {
   params: { matchId: string };
@@ -18,18 +21,28 @@ export default async function page({ params: { matchId } }: Props) {
 
   if (team1Id == undefined || team2Id == undefined) return <Custom404 />;
 
-  // Add a form and get match data in a pre-filled form
-  // Have date picker and time picker in the form
-  // Add a validation on the venue, do check -> In venue, at the date is there any other match
-  // QUESTION: What about a match in the morning and one match in the evening
-  // OR Overlap in the 90 minutes
+  async function checkConflict(time: number, venueId: string) {
+    "use server";
+    const resp = await checkSchedulingConflict(venueId, time);
+    return resp;
+  }
+
+  async function rescheduleFn(matchId: string, time: number) {
+    "use server";
+    const resp = await rescheduleMatch(matchId, time);
+    return resp;
+  }
 
   return (
     <>
       <PageHeading
         heading={match.team1.teamName + " v/s " + match.team2.teamName}
       />
-      <RescheduleMatch match={match} />
+      <RescheduleMatch
+        match={match}
+        checkConflict={checkConflict}
+        rescheduleFn={rescheduleFn}
+      />
     </>
   );
 }
