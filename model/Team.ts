@@ -12,9 +12,9 @@ export interface Teams extends Document {
   matchesLost: string[];
   matchesDrawn: string[];
   matchesPlayed?: string[];
-  abandonPenalty?: {
+  penalty?: {
     matchId: string;
-    amount: number;
+    number: number;
   }[];
   playerList: string[];
 }
@@ -69,10 +69,10 @@ const teamSchema = new Schema({
       type: String,
     },
   ],
-  abandonPenalty: [
+  penalty: [
     {
       matchId: String,
-      amount: Number,
+      number: Number,
     },
   ],
   playerList: [

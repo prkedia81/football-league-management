@@ -11,29 +11,35 @@ import Remarks from "../normalMatch/Remarks";
 import WalkOverReason from "./WalkOverReason";
 import PointDeduction from "./PointDeduction";
 import WalkoverWinner from "./WalkoverWinner";
+import axios from "axios";
+import { Matches } from "@/model/Match";
 
 interface Props {
+  match: Matches;
   team1: Teams;
   team2: Teams;
 }
 
-type Inputs = z.infer<typeof WalkoverMatchSchema>;
+export type WalkoverMatchInputs = z.infer<typeof WalkoverMatchSchema>;
 
-export default function WalkoverForm({ team1, team2 }: Props) {
+export default function WalkoverForm({ match, team1, team2 }: Props) {
   const [previousStep, setPreviousStep] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const delta = currentStep - previousStep;
 
-  const methods = useForm<Inputs>({
+  const methods = useForm<WalkoverMatchInputs>({
     resolver: zodResolver(WalkoverMatchSchema),
   });
 
-  const processForm: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+  const processForm: SubmitHandler<WalkoverMatchInputs> = async (data) => {
+    const resp = await axios.post("/api/walkover-match", {
+      match: match,
+      formData: data,
+    });
     methods.reset();
   };
 
-  type FieldName = keyof Inputs;
+  type FieldName = keyof WalkoverMatchInputs;
 
   const next = async () => {
     const fields = steps[currentStep].fields;

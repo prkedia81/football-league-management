@@ -1,6 +1,10 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+interface MultiInputData {
+  id: string;
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -24,4 +28,12 @@ export function timeFormat(epoch: number) {
     minute: "numeric",
     hour12: true,
   });
+}
+
+export function formatMultiInputEntry(data: MultiInputData[] | undefined) {
+  if (!data) return [];
+
+  const items: string[] = [];
+  data.forEach((item) => items.push(item.id));
+  return items;
 }

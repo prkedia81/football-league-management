@@ -16,6 +16,7 @@ import YellowCards from "./YellowCards";
 import RedCards from "./RedCards";
 import Officials from "./Officials";
 import Remarks from "./Remarks";
+import axios from "axios";
 
 interface Props {
   team1: Teams;
@@ -25,23 +26,26 @@ interface Props {
   match: Matches;
 }
 
-type Inputs = z.infer<typeof NormalMatchFormSchema>;
+export type NormalMatchInputs = z.infer<typeof NormalMatchFormSchema>;
 
 export default function NormalMatchForm({ team1, team2, ...props }: Props) {
   const [previousStep, setPreviousStep] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const delta = currentStep - previousStep;
 
-  const methods = useForm<Inputs>({
+  const methods = useForm<NormalMatchInputs>({
     resolver: zodResolver(NormalMatchFormSchema),
   });
 
-  const processForm: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+  const processForm: SubmitHandler<NormalMatchInputs> = async (data) => {
+    const resp = await axios.post("/api/normal-match", {
+      match: props.match,
+      formData: data,
+    });
     methods.reset();
   };
 
-  type FieldName = keyof Inputs;
+  type FieldName = keyof NormalMatchInputs;
 
   const next = async () => {
     const fields = steps[currentStep].fields;
@@ -165,13 +169,13 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
     {
       id: "Step 8",
       name: "Goals - " + team1.name,
-      subheading: "Choose goals scored against - " + team1.name,
-      fields: ["goalsAgainstTeam1", "scorerAgainstTeam1"],
+      subheading: "Choose goals scored by - " + team1.name,
+      fields: ["goalsAgainstTeam2", "scorerAgainstTeam2"],
       component: (
         <GoalsScored
-          key="againstTeam1"
-          numberName="goalsAgainstTeam1"
-          inputName="scorerAgainstTeam1"
+          key="againstTeam2"
+          numberName="goalsAgainstTeam2"
+          inputName="scorerAgainstTeam2"
           t1Squad={t1Squad}
           t2Squad={t2Squad}
           team1Players={props.team1Players}
@@ -182,13 +186,13 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
     {
       id: "Step 9",
       name: "Goals - " + team2.name,
-      subheading: "Choose goals scored against - " + team2.name,
-      fields: ["goalsAgainstTeam2", "scorerAgainstTeam2"],
+      subheading: "Choose goals scored by - " + team2.name,
+      fields: ["goalsAgainstTeam1", "scorerAgainstTeam1"],
       component: (
         <GoalsScored
-          key="againstTeam2"
-          numberName="goalsAgainstTeam2"
-          inputName="scorerAgainstTeam2"
+          key="againstTeam1"
+          numberName="goalsAgainstTeam1"
+          inputName="scorerAgainstTeam1"
           t1Squad={t1Squad}
           t2Squad={t2Squad}
           team1Players={props.team1Players}

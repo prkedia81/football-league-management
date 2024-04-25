@@ -7,14 +7,18 @@ export interface Matches extends Document {
     teamId?: string;
     teamName?: string;
     goalsScored?: string[];
-    players?: string[];
+    squad?: string[];
+    playing11?: string[];
+    bench?: string[];
   };
   team2: {
     teamCode: string;
     teamId?: string;
     teamName?: string;
     goalsScored?: string[];
-    players?: string[];
+    squad?: string[];
+    playing11?: string[];
+    bench?: string[];
   };
   team1Score: number;
   team2Score: number;
@@ -27,11 +31,13 @@ export interface Matches extends Document {
     venueName: string;
   };
   referee?: {
-    position: string;
-    refereeId: string;
+    pos: string;
+    name: string;
   }[];
   refereeReport?: string;
   remarks?: string;
+  redCards?: string[];
+  yellowCards?: string[];
 }
 
 // Define the schema
@@ -41,14 +47,18 @@ const matchSchema = new Schema({
     teamId: String,
     teamName: String,
     goalsScored: [{ type: String }],
-    players: [{ type: String }],
+    squad: [{ type: String }],
+    playing11: [{ type: String }],
+    bench: [{ type: String }],
   },
   team2: {
     teamCode: { type: String, required: true },
     teamId: String,
     teamName: String,
     goalsScored: [{ type: String, default: [] }],
-    players: [{ type: String, default: [] }],
+    squad: [{ type: String, default: [] }],
+    playing11: [{ type: String }],
+    bench: [{ type: String }],
   },
   team1Score: {
     type: Number,
@@ -78,12 +88,14 @@ const matchSchema = new Schema({
   },
   referee: [
     {
-      position: String,
-      refereeId: String,
+      pos: String,
+      name: String,
     },
   ],
   refereeReport: String,
   remarks: String,
+  redCards: [String],
+  yellowCards: [String],
 });
 
 // Create the model

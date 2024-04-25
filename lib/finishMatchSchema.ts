@@ -9,19 +9,19 @@ export const NormalMatchFormSchema = z.object({
   team1Starting11: z
     .array(z.string())
     .min(3, "Atleast 11 players required in Playing Squad"),
-  team1Bench: z.array(z.string()),
+  team1Bench: z.string().or(z.array(z.string())),
   team2players: z
     .array(z.string())
     .min(3, "Atleast 11 players required in Playing Squad"),
   team2Starting11: z
     .array(z.string())
     .min(3, "Atleast 11 players required in Playing Squad"),
-  team2Bench: z.array(z.string()),
+  team2Bench: z.string().or(z.array(z.string())),
   goalsAgainstTeam1: z.string(),
   scorerAgainstTeam1: z.optional(
     z.array(
       z.object({
-        goal: z.string(),
+        id: z.string(),
       })
     )
   ),
@@ -29,21 +29,22 @@ export const NormalMatchFormSchema = z.object({
   scorerAgainstTeam2: z.optional(
     z.array(
       z.object({
-        goal: z.string(),
+        id: z.string(),
       })
     )
   ),
+  numYellowCards: z.optional(z.string()),
   yellowCards: z.optional(
     z.array(
       z.object({
-        yellowCard: z.string(),
+        id: z.string(),
       })
     )
   ),
   redCards: z.optional(
     z.array(
       z.object({
-        redCard: z.string(),
+        id: z.string(),
       })
     )
   ),

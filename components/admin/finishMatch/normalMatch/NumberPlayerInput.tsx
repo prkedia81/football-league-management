@@ -59,7 +59,7 @@ function NumberPlayerInput({
           onClick={() => {
             const numFields = parseInt(getValues(numberName), 10);
             for (let i = 0; i < numFields; i++) {
-              append({ goal: "" });
+              append({ id: "" });
             }
           }}>
           {addTextButton}
@@ -78,7 +78,7 @@ function NumberPlayerInput({
             }`}</p>
             <div className="flex flex-row w-full gap-2">
               <select
-                {...register(`${inputName}.${index}.goal`)}
+                {...register(`${inputName}.${index}.id`)}
                 className="shadow-sm form-input focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                 <option disabled defaultChecked>
                   {defaultSelectText}
@@ -92,7 +92,7 @@ function NumberPlayerInput({
             </div>
           </div>
         ))}
-        {errors[inputName]?.message && (
+        {errors.yellowCards?.message && (
           <span className="text-red-600 text-sm mt-0.5">
             {"This field is required"}
           </span>

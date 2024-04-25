@@ -85,7 +85,7 @@ export async function getAllVenues() {
   return venue;
 }
 
-export async function getVenueFromId(id: string) {
+export async function getVenueFromId(id: string): Promise<Venues> {
   await connectMongo();
   const venue = await Venue.findById(id);
   return venue;
