@@ -256,7 +256,7 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
       name: "Complete",
       subheading: "",
       fields: [],
-      component: <h1>Test</h1>,
+      component: <h1>Successfully Finished Match!</h1>,
     },
   ];
 

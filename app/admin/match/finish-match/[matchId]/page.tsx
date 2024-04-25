@@ -23,7 +23,7 @@ export default async function page({ params: { matchId } }: Props) {
   return (
     <>
       <PageHeading
-        heading={match.team1.teamName + " v/s " + match.team1.teamName}
+        heading={match.team1.teamName + " v/s " + match.team2.teamName}
       />
       <h1 className="mx-4 mt-4 scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-2xl">
         Choose the outcome of the match:

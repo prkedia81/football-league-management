@@ -117,7 +117,7 @@ export default function WalkoverForm({ match, team1, team2 }: Props) {
       name: "Complete",
       subheading: "",
       fields: [],
-      component: <h1>Test</h1>,
+      component: <h1>Walkover Completed!</h1>,
     },
   ];
 
