@@ -65,7 +65,7 @@ export async function getAllPlayers() {
   return player;
 }
 
-export async function getPlayerFromId(id: string) {
+export async function getPlayerFromId(id: string): Promise<Players> {
   await connectMongo();
   const player = await Player.findById(id);
   return player;

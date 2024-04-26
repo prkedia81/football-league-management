@@ -67,7 +67,7 @@ export default function MatchCard({
     },
     {
       status: "cancelled",
-      class: "bg-indigo-100 bg-opacity-50 border-2 border-indigo-500",
+      class: "bg-red-100 bg-opacity-50 border-2 border-red-500",
     },
   ];
 
