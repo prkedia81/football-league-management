@@ -140,7 +140,7 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
     },
     {
       id: "Step 6",
-      name: "Playing XI - " + team1.name,
+      name: "Playing XI - " + team2.name,
       subheading: "Choose the playing XI for this team",
       fields: ["team2Starting11"],
       component: (
@@ -154,7 +154,7 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
     },
     {
       id: "Step 7",
-      name: "Bench Players - " + team1.name,
+      name: "Bench Players - " + team2.name,
       subheading: "Choose the playing on the bench for this team",
       fields: ["team2Bench"],
       component: (

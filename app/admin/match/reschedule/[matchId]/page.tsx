@@ -1,4 +1,5 @@
 import Custom404 from "@/app/admin/500";
+import LoadingState from "@/app/loading";
 import PageHeading from "@/components/admin/Heading";
 import RescheduleMatch, {
   RescheduleMatchInputs,
@@ -6,6 +7,7 @@ import RescheduleMatch, {
 import { Matches } from "@/model/Match";
 import { getMatchFromId, rescheduleMatch } from "@/services/matches";
 import { checkSchedulingConflict } from "@/services/venues";
+import { Suspense } from "react";
 
 interface Props {
   params: { matchId: string };
@@ -38,11 +40,13 @@ export default async function page({ params: { matchId } }: Props) {
       <PageHeading
         heading={match.team1.teamName + " v/s " + match.team2.teamName}
       />
-      <RescheduleMatch
-        match={match}
-        checkConflict={checkConflict}
-        rescheduleFn={rescheduleFn}
-      />
+      <Suspense fallback={<LoadingState />}>
+        <RescheduleMatch
+          match={match}
+          checkConflict={checkConflict}
+          rescheduleFn={rescheduleFn}
+        />
+      </Suspense>
     </>
   );
 }

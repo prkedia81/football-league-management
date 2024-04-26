@@ -1,4 +1,5 @@
 import Custom404 from "@/app/(home)/500";
+import LoadingState from "@/app/loading";
 import PageHeading from "@/components/admin/Heading";
 import NormalMatchForm from "@/components/admin/finishMatch/normalMatch/NormalMatchForm";
 import { CardHeader, CardContent, Card } from "@/components/ui/card";
@@ -9,6 +10,7 @@ import { getMatchFromId } from "@/services/matches";
 import { getAllPlayerDataFromTeamId } from "@/services/players";
 import { getTeamFromId } from "@/services/teams";
 import Link from "next/link";
+import { Suspense } from "react";
 
 interface Props {
   params: { matchId: string };
@@ -46,7 +48,9 @@ export default async function page({ params: { matchId } }: Props) {
   return (
     <>
       <PageHeading heading={team1.name + " v/s " + team2.name} />
-      <NormalMatchForm {...props} />
+      <Suspense fallback={<LoadingState />}>
+        <NormalMatchForm {...props} />
+      </Suspense>
     </>
   );
 }

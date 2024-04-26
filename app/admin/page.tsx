@@ -3,6 +3,8 @@ import PageHeading from "@/components/admin/Heading";
 import MatchCard from "@/components/admin/MatchCard";
 import { Matches } from "@/model/Match";
 import { getAllMatches } from "@/services/matches";
+import { Suspense } from "react";
+import LoadingState from "../loading";
 
 async function page() {
   const matches = JSON.parse(
@@ -23,11 +25,13 @@ async function page() {
           link={"/admin/match/add-fixtures"}
         />
       )}
-      <div className="my-8 w-full mx-4 flex flex-row flex-wrap gap-8">
-        {matches.map((match, i) => (
-          <MatchCard key={i} {...match} />
-        ))}
-      </div>
+      <Suspense fallback={<LoadingState />}>
+        <div className="my-8 w-full mx-4 flex flex-row flex-wrap gap-8">
+          {matches.map((match, i) => (
+            <MatchCard key={i} {...match} />
+          ))}
+        </div>
+      </Suspense>
     </>
   );
 }

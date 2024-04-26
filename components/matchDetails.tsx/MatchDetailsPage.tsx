@@ -1,9 +1,9 @@
 import { Matches } from "@/model/Match";
 import React from "react";
 import MatchBasicDetails from "./MatchBasicDetails";
-import PageHeading from "../admin/Heading";
 import MatchResult from "./MatchResult";
-import MatchGoals from "./MatchGoals";
+import MatchPlayerCard from "./MatchPlayerCard";
+import MatchPlayerList from "./MatchPlayerList";
 
 interface Props {
   match: Matches;
@@ -12,10 +12,7 @@ interface Props {
 async function MatchDetailsPage({ match }: Props) {
   return (
     <>
-      <PageHeading
-        heading={match.team1.teamName + " v/s " + match.team2.teamName}
-      />
-      <div className="grid gap-2 mx-4 mt-4">
+      <div className="grid gap-4 mx-4 mt-6 mb-8">
         <MatchResult status={match.status} />
         <MatchBasicDetails
           venueName={match.venue.venueName}
@@ -25,9 +22,42 @@ async function MatchDetailsPage({ match }: Props) {
           team2Score={match.team2Score}
           time={match.time}
         />
-        <MatchGoals
-          teamName={match.team1.teamName || ""}
-          players={match.team1.goalsScored || []}></MatchGoals>
+        <div className="flex gap-4 w-full">
+          <MatchPlayerCard
+            players={match.team1.goalsScored || []}
+            cardTitle={"Goals Scored by " + match.team1.teamName}
+            cardDescription="List of players who scored goals in the match"
+            emptyStateText="No goals scored by the team"
+          />
+          <MatchPlayerCard
+            players={match.team2.goalsScored || []}
+            cardTitle={"Goals Scored by " + match.team2.teamName}
+            cardDescription="List of players who scored goals in the match"
+            emptyStateText="No goals scored by the team"
+          />
+        </div>
+        <div className="flex gap-4 w-full">
+          <MatchPlayerCard
+            players={match.yellowCards || []}
+            cardTitle={"Yellow Cards"}
+            cardDescription="List of players who received a yellow card in the match"
+            emptyStateText="No yellow cards in the match"
+          />
+          <MatchPlayerCard
+            players={match.team2.goalsScored || []}
+            cardTitle={"Red Cards"}
+            cardDescription="List of players who received a red card in the match"
+            emptyStateText="No red cards in the match"
+          />
+        </div>
+        <MatchPlayerList
+          team1Name={match.team1.teamName || ""}
+          team2Name={match.team2.teamName || ""}
+          team1Id={match.team1.teamId || ""}
+          team2Id={match.team2.teamId || ""}
+          team1Players={match.team1.squad || []}
+          team2Players={match.team2.squad || []}
+        />
       </div>
     </>
   );

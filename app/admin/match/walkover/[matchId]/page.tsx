@@ -1,10 +1,12 @@
 import Custom404 from "@/app/(home)/500";
+import LoadingState from "@/app/loading";
 import PageHeading from "@/components/admin/Heading";
 import WalkoverForm from "@/components/admin/finishMatch/walkover/WalkoverMultiForm";
 import { Matches } from "@/model/Match";
 import { Teams } from "@/model/Team";
 import { getMatchFromId } from "@/services/matches";
 import { getTeamFromId } from "@/services/teams";
+import { Suspense } from "react";
 
 interface Props {
   params: { matchId: string };
@@ -32,7 +34,9 @@ export default async function page({ params: { matchId } }: Props) {
   return (
     <>
       <PageHeading heading={team1.name + " v/s " + team2.name} />
-      <WalkoverForm {...props} />
+      <Suspense fallback={<LoadingState />}>
+        <WalkoverForm {...props} />
+      </Suspense>
     </>
   );
 }
