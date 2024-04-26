@@ -23,7 +23,7 @@ async function page() {
           link={"/admin/match/add-fixtures"}
         />
       )}
-      <div className="mt-4 w-full mx-4 flex flex-row flex-wrap gap-4">
+      <div className="my-8 w-full mx-4 flex flex-row flex-wrap gap-8">
         {matches.map((match, i) => (
           <MatchCard key={i} {...match} />
         ))}
