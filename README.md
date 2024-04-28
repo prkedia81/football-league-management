@@ -1,5 +1,14 @@
 # Feature List & Bugs:
 
+# Attention Required: (Piyush's Push, April 28th,2024): Tables
+ # Bugs
+1. The Navbar Mode in Mobile view has icons, need equal Spacing
+2. The Tables generated here needs a fast reload process, cannot use getServerSideProps in /app directory, the solutions are the use of loader in next/app (can't fix this issue)
+ # Additions
+3. Added services/leagueMatch.ts to calculate and update table logic
+4. Added a points?. : number; in models
+5. Added Header and Footer
+
 ## Homepage:
 
 1. Today's Match

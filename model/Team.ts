@@ -12,6 +12,7 @@ export interface Teams extends Document {
   matchesLost: string[];
   matchesDrawn: string[];
   matchesPlayed?: string[];
+  points?: number;
   penalty?: {
     matchId: string;
     number: number;
