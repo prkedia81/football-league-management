@@ -38,7 +38,7 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
   });
 
   const processForm: SubmitHandler<NormalMatchInputs> = async (data) => {
-    const resp = await axios.post("/api/normal-match", {
+    const resp = await axios.post("/api/admin/normal-match", {
       match: props.match,
       formData: data,
     });

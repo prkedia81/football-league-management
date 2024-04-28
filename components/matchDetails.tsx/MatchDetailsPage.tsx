@@ -53,7 +53,7 @@ async function MatchDetailsPage({ match }: Props) {
             emptyStateText="No red cards in the match"
           />
         </div>
-        {match.team1.squad && (
+        {match.team1.squad?.length !== 0 && (
           <MatchPlayerList
             team1Name={match.team1.teamName || ""}
             team2Name={match.team2.teamName || ""}

@@ -32,7 +32,7 @@ export default function WalkoverForm({ match, team1, team2 }: Props) {
   });
 
   const processForm: SubmitHandler<WalkoverMatchInputs> = async (data) => {
-    const resp = await axios.post("/api/walkover-match", {
+    const resp = await axios.post("/api/admin/walkover-match", {
       match: match,
       formData: data,
     });

@@ -1,10 +1,12 @@
 # Feature List & Bugs:
 
-# Attention Required: (Piyush's Push, April 28th,2024): Tables
- # Bugs
+## Bugs
+
 1. The Navbar Mode in Mobile view has icons, need equal Spacing
 2. The Tables generated here needs a fast reload process, cannot use getServerSideProps in /app directory, the solutions are the use of loader in next/app (can't fix this issue)
- # Additions
+
+## Additions
+
 3. Added services/leagueMatch.ts to calculate and update table logic
 4. Added a points?. : number; in models
 5. Added Header and Footer
@@ -19,9 +21,8 @@
 
 1. Login/ Sign-up
 2. Remove players
-3. See match data
-4. Check Inputs and field options in complete match form for better UX
-5. End to End Testing
+3. Check Inputs and field options in complete match form for better UX
+4. End to End Testing
    - Single Upload
      - Venue
      - Match
@@ -32,7 +33,7 @@
      - Match
      - Player
      - Teams
-6. Send emails for the following:
+5. Send emails for the following:
    - Every end match
    - Every Re-schedule
    - Every Match fixture
