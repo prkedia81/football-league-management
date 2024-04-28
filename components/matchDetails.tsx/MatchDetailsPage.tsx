@@ -4,6 +4,9 @@ import MatchBasicDetails from "./MatchBasicDetails";
 import MatchResult from "./MatchResult";
 import MatchPlayerCard from "./MatchPlayerCard";
 import MatchPlayerList from "./MatchPlayerList";
+import MatchOfficials from "./MatchOfficials";
+import MatchRemarks from "./MatchRemarks";
+import MatchRefereeReport from "./MatchRefereeReport";
 
 interface Props {
   match: Matches;
@@ -50,14 +53,23 @@ async function MatchDetailsPage({ match }: Props) {
             emptyStateText="No red cards in the match"
           />
         </div>
-        <MatchPlayerList
-          team1Name={match.team1.teamName || ""}
-          team2Name={match.team2.teamName || ""}
-          team1Id={match.team1.teamId || ""}
-          team2Id={match.team2.teamId || ""}
-          team1Players={match.team1.squad || []}
-          team2Players={match.team2.squad || []}
-        />
+        {match.team1.squad && (
+          <MatchPlayerList
+            team1Name={match.team1.teamName || ""}
+            team2Name={match.team2.teamName || ""}
+            team1Id={match.team1.teamId || ""}
+            team2Id={match.team2.teamId || ""}
+            team1Players={match.team1.squad || []}
+            team2Players={match.team2.squad || []}
+          />
+        )}
+        {match.referee && <MatchOfficials officials={match.referee} />}
+        <div className="flex gap-4 w-full">
+          {match.remarks && <MatchRemarks remarks={match.remarks} />}
+          {match.refereeReport !== undefined && (
+            <MatchRefereeReport refereeReportLink={match.refereeReport} />
+          )}
+        </div>
       </div>
     </>
   );
