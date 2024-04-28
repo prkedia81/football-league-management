@@ -1,4 +1,4 @@
-import Team from "@/model/Team";
+import Team, { Teams } from "@/model/Team";
 import connectMongo from "./mongoConnect";
 import { AddTeamInput } from "@/app/admin/teams/add-teams/page";
 import { updateTeamAllMatchFixtures } from "./matches";
@@ -78,7 +78,7 @@ export async function getAllTeams() {
   return team;
 }
 
-export async function getTeamFromId(id: string) {
+export async function getTeamFromId(id: string): Promise<Teams> {
   await connectMongo();
   const team = await Team.findById(id);
   return team;

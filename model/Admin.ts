@@ -1,35 +1,52 @@
-import { Document, Schema, model, models } from "mongoose";
+import { Lucia } from "lucia";
+import { MongodbAdapter } from "@lucia-auth/adapter-mongodb";
+import mongoose from "mongoose";
+import { unique } from "next/dist/build/utils";
 
-// Define the TypeScript interface for the Goal document
-interface Admins extends Document {
-  name: string;
-  email: string;
-  password: string;
-  type: string; // Optional property
-}
+const User = mongoose.model(
+  "User",
+  new mongoose.Schema(
+    {
+      _id: {
+        type: String,
+        required: true,
+      },
+      username: {
+        type: String,
+        required: true,
+        unique: true,
+      },
+      password_hash: {
+        type: String,
+        required: true,
+      },
+    } as const,
+    { _id: false }
+  )
+);
 
-// Define the schema
-const adminSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    default: "admin",
-    // admin or super-admin
-  },
-});
+const Session = mongoose.model(
+  "Session",
+  new mongoose.Schema(
+    {
+      _id: {
+        type: String,
+        required: true,
+      },
+      user_id: {
+        type: String,
+        required: true,
+      },
+      expires_at: {
+        type: Date,
+        required: true,
+      },
+    } as const,
+    { _id: false }
+  )
+);
 
-// Create the model
-const Admin = models.Admin || model<Admins>("Admin", adminSchema);
-
-export default Admin;
+export const mongoAdapter = new MongodbAdapter(
+  mongoose.connection.collection("sessions"),
+  mongoose.connection.collection("users")
+);

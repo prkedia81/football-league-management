@@ -1,8 +1,8 @@
-import Footer from "@/components/home/Footer";
 import Navbar from "@/components/home/Navbar";
-import React from "react";
+import React, { cache } from "react";
 import { GetServerSideProps } from "next";
 import { leagueTable } from "@/services/leagueTable";
+import Footer from "@/components/home/Footer";
 
 interface TeamProps {
   rank: number;
@@ -23,16 +23,14 @@ interface LeagueTableProps {
   teams: TeamProps[];
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getLeagueTable = cache(async () => {
   const data = await leagueTable([]); // Assuming you pass an empty array or your actual data here
-  return {
-    props: {
-      teams: data,
-    },
-  };
-};
+  return data;
+});
 
-const Table: React.FC<LeagueTableProps> = ({ teams }) => {
+const Table = async () => {
+  const teams = await getLeagueTable();
+
   return (
     <>
       <div className="bg-gray-800 pt-4 sm:pt-10 lg:pt-12">
