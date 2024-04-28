@@ -33,10 +33,9 @@
      - Player
      - Teams
 6. Send emails for the following:
-
-- Every end match
-- Every Re-schedule
-- Every Match fixture
+   - Every end match
+   - Every Re-schedule
+   - Every Match fixture
 
 # Future Versions:
 
