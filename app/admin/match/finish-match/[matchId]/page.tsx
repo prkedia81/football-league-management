@@ -1,10 +1,12 @@
 import Custom404 from "@/app/(home)/500";
+import LoadingState from "@/app/loading";
 import CancelMatchComponent from "@/components/admin/finishMatch/CancelMatchComponent";
 import PageHeading from "@/components/admin/Heading";
 import { CardHeader, CardContent, Card } from "@/components/ui/card";
 import { Matches } from "@/model/Match";
 import { getMatchFromId } from "@/services/matches";
 import Link from "next/link";
+import { Suspense } from "react";
 
 interface Props {
   params: { matchId: string };
@@ -22,9 +24,11 @@ export default async function page({ params: { matchId } }: Props) {
 
   return (
     <>
-      <PageHeading
-        heading={match.team1.teamName + " v/s " + match.team2.teamName}
-      />
+      <Suspense fallback={<LoadingState />}>
+        <PageHeading
+          heading={match.team1.teamName + " v/s " + match.team2.teamName}
+        />
+      </Suspense>
       <h1 className="mx-4 mt-4 scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-2xl">
         Choose the outcome of the match:
       </h1>

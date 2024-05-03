@@ -11,6 +11,8 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
+import { signOut } from "next-auth/react";
+import { Button } from "../ui/button";
 
 const navigation = [
   { name: "Matches", href: "/admin", icon: HomeIcon, current: false },
@@ -110,25 +112,7 @@ export default function Sidebar({
                   </nav>
                 </div>
                 <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                  <a href="#" className="flex-shrink-0 group block">
-                    <div className="flex items-center">
-                      <div>
-                        <img
-                          className="inline-block h-10 w-10 rounded-full"
-                          src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-                          alt=""
-                        />
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">
-                          Whitney Francis
-                        </p>
-                        <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">
-                          View profile
-                        </p>
-                      </div>
-                    </div>
-                  </a>
+                  <Button onClick={() => signOut()}>Sign Out</Button>
                 </div>
               </div>
             </Transition.Child>
@@ -178,8 +162,9 @@ export default function Sidebar({
                   </div>
                 </nav>
               </div>
-              <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                <a href="#" className="flex-shrink-0 w-full group block">
+              <div className="flex-col flex-shrink-0 flex border-t border-gray-200 p-4">
+                <Button onClick={() => signOut()}>Sign Out</Button>
+                {/* <a href="#" className="flex-shrink-0 w-full group block">
                   <div className="flex items-center">
                     <div>
                       <img
@@ -197,7 +182,7 @@ export default function Sidebar({
                       </p>
                     </div>
                   </div>
-                </a>
+                </a> */}
               </div>
             </div>
           </div>

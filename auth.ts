@@ -1,32 +1,48 @@
-import { Lucia } from "lucia";
-import { mongoAdapter as adapter } from "./model/Admin";
+import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import { getUserFromDb } from "./services/users";
+import { ZodError, boolean } from "zod";
+import { signInSchema } from "./lib/signInSchema";
+import bcrypt from "bcryptjs";
 
-export const lucia = new Lucia(adapter, {
-  sessionCookie: {
-    // this sets cookies with super long expiration
-    // since Next.js doesn't allow Lucia to extend cookie expiration when rendering pages
-    expires: false,
-    attributes: {
-      // set to `true` when using HTTPS
-      secure: process.env.NODE_ENV === "production",
-    },
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  session: {
+    strategy: "jwt",
   },
-  getUserAttributes: (attributes) => {
-    return {
-      // attributes has the type of DatabaseUserAttributes
-      username: attributes.username,
-    };
-  },
+  providers: [
+    Credentials({
+      credentials: {
+        email: {},
+        password: {},
+      },
+      authorize: async (credentials) => {
+        try {
+          let user = null;
+
+          const { email, password } = await signInSchema.parseAsync(
+            credentials
+          );
+
+          // logic to verify if user exists
+          // user = await getUserFromDb(email);
+
+          if (!user) {
+            throw new Error("User not found.");
+          }
+
+          const checkPassword = bcrypt.compareSync(password, user.password);
+
+          if (!checkPassword) throw new Error("Incorrect Password.");
+
+          return user;
+        } catch (error) {
+          console.log(error);
+          if (error instanceof ZodError) {
+            return null;
+          }
+          return null;
+        }
+      },
+    }),
+  ],
 });
-
-// IMPORTANT!
-declare module "lucia" {
-  interface Register {
-    Lucia: typeof lucia;
-    DatabaseUserAttributes: DatabaseUserAttributes;
-  }
-}
-
-interface DatabaseUserAttributes {
-  username: string;
-}

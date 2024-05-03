@@ -13,19 +13,19 @@ async function page() {
 
   return (
     <>
-      <PageHeading
-        heading="Match Fixtures"
-        isPrimaryButton={true}
-        primaryButtonLink="/admin/match/add-fixtures"
-        primaryButtonText="Add Fixtures"
-      />
-      {matches.length === 0 && (
-        <EmptyState
-          text="No matches added, click here to add fixtures"
-          link={"/admin/match/add-fixtures"}
-        />
-      )}
       <Suspense fallback={<LoadingState />}>
+        <PageHeading
+          heading="Match Fixtures"
+          isPrimaryButton={true}
+          primaryButtonLink="/admin/match/add-fixtures"
+          primaryButtonText="Add Fixtures"
+        />
+        {matches.length === 0 && (
+          <EmptyState
+            text="No matches added, click here to add fixtures"
+            link={"/admin/match/add-fixtures"}
+          />
+        )}
         <div className="my-8 w-full mx-4 flex flex-row flex-wrap gap-8">
           {matches.map((match, i) => (
             <MatchCard key={i} {...match} />

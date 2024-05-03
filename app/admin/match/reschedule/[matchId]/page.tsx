@@ -37,9 +37,11 @@ export default async function page({ params: { matchId } }: Props) {
 
   return (
     <>
-      <PageHeading
-        heading={match.team1.teamName + " v/s " + match.team2.teamName}
-      />
+      <Suspense fallback={<LoadingState />}>
+        <PageHeading
+          heading={match.team1.teamName + " v/s " + match.team2.teamName}
+        />
+      </Suspense>
       <Suspense fallback={<LoadingState />}>
         <RescheduleMatch
           match={match}
