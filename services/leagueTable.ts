@@ -1,6 +1,6 @@
 import Team, { Teams } from "@/model/Team";
 import connectMongo from "./mongoConnect";
-import { getTeamFromId } from "./teams";
+import { club } from "@/utils/clubs";
 
 export async function leagueTable(data: any[]) {
   await connectMongo();
@@ -25,7 +25,7 @@ export async function leagueTable(data: any[]) {
       };
     })
   );
-
+  
   // Function to get the league table
   async function getLeagueTable(): Promise<Teams[]> {
     const teams = await Team.find({});
@@ -58,10 +58,7 @@ async function updateTeamPoints(teamId: string): Promise<Teams> {
     }
 
     // Calculate points
-    const wins = team.matchesWon.length;
-    const losses = team.matchesLost.length;
-    const draw = team.matchesDrawn.length;
-    let points = wins * 3 + draw;
+    let points = team.matchesWon * 3 + team.matchesDrawn;
     const goalDifference = team.goalScoredFor - team.goalScoredAgainst;
 
     // Calculate penalty points
@@ -76,11 +73,7 @@ async function updateTeamPoints(teamId: string): Promise<Teams> {
 
     // Update the team's points and other details for table
     team.goalDifference = goalDifference;
-    team.matches = team.matchesPlayed.length;
     team.points = points;
-    team.losses = losses;
-    team.wins = wins;
-    team.draws = draw;
     await team.save();
 
     return team;

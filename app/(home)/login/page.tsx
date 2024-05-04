@@ -29,6 +29,7 @@ const Login = () => {
   };
 
   return (
+    <div className="flex min-h-screen flex-col items-center justify-between p-24">
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle className="text-2xl">Login</CardTitle>
@@ -68,6 +69,7 @@ const Login = () => {
         </form>
       </CardContent>
     </Card>
+    </div>
   );
 };
 export default Login;

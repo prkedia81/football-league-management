@@ -1,11 +1,10 @@
 import Navbar from "@/components/home/Navbar";
 import React, { cache } from "react";
 import { GetServerSideProps } from "next";
-import { leagueTable } from "@/services/leagueTable";
+import { leagueTable } from "@/services/newleagueTable";
 import Footer from "@/components/home/Footer";
 
 interface TeamProps {
-  rank: number;
   regId: string;
   name: string;
   teamCode: string;
@@ -35,6 +34,9 @@ const Table = async () => {
     <>
       <div className="bg-gray-800 pt-4 sm:pt-10 lg:pt-12">
         <Navbar />
+        <h1 className="text-3xl text-center tracking-tight font-extrabold text-white sm:mt-1 sm:leading-none lg:mt-2 lg:text-2xl xl:text-2xl">
+                  <span className="md:block">Matches</span>
+        </h1>
       </div>
       <div className="bg-gray-400">
         <div className="flex flex-col">
@@ -44,11 +46,6 @@ const Table = async () => {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Pos
-                      </th>
                       <th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -102,10 +99,10 @@ const Table = async () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {teams.map((team, index) => (
-                      <tr key={index}>
+                    {teams.map((team, regId) => (
+                      <tr key={team.regId}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          {team.rank}
+                          {team.name}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           {team.teamCode}
