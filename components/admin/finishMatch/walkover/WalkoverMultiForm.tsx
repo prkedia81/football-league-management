@@ -100,7 +100,7 @@ export default function WalkoverForm({ match, team1, team2 }: Props) {
         "assistantReferee2",
         "fourthReferee",
         "matchCommissioner",
-        "matchObserver",
+        "refereeAssessor",
       ],
       component: <Officials />,
     },

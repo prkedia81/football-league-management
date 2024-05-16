@@ -240,7 +240,7 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
         "assistantReferee2",
         "fourthReferee",
         "matchCommissioner",
-        "matchObserver",
+        "refereeAssessor",
       ],
       component: <Officials />,
     },

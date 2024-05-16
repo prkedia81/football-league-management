@@ -1,7 +1,6 @@
-import { cn } from "@/lib/utils";
 import React, { DetailedHTMLProps, InputHTMLAttributes } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { DatePicker } from "../DatePicker";
+import { ComboBox, ComboBoxElement } from "../ComboBox";
 
 interface Props
   extends DetailedHTMLProps<
@@ -12,12 +11,18 @@ interface Props
   label: string;
   isRequired?: boolean;
   name: string;
+  placeholderText: string;
+  disabledText?: string;
+  displayItems: ComboBoxElement[];
+  defaultValue?: string;
 }
 
-const DatePickerField = ({
+const ComboBoxField = ({
   errorMessage,
   label,
   isRequired = false,
+  placeholderText,
+  displayItems,
   ...props
 }: Props) => {
   const {
@@ -35,12 +40,18 @@ const DatePickerField = ({
         </label>
         <div className="mt-1 flex-col gap-1 sm:mt-0 sm:col-span-4">
           <Controller
-            name="date"
+            name={props.name}
             control={control}
-            defaultValue={null}
             rules={{ required: isRequired }}
+            defaultValue={props.defaultValue || null}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
-              <DatePicker onChange={onChange} value={value} />
+              <ComboBox
+                onChange={onChange}
+                value={value}
+                placeholderText={placeholderText}
+                disabledText={props.disabledText}
+                items={displayItems}
+              />
             )}
           />
           {errors[props.name] && (
@@ -55,4 +66,4 @@ const DatePickerField = ({
   );
 };
 
-export default DatePickerField;
+export default ComboBoxField;

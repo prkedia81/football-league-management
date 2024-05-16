@@ -36,10 +36,10 @@ function Officials() {
         placeholder="Enter Match Commissioner's Name"
       />
       <InputField
-        label="Match Observer"
-        name="matchObserver"
-        id="matchObserver"
-        placeholder="Enter Match Observer's Name"
+        label="Referee Assessor"
+        name="refereeAssessor"
+        id="refereeAssessor"
+        placeholder="Enter Referee Assessor's Name"
       />
       <p>TODO: Add Upload Referee Report</p>
     </div>

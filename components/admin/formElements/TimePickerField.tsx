@@ -38,7 +38,8 @@ const TimePickerField = ({
             name="time"
             control={control}
             defaultValue={null}
-            render={({ field: { onChange, value } }) => (
+            rules={{ required: isRequired }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
               <TimePicker onChange={onChange} value={value} />
             )}
           />

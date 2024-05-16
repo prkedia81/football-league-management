@@ -38,27 +38,34 @@
    - Every Re-schedule
    - Every Match fixture
 
-# Changes Requested:
+## Changes Requested:
 
 - [ ] Edit Match Details
 - [ ] Edit Player Details
+- [ ] Edit Venue Details
+- [ ] Edit Team Details
+- [x] Not match Fixture- Match Sequence
+- [ ] Show the data that is happening in re-schedule (double confirmation)
+- [x] Change from Venue ID to Venue Drop down
+- [ ] In Re-schedule match -> Add 1 button for confirm and 1 button for send email to club
+- [x] Not match observer -> Referee Assessor
+- [x] AR1, AR2 compulsory
+- [ ] Add Officials options in team
+- [x] Add Combobox in every drop down
+- [ ] Set up emailing
 
-3. [] Edit Venue Details
-4. [] Edit Team Details
-5. [] Not match Fixture- Match Sequence
-6. [] Show the data that is happening in re-schedule (double confirmation)
-7. [] Change from Venue ID to Venue Drop down (with typing)
-8. [] In Re-schedule match -> Add 1 button for confirm and 1 button for send email to club
-9. [] Not match observer -> Referee Assessor
-10. [] AR1, AR2 compulsory
-11. [] Add upload team from Excel in the squad match with Registration ID
-12. [] In the players list, add the CRS ID along with it
-13. [] GOAL KEEPER In Player List
-14. [] Captain in a match
-15. [] Change the way players are selected
-16. [] Add Officials options in team
+---
 
-# Reports to be Generated:
+Player List in complete match changes:
+
+- [ ] Player select combo box
+- [ ] In the players list, add the CRS ID along with it
+- [ ] Add upload team from Excel in the squad match with Registration ID
+- [ ] Change the way players are selected - CHANGE DB
+- [ ] GOAL KEEPER In Player List
+- [ ] Captain in a match
+
+## Reports to be Generated:
 
 1. League Table - Standing
 2. Club Performance:

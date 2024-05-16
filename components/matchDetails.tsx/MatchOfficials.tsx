@@ -28,8 +28,8 @@ function MatchOfficials({ officials }: Props) {
       official.displayName = "Fourth Referee";
     else if (official.pos === "matchCommissioner")
       official.displayName = "Match Commissioner";
-    else if (official.pos === "matchObserver")
-      official.displayName = "Match Observer";
+    else if (official.pos === "refereeAssessor")
+      official.displayName = "Referee Assessor";
   }
 
   return (

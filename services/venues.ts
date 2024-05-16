@@ -79,7 +79,7 @@ export async function addAllMatchToVenue(venueRegId: string) {
   );
 }
 
-export async function getAllVenues() {
+export async function getAllVenues(): Promise<Venues[]> {
   await connectMongo();
   const venue = await Venue.find();
   return venue;

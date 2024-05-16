@@ -49,11 +49,11 @@ export const NormalMatchFormSchema = z.object({
     )
   ),
   referee: z.string().min(1, "Add the referee name"),
-  assistantReferee1: z.string(),
-  assistantReferee2: z.string(),
+  assistantReferee1: z.string().min(1, "Add assistant referee 1's name"),
+  assistantReferee2: z.string().min(1, "Add assistant referee 2's name"),
   fourthReferee: z.string(),
   matchCommissioner: z.string(),
-  matchObserver: z.string(),
+  refereeAssessor: z.string(),
   refereeReport: z.optional(z.string().url()),
   remarks: z.string(),
 });
@@ -67,7 +67,7 @@ export const WalkoverMatchSchema = z.object({
   assistantReferee2: z.string(),
   fourthReferee: z.string(),
   matchCommissioner: z.string(),
-  matchObserver: z.string(),
+  refereeAssessor: z.string(),
   refereeReport: z.optional(z.string().url()),
   remarks: z.string(),
 });

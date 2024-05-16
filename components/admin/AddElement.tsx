@@ -1,8 +1,8 @@
 "use client";
 
 import PageHeading from "@/components/admin/Heading";
-import UploadTable from "@/components/admin/UploadTable";
-import UploadZone from "@/components/admin/UploadZone";
+import UploadTable from "@/components/admin/formElements/UploadTable";
+import UploadZone from "@/components/admin/formElements/UploadZone";
 import { Button } from "@/components/ui/button";
 import { ReactNode, useState } from "react";
 import LoadingSpinner from "../LoadingSpinner";

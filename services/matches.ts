@@ -181,8 +181,8 @@ function formatRefereesForMatchFinish(
       name: data.matchCommissioner,
     },
     {
-      pos: "matchObserver",
-      name: data.matchObserver,
+      pos: "refereeAssessor",
+      name: data.refereeAssessor,
     },
   ];
 }

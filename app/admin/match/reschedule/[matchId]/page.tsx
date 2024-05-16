@@ -6,7 +6,7 @@ import RescheduleMatch, {
 } from "@/components/admin/finishMatch/RescheduleMatch";
 import { Matches } from "@/model/Match";
 import { getMatchFromId, rescheduleMatch } from "@/services/matches";
-import { checkSchedulingConflict } from "@/services/venues";
+import { checkSchedulingConflict, getAllVenues } from "@/services/venues";
 import { Suspense } from "react";
 
 interface Props {
@@ -20,6 +20,8 @@ export default async function page({ params: { matchId } }: Props) {
 
   const team1Id = match?.team1?.teamId;
   const team2Id = match?.team2?.teamId;
+
+  const allVenue = JSON.parse(JSON.stringify(await getAllVenues()));
 
   if (team1Id == undefined || team2Id == undefined) return <Custom404 />;
 
@@ -47,6 +49,7 @@ export default async function page({ params: { matchId } }: Props) {
           match={match}
           checkConflict={checkConflict}
           rescheduleFn={rescheduleFn}
+          venues={allVenue}
         />
       </Suspense>
     </>
