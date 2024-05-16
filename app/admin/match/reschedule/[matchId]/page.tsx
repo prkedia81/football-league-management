@@ -33,6 +33,7 @@ export default async function page({ params: { matchId } }: Props) {
 
   async function rescheduleFn(matchId: string, time: number) {
     "use server";
+    // TODO: Edit Venue also!
     const resp = await rescheduleMatch(matchId, time);
     return resp;
   }

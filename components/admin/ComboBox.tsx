@@ -32,6 +32,7 @@ export function ComboBox({
       : items.filter((item) => {
           return item.label.toLowerCase().includes(query.toLowerCase());
         });
+  // TODO: Highlight Selected
 
   return (
     <Combobox as="div" value={value} onChange={(e) => onChange(e.value)}>
