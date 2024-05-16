@@ -15,7 +15,7 @@ async function page() {
     <>
       <Suspense fallback={<LoadingState />}>
         <PageHeading
-          heading="Match Fixtures"
+          heading="Match Sequence"
           isPrimaryButton={true}
           primaryButtonLink="/admin/match/add-fixtures"
           primaryButtonText="Add Fixtures"
