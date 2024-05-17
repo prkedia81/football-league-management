@@ -121,7 +121,7 @@ export default function WalkoverForm({ match, team1, team2 }: Props) {
   ];
 
   return (
-    <section className="absolute inset-0 flex flex-col justify-between p-24">
+    <section className=" inset-0 flex flex-col justify-between py-8 px-24">
       {/* steps */}
       <nav aria-label="Progress">
         <ol role="list" className="space-y-4 md:flex md:space-x-8 md:space-y-0">
@@ -158,9 +158,7 @@ export default function WalkoverForm({ match, team1, team2 }: Props) {
 
       {/* Form */}
       <FormProvider {...methods}>
-        <form
-          className="mt-12 py-12"
-          onSubmit={methods.handleSubmit(processForm)}>
+        <form className="mt-12" onSubmit={methods.handleSubmit(processForm)}>
           <div>
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               {steps[currentStep].name}
@@ -174,13 +172,13 @@ export default function WalkoverForm({ match, team1, team2 }: Props) {
       </FormProvider>
 
       {/* Navigation */}
-      <div className="mt-8 pt-5">
+      <div className="pt-5">
         <div className="flex justify-between">
           <button
             type="button"
             onClick={prev}
             disabled={currentStep === 0}
-            className="inline-flex items-center rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
+            className="inline-flex items-center rounded bg-white px-2 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -202,7 +200,7 @@ export default function WalkoverForm({ match, team1, team2 }: Props) {
             type="button"
             onClick={next}
             disabled={currentStep === steps.length - 1}
-            className="rounded inline-flex items-center bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
+            className="rounded inline-flex items-center bg-white px-2 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
             <span className="text-gray-900 text-sm">Next</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"

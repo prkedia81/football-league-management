@@ -2,7 +2,7 @@
 
 import PageHeading from "@/components/admin/Heading";
 import UploadTable from "@/components/admin/formElements/UploadTable";
-import UploadZone from "@/components/admin/formElements/UploadZone";
+import ExcelUploadZone from "@/components/admin/formElements/ExcelUploadZone";
 import { Button } from "@/components/ui/button";
 import { ReactNode, useState } from "react";
 import LoadingSpinner from "../LoadingSpinner";
@@ -57,7 +57,7 @@ function AddElement<T>({
       <PageHeading heading={pageHeading} />
       {data.length == 0 && (
         <div className="flex flex-col w-full gap-2">
-          <UploadZone
+          <ExcelUploadZone
             text={uploadZoneText}
             setData={setData}
             setHeadings={setHeadings}

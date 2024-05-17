@@ -55,7 +55,9 @@ const InputField = ({
           </div>
           {errors[props.name] && (
             <span className="text-red-600 text-sm mt-0.5">
-              {errorMessage ?? "This field is required"}
+              {(errors[props.name]?.message as string) ??
+                errorMessage ??
+                "This field is required"}
             </span>
           )}
         </div>

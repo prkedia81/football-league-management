@@ -1,5 +1,6 @@
 import React from "react";
 import InputField from "../../formElements/InputField";
+import FileUploadZone from "../../formElements/FileUploadZone";
 
 function Officials() {
   return (
@@ -13,12 +14,14 @@ function Officials() {
       />
       <InputField
         label="Assistant Referee 1"
+        isRequired={true}
         name="assistantReferee1"
         id="assistantReferee1"
         placeholder="Enter Assistant Referee 1's Name"
       />
       <InputField
         label="Assistant Referee 2"
+        isRequired={true}
         name="assistantReferee2"
         id="assistantReferee2"
         placeholder="Enter Assistant Referee 1's Name"
@@ -41,7 +44,7 @@ function Officials() {
         id="refereeAssessor"
         placeholder="Enter Referee Assessor's Name"
       />
-      <p>TODO: Add Upload Referee Report</p>
+      <FileUploadZone field="refereeReport" />
     </div>
   );
 }

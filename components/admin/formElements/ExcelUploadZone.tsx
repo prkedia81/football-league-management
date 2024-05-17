@@ -7,7 +7,7 @@ interface Props {
   text: string;
 }
 
-function UploadZone<T>({ setHeadings, setData, text }: Props) {
+function ExcelUploadZone<T>({ setHeadings, setData, text }: Props) {
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files === null) return;
     const file = event.target.files[0];
@@ -55,4 +55,4 @@ function UploadZone<T>({ setHeadings, setData, text }: Props) {
   );
 }
 
-export default UploadZone;
+export default ExcelUploadZone;

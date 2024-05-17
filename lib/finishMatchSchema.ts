@@ -54,7 +54,10 @@ export const NormalMatchFormSchema = z.object({
   fourthReferee: z.string(),
   matchCommissioner: z.string(),
   refereeAssessor: z.string(),
-  refereeReport: z.optional(z.string().url()),
+  refereeReport: z
+    .string()
+    .min(1, { message: "Referee Report is required" })
+    .url({ message: "Must be a valid url" }),
   remarks: z.string(),
 });
 
@@ -63,11 +66,14 @@ export const WalkoverMatchSchema = z.object({
   reason: z.string().min(1, "Select a reason"),
   deduction: z.string().min(1, "Choose the number of points to be deducted"),
   referee: z.string().min(1, "Add the referee name"),
-  assistantReferee1: z.string(),
-  assistantReferee2: z.string(),
+  assistantReferee1: z.string().min(1, "Add the assistant referee 1's name"),
+  assistantReferee2: z.string().min(1, "Add the assistant referee 2's name"),
   fourthReferee: z.string(),
   matchCommissioner: z.string(),
   refereeAssessor: z.string(),
-  refereeReport: z.optional(z.string().url()),
+  refereeReport: z
+    .string()
+    .min(1, { message: "Referee Report is required" })
+    .url({ message: "Must be a valid url" }),
   remarks: z.string(),
 });
