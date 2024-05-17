@@ -101,22 +101,17 @@ export default function WalkoverForm({ match, team1, team2 }: Props) {
         "fourthReferee",
         "matchCommissioner",
         "refereeAssessor",
+        "refereeReport",
+        "remarks",
       ],
       component: <Officials />,
     },
     {
       id: "Step 5",
-      name: "Remarks",
-      subheading: "Add any remarks for the match",
-      fields: ["remarks"],
-      component: <Remarks />,
-    },
-    {
-      id: "Step 6",
       name: "Complete",
       subheading: "",
       fields: [],
-      component: <h1>Walkover Completed!</h1>,
+      component: <h1>Successfully Submitted!</h1>,
     },
   ];
 

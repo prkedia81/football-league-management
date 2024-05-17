@@ -1,50 +1,65 @@
 import { optional, z } from "zod";
 
 export const NormalMatchFormSchema = z.object({
-  winner: z.string().min(1, "Select a winner"),
+  winner: z
+    .string({ invalid_type_error: "Select a winner" })
+    .min(1, "Select a winner"),
   // TODO: Change back to 11
-  team1players: z
-    .array(z.string())
-    .min(3, "Atleast 14 players required in Playing Squad"),
-  team1Starting11: z
-    .array(z.string())
-    .min(3, "Atleast 11 players required in Playing Squad"),
+  team1players: z.array(z.string()),
+  // .min(0, "Atleast 14 players required in Playing Squad"),
+  team1Starting11: z.array(z.string()),
+  // .min(0, "Atleast 11 players required in Playing Squad"),
   team1Bench: z.string().or(z.array(z.string())),
-  team2players: z
-    .array(z.string())
-    .min(3, "Atleast 11 players required in Playing Squad"),
-  team2Starting11: z
-    .array(z.string())
-    .min(3, "Atleast 11 players required in Playing Squad"),
+  team2players: z.array(z.string()),
+  // .min(0, "Atleast 11 players required in Playing Squad"),
+  team2Starting11: z.array(z.string()),
+  // .min(0, "Atleast 11 players required in Playing Squad"),
   team2Bench: z.string().or(z.array(z.string())),
-  goalsAgainstTeam1: z.string(),
+  goalsAgainstTeam1: z
+    .string({
+      invalid_type_error: "Enter the number of goals scored",
+    })
+    .min(1, "Enter the number of goals scored"),
   scorerAgainstTeam1: z.optional(
     z.array(
       z.object({
-        id: z.string(),
+        id: z.string().min(1, "Select 1 Player"),
       })
     )
   ),
-  goalsAgainstTeam2: z.string(),
+  goalsAgainstTeam2: z
+    .string({
+      invalid_type_error: "Enter the number of goals scored",
+    })
+    .min(1, "Enter the number of goals scored"),
   scorerAgainstTeam2: z.optional(
     z.array(
       z.object({
-        id: z.string(),
+        id: z.string().min(1, "Select 1 Player"),
       })
     )
   ),
-  numYellowCards: z.optional(z.string()),
+  numYellowCards: z
+    .string({
+      invalid_type_error: "Enter the number of goals scored",
+    })
+    .min(1, "Enter the number of goals scored"),
+  numRedCards: z
+    .string({
+      invalid_type_error: "Enter the number of goals scored",
+    })
+    .min(1, "Enter the number of goals scored"),
   yellowCards: z.optional(
     z.array(
       z.object({
-        id: z.string(),
+        id: z.string().min(1, "Select 1 Player"),
       })
     )
   ),
   redCards: z.optional(
     z.array(
       z.object({
-        id: z.string(),
+        id: z.string().min(1, "Select 1 Player"),
       })
     )
   ),

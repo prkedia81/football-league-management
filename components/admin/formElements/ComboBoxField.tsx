@@ -14,6 +14,8 @@ interface Props
   placeholderText: string;
   disabledText?: string;
   displayItems: ComboBoxElement[];
+  disabledText2?: string;
+  displayItems2?: ComboBoxElement[];
   defaultValue?: string;
 }
 
@@ -51,6 +53,8 @@ const ComboBoxField = ({
                 placeholderText={placeholderText}
                 disabledText={props.disabledText}
                 items={displayItems}
+                disabledText2={props.disabledText2}
+                items2={props.displayItems2}
               />
             )}
           />

@@ -1,6 +1,7 @@
 import React from "react";
 import InputField from "../../formElements/InputField";
 import FileUploadZone from "../../formElements/FileUploadZone";
+import Remarks from "./Remarks";
 
 function Officials() {
   return (
@@ -44,7 +45,10 @@ function Officials() {
         id="refereeAssessor"
         placeholder="Enter Referee Assessor's Name"
       />
+      <hr />
       <FileUploadZone field="refereeReport" />
+      <hr />
+      <Remarks />
     </div>
   );
 }

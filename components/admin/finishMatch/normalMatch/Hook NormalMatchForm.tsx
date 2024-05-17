@@ -6,13 +6,13 @@ import { NormalMatchFormSchema } from "@/lib/finishMatchSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { z } from "zod";
-import Winner from "./Winner";
+import MatchOutcome from "./MatchOutcome";
 import PlayerSelect from "./PlayerSelect";
 import { Teams } from "@/model/Team";
 import { Players } from "@/model/Player";
 import { Matches } from "@/model/Match";
 import GoalsScored from "./GoalsScored";
-import YellowCards from "./YellowCards";
+import RedYellowCards from "./RedYellowCards";
 import RedCards from "./RedCards";
 import Officials from "./Officials";
 import Remarks from "./Remarks";
@@ -37,7 +37,7 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
       name: "Match Outcome",
       subheading: "Choose the match outcome",
       fields: ["winner"],
-      component: <Winner team1Name={team1.name} team2Name={team2.name} />,
+      component: <MatchOutcome team1Name={team1.name} team2Name={team2.name} />,
     },
     {
       id: "Step 2",
@@ -161,7 +161,7 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
       subheading: "Choose all the yellow cards in the match",
       fields: ["yellowCards"],
       component: (
-        <YellowCards
+        <RedYellowCards
           key="yellowCards"
           t1Squad={t1Squad}
           t2Squad={t2Squad}

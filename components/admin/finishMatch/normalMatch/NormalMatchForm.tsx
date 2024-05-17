@@ -6,16 +6,13 @@ import { NormalMatchFormSchema } from "@/lib/finishMatchSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { z } from "zod";
-import Winner from "./Winner";
+import MatchOutcome from "./MatchOutcome";
 import PlayerSelect from "./PlayerSelect";
 import { Teams } from "@/model/Team";
 import { Players } from "@/model/Player";
 import { Matches } from "@/model/Match";
-import GoalsScored from "./GoalsScored";
-import YellowCards from "./YellowCards";
-import RedCards from "./RedCards";
+import RedYellowCards from "./RedYellowCards";
 import Officials from "./Officials";
-import Remarks from "./Remarks";
 import axios from "axios";
 
 interface Props {
@@ -71,169 +68,97 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
     }
   };
 
-  const t1Squad = methods.watch("team1players");
-  const t2Squad = methods.watch("team2players");
+  // const t1Squad = methods.watch("team1players");
+  // const t2Squad = methods.watch("team2players");
 
   // console.log(methods.getValues());
 
   const steps = [
     {
       id: "Step 1",
-      name: "Match Outcome",
-      subheading: "Choose the match outcome",
-      fields: ["winner"],
-      component: <Winner team1Name={team1.name} team2Name={team2.name} />,
-    },
-    {
-      id: "Step 2",
       name: "Players - " + team1.name,
-      subheading: "Choose the complete squad for this team",
-      fields: ["team1players"],
+      subheading: "Choose the squad for this team",
+      fields: [
+        "team1Starting11",
+        "team1Gk",
+        "team1Captain",
+        "team1Substitute",
+        "team1Reserve",
+      ],
       component: (
         <PlayerSelect
           key="team1"
-          inputName="team1players"
+          starting11Field="team1Starting11"
+          gkField="team1Gk"
+          captainField="team1Captain"
+          substituteField="team1Substitute"
+          reserveField="team1Reserve"
           playerList={props.team1Players}
+        />
+      ),
+    },
+    {
+      id: "Step 2",
+      name: "Players - " + team2.name,
+      subheading: "Choose the squad for this team",
+      fields: [
+        "team2Starting11",
+        "team2Gk",
+        "team2Captain",
+        "team2Substitute",
+        "team2Reserve",
+      ],
+      component: (
+        <PlayerSelect
+          key="team2"
+          starting11Field="team2Starting11"
+          gkField="team2Gk"
+          captainField="team2Captain"
+          substituteField="team2Substitute"
+          reserveField="team2Reserve"
+          playerList={props.team2Players}
         />
       ),
     },
     {
       id: "Step 3",
-      name: "Playing XI - " + team1.name,
-      subheading: "Choose the playing XI for this team",
-      fields: ["team1Starting11"],
+      name: "Match Outcome",
+      subheading: "Choose the match outcome",
+      fields: [
+        "winner",
+        "goalsAgainstTeam2",
+        "scorerAgainstTeam2",
+        "goalsAgainstTeam1",
+        "scorerAgainstTeam1",
+      ],
       component: (
-        <PlayerSelect
-          key="team1Starting11"
-          inputName="team1Starting11"
-          playerList={props.team1Players}
-          filterId={t1Squad}
+        <MatchOutcome
+          team1Name={team1.name}
+          team2Name={team2.name}
+          team1Players={props.team1Players}
+          team2Players={props.team2Players}
         />
       ),
     },
     {
       id: "Step 4",
-      name: "Bench Players - " + team1.name,
-      subheading: "Choose the playing on the bench for this team",
-      fields: ["team1Bench"],
+      name: "Yellow and Red Cards",
+      subheading: "Choose all the yellow and red cards given in the match",
+      fields: ["yellowCards", "redCards", "numYellowCards", "numRedCards"],
       component: (
-        <PlayerSelect
-          key="team1Bench"
-          inputName="team1Bench"
-          playerList={props.team1Players}
-          filterId={t1Squad}
+        <RedYellowCards
+          key="yellowCards"
+          team1Name={team1.name}
+          team2Name={team2.name}
+          team1Players={props.team1Players}
+          team2Players={props.team2Players}
         />
       ),
     },
     {
       id: "Step 5",
-      name: "Players - " + team2.name,
-      subheading: "Choose the players for this team",
-      fields: ["team2players"],
-      component: (
-        <PlayerSelect
-          key="team2players"
-          inputName="team2players"
-          playerList={props.team2Players}
-        />
-      ),
-    },
-    {
-      id: "Step 6",
-      name: "Playing XI - " + team2.name,
-      subheading: "Choose the playing XI for this team",
-      fields: ["team2Starting11"],
-      component: (
-        <PlayerSelect
-          key="team2Starting11"
-          inputName="team2Starting11"
-          playerList={props.team2Players}
-          filterId={t2Squad}
-        />
-      ),
-    },
-    {
-      id: "Step 7",
-      name: "Bench Players - " + team2.name,
-      subheading: "Choose the playing on the bench for this team",
-      fields: ["team2Bench"],
-      component: (
-        <PlayerSelect
-          key="team2Bench"
-          inputName="team2Bench"
-          playerList={props.team2Players}
-          filterId={t2Squad}
-        />
-      ),
-    },
-    {
-      id: "Step 8",
-      name: "Goals - " + team1.name,
-      subheading: "Choose goals scored by - " + team1.name,
-      fields: ["goalsAgainstTeam2", "scorerAgainstTeam2"],
-      component: (
-        <GoalsScored
-          key="againstTeam2"
-          numberName="goalsAgainstTeam2"
-          inputName="scorerAgainstTeam2"
-          t1Squad={t1Squad}
-          t2Squad={t2Squad}
-          team1Players={props.team1Players}
-          team2Players={props.team2Players}
-        />
-      ),
-    },
-    {
-      id: "Step 9",
-      name: "Goals - " + team2.name,
-      subheading: "Choose goals scored by - " + team2.name,
-      fields: ["goalsAgainstTeam1", "scorerAgainstTeam1"],
-      component: (
-        <GoalsScored
-          key="againstTeam1"
-          numberName="goalsAgainstTeam1"
-          inputName="scorerAgainstTeam1"
-          t1Squad={t1Squad}
-          t2Squad={t2Squad}
-          team1Players={props.team1Players}
-          team2Players={props.team2Players}
-        />
-      ),
-    },
-    {
-      id: "Step 10",
-      name: "Yellow Cards",
-      subheading: "Choose all the yellow cards in the match",
-      fields: ["yellowCards"],
-      component: (
-        <YellowCards
-          key="yellowCards"
-          t1Squad={t1Squad}
-          t2Squad={t2Squad}
-          team1Players={props.team1Players}
-          team2Players={props.team2Players}
-        />
-      ),
-    },
-    {
-      id: "Step 11",
-      name: "Red Cards",
-      subheading: "Choose all the red cards in the match",
-      fields: ["redCards"],
-      component: (
-        <RedCards
-          key="redCards"
-          t1Squad={t1Squad}
-          t2Squad={t2Squad}
-          team1Players={props.team1Players}
-          team2Players={props.team2Players}
-        />
-      ),
-    },
-    {
-      id: "Step 12",
-      name: "Officials",
-      subheading: "Add all officials in the match",
+      name: "Officials & Remarks",
+      subheading: "Add all officials and remarks in the match",
       fields: [
         "referee",
         "assistantReferee1",
@@ -241,24 +166,22 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
         "fourthReferee",
         "matchCommissioner",
         "refereeAssessor",
+        "refereeReport",
+        "remarks",
       ],
       component: <Officials />,
     },
+
     {
-      id: "Step 13",
-      name: "Remarks",
-      subheading: "Add any remarks for the match",
-      fields: ["remarks"],
-      component: <Remarks />,
-    },
-    {
-      id: "Step 4",
+      id: "Step 6",
       name: "Complete",
       subheading: "",
       fields: [],
       component: <h1>Successfully Finished Match!</h1>,
     },
   ];
+
+  console.log(methods.watch());
 
   return (
     <section className="flex flex-col justify-between pt-2 pb-12">
@@ -315,13 +238,13 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
         </FormProvider>
 
         {/* Navigation */}
-        <div className="mt-8 pt-5">
+        <div className="">
           <div className="flex justify-between">
             <button
               type="button"
               onClick={prev}
               disabled={currentStep === 0}
-              className="inline-flex items-center rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
+              className="inline-flex items-center rounded bg-white px-2 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -343,7 +266,7 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
               type="button"
               onClick={next}
               disabled={currentStep === steps.length - 1}
-              className="rounded inline-flex items-center bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
+              className="rounded inline-flex items-center bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
               <span className="text-gray-900 text-sm">Next</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
