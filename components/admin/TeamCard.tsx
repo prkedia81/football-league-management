@@ -44,13 +44,23 @@ function TeamCard(props: Props) {
             Edit Team
           </Button>
         </Link> */}
-        <Link
-          href={"/admin/teams/manage-players/" + props._id}
-          className="w-full">
-          <Button variant="outline" className="w-full">
-            Manage Players
-          </Button>
-        </Link>
+        <div className="flex flex-row  gap-2">
+          <Link
+            href={"/admin/teams/manage-players/" + props._id}
+            className="w-full">
+            <Button variant="outline" className="w-full">
+              Manage Players
+            </Button>
+          </Link>
+
+          <Link
+            href={"/admin/teams/manage-officials/" + props._id}
+            className="w-full">
+            <Button variant="outline" className="w-full">
+              Manage Officials
+            </Button>
+          </Link>
+        </div>
       </CardFooter>
     </Card>
   );

@@ -7,7 +7,7 @@ import InputField from "@/components/admin/formElements/InputField";
 import { useState } from "react";
 import SuccessFailModal from "@/components/admin/SuccessFailModal";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { AddPlayerInputs } from "./page";
+import { AddOfficialInput } from "./page";
 
 interface Props {
   handleAddFn: (data: any) => Promise<boolean>;
@@ -21,12 +21,12 @@ interface Props {
   modalFailButtonLink: string;
 }
 
-function AddSinglePlayer({ handleAddFn, ...props }: Props) {
-  const methods = useForm<AddPlayerInputs>();
+function AddSingleOfficial({ handleAddFn, ...props }: Props) {
+  const methods = useForm<AddOfficialInput>();
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
   const [statusModal, setStatusModal] = useState<boolean | undefined>();
 
-  const onSubmit: SubmitHandler<AddPlayerInputs> = async (data) => {
+  const onSubmit: SubmitHandler<AddOfficialInput> = async (data) => {
     setUploadLoading(true);
     const response = await handleAddFn(data);
     setUploadLoading(false);
@@ -40,8 +40,8 @@ function AddSinglePlayer({ handleAddFn, ...props }: Props) {
   return (
     <>
       <AddIndividualEntryCard
-        title="Add A player"
-        description="Use this form to add an individual to the team">
+        title="Add a Official"
+        description="Use this form to add an individual official to the team">
         <FormProvider {...methods}>
           <form className="space-y-2" onSubmit={methods.handleSubmit(onSubmit)}>
             <InputField
@@ -49,21 +49,22 @@ function AddSinglePlayer({ handleAddFn, ...props }: Props) {
               isRequired={true}
               name="name"
               id="name"
-              placeholder="Enter Player's Name"
+              placeholder="Enter Official's Name"
+            />
+            <InputField
+              label="Position"
+              isRequired={true}
+              name="position"
+              id="position"
+              placeholder="Add Official's Position (eg. Coach, assistant coach etc)"
             />
             <InputField
               label="Registration Number"
-              isRequired={true}
+              isRequired={false}
               name="regId"
               id="regId"
-              placeholder="Enter Player's Registration Number"
+              placeholder="Enter Official's Registration Number"
             />
-            {/* <InputField
-              label="Position"
-              name="position"
-              id="position"
-              placeholder="Add Player's Playing Position (For eg, RM, CF, CB, DM etc)"
-            /> */}
             {/* <InputField
               label="Jersey Number"
               isRequired={true}
@@ -73,7 +74,7 @@ function AddSinglePlayer({ handleAddFn, ...props }: Props) {
             /> */}
             <Button type="submit">
               {uploadLoading == false ? (
-                "Add Player"
+                "Add Official"
               ) : (
                 <LoadingSpinner color="text-white" />
               )}
@@ -103,4 +104,4 @@ function AddSinglePlayer({ handleAddFn, ...props }: Props) {
     </>
   );
 }
-export default AddSinglePlayer;
+export default AddSingleOfficial;

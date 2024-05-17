@@ -6,8 +6,8 @@ import { createBulkNewPlayers, createNewPlayer } from "@/services/players";
 export interface AddPlayerInputs {
   name: string;
   regId: string;
-  position: string;
-  jerseyNumber: number;
+  position?: string;
+  jerseyNumber?: number;
 }
 
 export interface PlayerListUpload extends AddPlayerInputs {

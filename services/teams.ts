@@ -72,6 +72,18 @@ export async function addPlayerToTeam(teamId: string, playerId: string) {
   );
 }
 
+export async function addOfficialToTeam(teamId: string, playerId: string) {
+  await connectMongo();
+  const team = await Team.findOneAndUpdate(
+    {
+      _id: teamId,
+    },
+    {
+      $push: { officialList: playerId },
+    }
+  );
+}
+
 export async function getAllTeams() {
   await connectMongo();
   const team = await Team.find();
@@ -88,4 +100,10 @@ export async function getTeamPlayersFromId(id: string) {
   await connectMongo();
   const team = await Team.findById(id);
   return team.playerList;
+}
+
+export async function getTeamOfficialsFromId(id: string) {
+  await connectMongo();
+  const team = await Team.findById(id);
+  return team.officialList;
 }

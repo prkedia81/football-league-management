@@ -18,6 +18,7 @@ export interface Teams extends Document {
     number: number;
   }[];
   playerList: string[];
+  officialList: string[];
 }
 
 // Define the schema
@@ -77,6 +78,12 @@ const teamSchema = new Schema({
     },
   ],
   playerList: [
+    {
+      type: String,
+      default: [],
+    },
+  ],
+  officialList: [
     {
       type: String,
       default: [],

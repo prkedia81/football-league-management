@@ -38,8 +38,8 @@
 - [ ] Edit Player Details
 - [ ] Edit Venue Details
 - [ ] Edit Team Details
-- [ ] Add Officials options in team
 - [ ] Set up emailing
+- [x] Add Officials options in team
 - [x] Show the data that is happening in re-schedule (double confirmation)
 - [x] In Re-schedule match -> Add 1 button for confirm and 1 button for send email to club
 - [x] Not match Fixture - Match Sequence
@@ -54,6 +54,7 @@ Player List in complete match changes:
 
 - [ ] Player select combo box
 - [ ] In the players list, add the CRS ID along with it
+- [ ] Add officials in red card, yellow card area
 - [ ] Add upload team from Excel in the squad match with Registration ID
 - [ ] Change the way players are selected + CHANGE DB -> GOAL KEEPER, Captain In Player List
 
@@ -69,3 +70,7 @@ Player List in complete match changes:
 3. Player wise data:
 
 - Number of matches played, number of goals, yellow cards, red cards
+
+## Future Versions:
+
+- Type Safety in upload section -> excel upload, single

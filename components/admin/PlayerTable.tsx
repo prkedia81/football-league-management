@@ -9,21 +9,39 @@ import {
   TableRow,
 } from "../ui/table";
 import { Players } from "@/model/Player";
+import { Officials } from "@/model/Official";
 
 interface Props {
   caption: string;
-  data: Players[];
+  data: Players[] | Officials[];
+  isOfficials?: boolean;
 }
 
-function PlayerTable({ caption, data }: Props) {
-  const headings = [
-    "Sr Num",
-    "Name",
-    "Registration ID",
-    "Goals",
-    "Yellow Cards",
-    "Red Cards",
-  ];
+function PlayerTable({ caption, data, isOfficials = false }: Props) {
+  // type guard functions - Typesafety work around
+  function tsIsOfficial(row: Players | Officials): row is Officials {
+    return (row as Officials).position !== undefined;
+  }
+
+  function tsIsPlayer(row: Players | Officials): row is Players {
+    return (row as Players).goals !== undefined;
+  }
+
+  let headings: string[] = [];
+
+  if (!isOfficials) {
+    headings = [
+      "Sr Num",
+      "Name",
+      "Registration ID",
+      "Goals",
+      "Yellow Cards",
+      "Red Cards",
+    ];
+  } else {
+    headings = ["Sr Num", "Name", "Position", "Yellow Cards", "Red Cards"];
+  }
+
   return (
     <Table>
       <TableCaption>{caption}</TableCaption>
@@ -41,8 +59,12 @@ function PlayerTable({ caption, data }: Props) {
           <TableRow key={i}>
             <TableCell>{i + 1}</TableCell>
             <TableCell>{row.name}</TableCell>
-            <TableCell>{row.regId}</TableCell>
-            <TableCell>{row.goals.length}</TableCell>
+            {tsIsOfficial(row) ? (
+              <TableCell>{row.position}</TableCell>
+            ) : (
+              <TableCell>{row.regId}</TableCell>
+            )}
+            {tsIsPlayer(row) && <TableCell>{row.goals.length}</TableCell>}
             <TableCell>{row.yellowCards.length}</TableCell>
             <TableCell>{row.redCards.length}</TableCell>
           </TableRow>
