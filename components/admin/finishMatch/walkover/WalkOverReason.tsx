@@ -35,7 +35,7 @@ const WalkOverReason = () => {
         display="Others"
       />
       {errors.reason?.message && (
-        <p className="mt-2 text-sm text-red-400">{"Select one outcome"}</p>
+        <p className="mt-0.5 text-sm text-red-600">{"Select one outcome"}</p>
       )}
     </div>
   );

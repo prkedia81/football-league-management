@@ -1,8 +1,9 @@
-import { NormalMatchFormSchema } from "@/lib/finishMatchSchema";
 import { ReactElement, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm, useFormContext } from "react-hook-form";
 import { z } from "zod";
+import axios from "axios";
+import { Matches } from "@/model/Match";
 
 export interface Step {
   id: string;
@@ -12,27 +13,42 @@ export interface Step {
   component: ReactElement;
 }
 
-export function useMultistepForm(steps: Step[]) {
-  type Inputs = z.infer<typeof NormalMatchFormSchema>;
+interface Props {
+  steps: Step[];
+  zodSchema: any;
+  match: Matches;
+  submitApiEndpoint: string;
+}
+
+export function useMultistepForm({
+  steps,
+  zodSchema,
+  match,
+  submitApiEndpoint,
+}: Props) {
+  type Inputs = z.infer<typeof zodSchema>;
 
   const [previousStep, setPreviousStep] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const delta = currentStep - previousStep;
 
   const methods = useForm<Inputs>({
-    resolver: zodResolver(NormalMatchFormSchema),
+    resolver: zodResolver(zodSchema),
   });
 
-  const processForm: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+  const processForm: SubmitHandler<Inputs> = async (data) => {
+    const resp = await axios.post(submitApiEndpoint, {
+      match: match,
+      formData: data,
+    });
     methods.reset();
   };
 
-  type FieldName = keyof Inputs;
+  // type FieldName = keyof Inputs;
 
   const next = async () => {
     const fields = steps[currentStep].fields;
-    const output = await methods.trigger(fields as FieldName[], {
+    const output = await methods.trigger(fields, {
       shouldFocus: true,
     });
 

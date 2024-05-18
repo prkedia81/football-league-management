@@ -27,7 +27,7 @@ function WalkoverWinner({ team1Name, team2Name }: Props) {
         display={"Team 2 - " + team2Name}
       />
       {errors.winner?.message && (
-        <p className="mt-2 text-sm text-red-400">{"Select one outcome"}</p>
+        <p className="mt-0.5 text-sm text-red-600">{"Select one outcome"}</p>
       )}
     </div>
   );

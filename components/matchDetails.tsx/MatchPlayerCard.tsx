@@ -8,12 +8,14 @@ import {
 } from "../ui/card";
 import { getPlayerFromId } from "@/services/players";
 import LoadingState from "@/app/loading";
+import { getTeamFromId } from "@/services/teams";
 
 interface Props {
   players: string[];
   cardTitle: string;
   cardDescription: string;
   emptyStateText: string;
+  isTeam?: boolean;
 }
 
 async function MatchPlayerCard({
@@ -21,15 +23,25 @@ async function MatchPlayerCard({
   cardDescription,
   players,
   emptyStateText,
+  isTeam = false,
 }: Props) {
-  const playerData: { id: string; name: string }[] = [];
+  const playerData: { id: string; name: string; teamName?: string }[] = [];
   for (let i = 0; i < players.length; i++) {
     const playerId = players[i];
     const player = await getPlayerFromId(playerId);
-    playerData.push({
-      id: playerId,
-      name: player.name,
-    });
+    if (isTeam) {
+      const playerTeam = (await getTeamFromId(player.teamId)).name;
+      playerData.push({
+        id: playerId,
+        name: player.name,
+        teamName: playerTeam,
+      });
+    } else {
+      playerData.push({
+        id: playerId,
+        name: player.name,
+      });
+    }
   }
 
   return (
@@ -49,7 +61,10 @@ async function MatchPlayerCard({
                   <li
                     key={player.id}
                     className="relative bg-white py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                    {player.name}
+                    {player.name + " "}{" "}
+                    <span className="text-gray-600 text-sm">
+                      {isTeam ? ` - ${player.teamName}` : ""}
+                    </span>
                   </li>
                 );
               })}

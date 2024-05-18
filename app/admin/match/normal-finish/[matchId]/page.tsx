@@ -2,14 +2,9 @@ import Custom404 from "@/app/(home)/500";
 import LoadingState from "@/app/loading";
 import PageHeading from "@/components/admin/Heading";
 import NormalMatchForm from "@/components/admin/finishMatch/normalMatch/NormalMatchForm";
-import { CardHeader, CardContent, Card } from "@/components/ui/card";
-import Match, { Matches } from "@/model/Match";
-import { Players } from "@/model/Player";
-import { Teams } from "@/model/Team";
 import { getMatchFromId } from "@/services/matches";
 import { getAllPlayerDataFromTeamId } from "@/services/players";
 import { getTeamFromId } from "@/services/teams";
-import Link from "next/link";
 import { Suspense } from "react";
 
 interface Props {
@@ -17,25 +12,31 @@ interface Props {
 }
 
 export default async function page({ params: { matchId } }: Props) {
-  const match: Matches = JSON.parse(
-    JSON.stringify(await getMatchFromId(matchId))
-  );
+  let match = await getMatchFromId(matchId);
 
-  const team1Id = match?.team1?.teamId;
-  const team2Id = match?.team2?.teamId;
+  if (!match.team1 || !match.team2) {
+    return <Custom404 />;
+  }
 
-  if (team1Id == undefined || team2Id == undefined) return <Custom404 />;
+  // Extract team IDs
+  const {
+    team1: { teamId: team1Id },
+    team2: { teamId: team2Id },
+  } = match;
 
-  const team1: Teams = JSON.parse(JSON.stringify(await getTeamFromId(team1Id)));
-  const team2: Teams = JSON.parse(JSON.stringify(await getTeamFromId(team2Id)));
+  // Fetch teams and players in parallel using Promise.all
+  let [team1, team2, team1Players, team2Players] = await Promise.all([
+    getTeamFromId(team1Id || ""),
+    getTeamFromId(team2Id || ""),
+    getAllPlayerDataFromTeamId(team1Id || ""),
+    getAllPlayerDataFromTeamId(team2Id || ""),
+  ]);
 
-  const team1Players: Players[] = JSON.parse(
-    JSON.stringify(await getAllPlayerDataFromTeamId(team1Id))
-  );
-
-  const team2Players: Players[] = JSON.parse(
-    JSON.stringify(await getAllPlayerDataFromTeamId(team2Id))
-  );
+  match = JSON.parse(JSON.stringify(match));
+  team1 = JSON.parse(JSON.stringify(team1));
+  team2 = JSON.parse(JSON.stringify(team2));
+  team1Players = JSON.parse(JSON.stringify(team1Players));
+  team2Players = JSON.parse(JSON.stringify(team2Players));
 
   const props = {
     match: match,
@@ -47,9 +48,17 @@ export default async function page({ params: { matchId } }: Props) {
 
   return (
     <>
-      <PageHeading heading={team1.name + " v/s " + team2.name} />
+      <Suspense fallback={<LoadingState />}>
+        <PageHeading heading={team1.name + " v/s " + team2.name} />
+      </Suspense>
       <Suspense fallback={<LoadingState />}>
         <NormalMatchForm {...props} />
+        {/* <MultiFormSkeleton
+          zodSchema={NormalMatchFormSchema}
+          steps={steps}
+          submitApiEndpoint="/api/admin/normal-match"
+          match={match}
+        /> */}
       </Suspense>
     </>
   );

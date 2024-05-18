@@ -42,12 +42,14 @@ async function MatchDetailsPage({ match }: Props) {
         <div className="flex gap-4 w-full">
           <MatchPlayerCard
             players={match.yellowCards || []}
+            isTeam={true}
             cardTitle={"Yellow Cards"}
             cardDescription="List of players who received a yellow card in the match"
             emptyStateText="No yellow cards in the match"
           />
           <MatchPlayerCard
             players={match.team2.goalsScored || []}
+            isTeam={true}
             cardTitle={"Red Cards"}
             cardDescription="List of players who received a red card in the match"
             emptyStateText="No red cards in the match"

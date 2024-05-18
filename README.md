@@ -59,10 +59,10 @@
 Player List in complete match changes:
 
 - [x] Player select combo box
-- [ ] In the players list, add the CRS ID along with it
+- [x] In the players list, add the CRS ID along with it
 - [ ] Add officials in red card, yellow card area
-- [ ] Add upload team from Excel in the squad match with Registration ID
-- [ ] Change the way players are selected + CHANGE DB -> GOAL KEEPER, Captain In Player List
+- [x] Change the way players are selected -> GOAL KEEPER, Captain In Player List
+- [ ] Update DB
 
 ## Reports to be Generated:
 
@@ -80,3 +80,4 @@ Player List in complete match changes:
 ## Future Versions:
 
 - Type Safety in upload section -> excel upload, single
+- Add upload team from Excel in the squad match with Registration ID

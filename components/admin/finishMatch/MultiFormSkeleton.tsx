@@ -1,32 +1,30 @@
+"use client";
+
+import { Step, useMultistepForm } from "@/hooks/useMultistepForm";
+import { Matches } from "@/model/Match";
 import React from "react";
-import { FieldValues, FormProvider, UseFormReturn } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 
-export interface Steps {
-  id: string;
-  name: string;
-  subheading: string;
-  fields: string[];
-  component: JSX.Element;
-}
-[];
-
-interface Props<T> {
-  currentStep: number;
-  prev: () => void;
-  next: () => void;
-  processForm: () => void;
-  methods: UseFormReturn<T>;
-  steps: Steps[];
+interface Props {
+  steps: Step[];
+  zodSchema: any;
+  match: Matches;
+  submitApiEndpoint: string;
 }
 
-function MultiFormSkeleton<T>({
-  methods,
+function MultiFormSkeleton({
   steps,
-  currentStep,
-  prev,
-  next,
-  processForm,
-}: Props<T>) {
+  zodSchema,
+  match,
+  submitApiEndpoint,
+}: Props) {
+  const { methods, currentStep, prev, next, processForm } = useMultistepForm({
+    steps,
+    zodSchema,
+    match,
+    submitApiEndpoint,
+  });
+
   return (
     <section className="flex flex-col justify-between pt-2 pb-12">
       {/* steps */}
