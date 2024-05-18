@@ -10,6 +10,7 @@ interface Props {
   zodSchema: any;
   match: Matches;
   submitApiEndpoint: string;
+  formDefaultValues?: any;
 }
 
 function MultiFormSkeleton({
@@ -17,12 +18,14 @@ function MultiFormSkeleton({
   zodSchema,
   match,
   submitApiEndpoint,
+  formDefaultValues = {},
 }: Props) {
   const { methods, currentStep, prev, next, processForm } = useMultistepForm({
     steps,
     zodSchema,
     match,
     submitApiEndpoint,
+    formDefaultValues,
   });
 
   return (

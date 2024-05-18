@@ -9,6 +9,9 @@ export interface Matches extends Document {
     goalsScored?: string[];
     squad?: string[];
     playing11?: string[];
+    goalKeeper?: string[];
+    captain?: string[];
+    substitute?: string[];
     bench?: string[];
   };
   team2: {
@@ -18,6 +21,9 @@ export interface Matches extends Document {
     goalsScored?: string[];
     squad?: string[];
     playing11?: string[];
+    goalKeeper?: string[];
+    captain?: string[];
+    substitute?: string[];
     bench?: string[];
   };
   team1Score: number;
@@ -38,6 +44,10 @@ export interface Matches extends Document {
   remarks?: string;
   redCards?: string[];
   yellowCards?: string[];
+  penalty?: {
+    teamId: string;
+    number: number;
+  };
 }
 
 // Define the schema
@@ -49,15 +59,21 @@ const matchSchema = new Schema({
     goalsScored: [{ type: String }],
     squad: [{ type: String }],
     playing11: [{ type: String }],
+    goalKeeper: [{ type: String }],
+    captain: [{ type: String }],
+    substitute: [{ type: String }],
     bench: [{ type: String }],
   },
   team2: {
     teamCode: { type: String, required: true },
     teamId: String,
     teamName: String,
-    goalsScored: [{ type: String, default: [] }],
-    squad: [{ type: String, default: [] }],
+    goalsScored: [{ type: String }],
+    squad: [{ type: String }],
     playing11: [{ type: String }],
+    goalKeeper: [{ type: String }],
+    captain: [{ type: String }],
+    substitute: [{ type: String }],
     bench: [{ type: String }],
   },
   team1Score: {
@@ -96,6 +112,10 @@ const matchSchema = new Schema({
   remarks: String,
   redCards: [String],
   yellowCards: [String],
+  penalty: {
+    teamId: String,
+    number: Number,
+  },
 });
 
 // Create the model

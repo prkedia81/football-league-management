@@ -18,6 +18,7 @@ interface Props {
   zodSchema: any;
   match: Matches;
   submitApiEndpoint: string;
+  formDefaultValues: any;
 }
 
 export function useMultistepForm({
@@ -25,6 +26,7 @@ export function useMultistepForm({
   zodSchema,
   match,
   submitApiEndpoint,
+  formDefaultValues,
 }: Props) {
   type Inputs = z.infer<typeof zodSchema>;
 
@@ -34,6 +36,7 @@ export function useMultistepForm({
 
   const methods = useForm<Inputs>({
     resolver: zodResolver(zodSchema),
+    defaultValues: formDefaultValues,
   });
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
@@ -69,6 +72,8 @@ export function useMultistepForm({
       setCurrentStep((step) => step - 1);
     }
   };
+
+  console.log(methods.watch());
 
   return { methods, previousStep, currentStep, processForm, next, prev };
 }

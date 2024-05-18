@@ -15,9 +15,9 @@ export const NormalMatchFormSchema = z.object({
       invalid_type_error: "Select atleast 1 players as Goal Keeper",
     })
     .min(1, "Select atleast 1 players as Goal Keeper"),
-  team1Captain: z.boolean().or(z.array(z.string())),
-  team1Substitute: z.boolean().or(z.array(z.string())),
-  team1Reserve: z.boolean().or(z.array(z.string())),
+  team1Captain: z.optional(z.array(z.string())),
+  team1Substitute: z.array(z.string()),
+  team1Reserve: z.array(z.string()),
   // TODO: Change back to 11
   team2Starting11: z
     .array(z.string(), {
@@ -29,9 +29,9 @@ export const NormalMatchFormSchema = z.object({
       invalid_type_error: "Select atleast 1 players as Goal Keeper",
     })
     .min(1, "Select atleast 1 players as Goal Keeper"),
-  team2Captain: z.boolean().or(z.array(z.string())),
-  team2Substitute: z.boolean().or(z.array(z.string())),
-  team2Reserve: z.boolean().or(z.array(z.string())),
+  team2Captain: z.array(z.string()),
+  team2Substitute: z.array(z.string()),
+  team2Reserve: z.array(z.string()),
   goalsAgainstTeam1: z
     .string({
       invalid_type_error: "Enter the number of goals scored",

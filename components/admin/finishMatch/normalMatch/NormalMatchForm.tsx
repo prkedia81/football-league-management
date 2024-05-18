@@ -19,6 +19,18 @@ interface Props {
 }
 
 export default function NormalMatchForm({ team1, team2, ...props }: Props) {
+  const formDefaultValues = {
+    team1Starting11: [],
+    team1Gk: [],
+    team1Captain: [],
+    team1Substitute: [],
+    team1Reserve: [],
+    team2Gk: [],
+    team2Captain: [],
+    team2Substitute: [],
+    team2Reserve: [],
+  };
+
   const steps = [
     {
       id: "Step 1",
@@ -134,6 +146,7 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
         steps={steps}
         submitApiEndpoint="/api/admin/normal-match"
         match={props.match}
+        formDefaultValues={formDefaultValues}
       />
     </>
   );

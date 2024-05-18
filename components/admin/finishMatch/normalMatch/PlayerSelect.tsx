@@ -60,7 +60,7 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
                 </TableCell>
                 <TableCell className="border">
                   <input
-                    id={player._id}
+                    id={props.starting11Field + "." + player._id}
                     type="checkbox"
                     {...register(props.starting11Field)}
                     value={player._id}
@@ -69,7 +69,7 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
                 </TableCell>
                 <TableCell className="border">
                   <input
-                    id={player._id}
+                    id={props.substituteField + "." + player._id}
                     type="checkbox"
                     {...register(props.substituteField)}
                     value={player._id}
@@ -78,7 +78,7 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
                 </TableCell>
                 <TableCell className="border">
                   <input
-                    id={player._id}
+                    id={props.captainField + "." + player._id}
                     type="checkbox"
                     {...register(props.captainField)}
                     value={player._id}
@@ -87,7 +87,7 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
                 </TableCell>
                 <TableCell className="border">
                   <input
-                    id={player._id}
+                    id={props.gkField + "." + player._id}
                     type="checkbox"
                     {...register(props.gkField)}
                     value={player._id}
@@ -96,7 +96,7 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
                 </TableCell>
                 <TableCell className="border">
                   <input
-                    id={player._id}
+                    id={props.reserveField + "." + player._id}
                     type="checkbox"
                     {...register(props.reserveField)}
                     value={player._id}

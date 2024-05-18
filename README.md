@@ -44,6 +44,7 @@
 - [ ] Edit Venue Details
 - [ ] Edit Team Details
 - [ ] Set up emailing
+- [ ] Set up points count after match end
 - [x] Referee Report Upload - 1 Image or 1 PDF
 - [x] Add Officials options in team
 - [x] Show the data that is happening in re-schedule (double confirmation)
@@ -62,7 +63,7 @@ Player List in complete match changes:
 - [x] In the players list, add the CRS ID along with it
 - [ ] Add officials in red card, yellow card area
 - [x] Change the way players are selected -> GOAL KEEPER, Captain In Player List
-- [ ] Update DB
+- [x] Update DB
 
 ## Reports to be Generated:
 

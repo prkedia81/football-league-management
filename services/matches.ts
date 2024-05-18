@@ -1,13 +1,16 @@
 import { AddMatchInputs } from "@/app/admin/match/add-fixtures/page";
 import connectMongo from "./mongoConnect";
 import Match, { Matches } from "@/model/Match";
-import { NormalMatchInputs } from "@/components/admin/finishMatch/normalMatch/NormalMatchForm";
 import { formatMultiInputEntry } from "@/lib/utils";
 import Team from "@/model/Team";
 import Player from "@/model/Player";
 import { getVenueFromId } from "./venues";
 import Venue, { Venues } from "@/model/Venue";
-import { WalkoverMatchInputs } from "@/components/admin/finishMatch/walkover/WalkoverMultiForm";
+import { z } from "zod";
+import {
+  NormalMatchFormSchema,
+  WalkoverMatchSchema,
+} from "@/lib/finishMatchSchema";
 
 interface PlayerUpdate {
   playerId?: string;
@@ -26,6 +29,9 @@ interface PlayerUpdate {
     };
   };
 }
+
+type NormalMatchInputs = z.infer<typeof NormalMatchFormSchema>;
+type WalkoverMatchInputs = z.infer<typeof WalkoverMatchSchema>;
 
 function formatInputForMatchCreate(data: AddMatchInputs) {
   // {
@@ -192,6 +198,13 @@ export async function finishNormalMatch(
   data: NormalMatchInputs
 ) {
   try {
+    const team1Squad = data.team1Starting11.concat(
+      data.team1Substitute.concat(data.team1Reserve)
+    );
+    const team2Squad = data.team2Starting11.concat(
+      data.team2Substitute.concat(data.team2Reserve)
+    );
+
     // In Match DB
     // S1: Update Result (result)
     // S2: Add all referee details in an array
@@ -210,13 +223,19 @@ export async function finishNormalMatch(
     const updatedMatch = await Match.findByIdAndUpdate(
       match._id,
       {
-        "team1.squad": data.team1players,
+        "team1.squad": team1Squad,
         "team1.playing11": data.team1Starting11,
-        "team1.bench": data.team1Bench || [],
+        "team1.substitute": data.team1Substitute || [],
+        "team1.bench": data.team1Reserve || [],
+        "team1.goalKeeper": data.team1Gk || [],
+        "team1.captain": data.team1Captain || [],
         "team1.goalsScored": formatMultiInputEntry(data.scorerAgainstTeam2),
-        "team2.squad": data.team2players,
+        "team2.squad": team2Squad,
         "team2.playing11": data.team2Starting11,
-        "team2.bench": data.team2Bench || [],
+        "team2.substitute": data.team2Substitute || [],
+        "team2.bench": data.team2Reserve || [],
+        "team2.goalKeeper": data.team2Gk || [],
+        "team2.captain": data.team2Captain || [],
         "team2.goalsScored": formatMultiInputEntry(data.scorerAgainstTeam1),
         team1Score: data.goalsAgainstTeam2 || 0,
         team2Score: data.goalsAgainstTeam1 || 0,
@@ -304,7 +323,7 @@ export async function finishNormalMatch(
     // S1: Update all players who have goals
     // S2: Update all players who have yellow cards
     // S3: Update all players who have red cards
-    const allPlayers = data.team1players.concat(data.team2players);
+    const allPlayers = team1Squad.concat(team2Squad);
     const allPlayerUpdate: PlayerUpdate[] = [];
     allPlayers.forEach((player) => {
       const playerUpdate: PlayerUpdate = {

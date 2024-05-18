@@ -13,6 +13,8 @@ import {
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
 import { Button } from "../ui/button";
+import Image from "next/image";
+import Link from "next/link";
 
 const navigation = [
   { name: "Matches", href: "/admin", icon: HomeIcon, current: false },
@@ -78,11 +80,15 @@ export default function Sidebar({
                 </Transition.Child>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                   <div className="flex-shrink-0 flex items-center px-4">
-                    <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-900-text.svg"
-                      alt="Workflow"
-                    />
+                    <Link href="/admin">
+                      <Image
+                        width={100}
+                        height={100}
+                        className="h-16 w-16"
+                        src="/Logo.png"
+                        alt="CFL Logo"
+                      />
+                    </Link>
                   </div>
                   <nav aria-label="Sidebar" className="mt-5">
                     <div className="px-2 space-y-1">
@@ -127,13 +133,18 @@ export default function Sidebar({
           <div className="flex flex-col w-52">
             {/* Sidebar component, swap this element with another sidebar if you like */}
             <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-gray-50">
-              <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-                <div className="flex items-center flex-shrink-0 px-4">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-900-text.svg"
-                    alt="Workflow"
-                  />
+              <div className="flex-1 flex flex-col pt-5 pb-2 overflow-y-auto">
+                <div className="flex items-center flex-shrink-0 px-2">
+                  <Link href="/admin">
+                    <Image
+                      width={100}
+                      height={100}
+                      className="h-16 w-16"
+                      src="/Logo.png"
+                      alt="CFL Logo"
+                    />
+                  </Link>
+                  {/* <p className="font-extrabold">Calcutta Football League</p> */}
                 </div>
                 <nav className="mt-5 flex-1" aria-label="Sidebar">
                   <div className="px-2 space-y-1">
