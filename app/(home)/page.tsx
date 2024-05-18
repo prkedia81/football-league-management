@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/home/Navbar";
 import Footer from "@/components/home/Footer";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -31,7 +32,7 @@ export default function Home() {
                 <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:leading-none lg:mt-6 lg:text-5xl xl:text-6xl">
                   <span className="md:block">Callcutta Football League</span>{" "}
                   <span className="text-indigo-400 md:block">
-                    Calcutta's Own League
+                    {"Calcutta's Own League"}
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
@@ -45,21 +46,27 @@ export default function Home() {
                 <div className="mt-5 w-full sm:mx-auto sm:max-w-lg lg:ml-0">
                   <div className="flex flex-wrap items-start justify-between">
                     <div className="flex justify-center px-1">
-                      <img
+                      <Image
+                        width={200}
+                        height={200}
                         className="h-9 sm:h-10"
                         src="https://tailwindui.com/img/logos/tuple-logo-gray-400.svg"
                         alt="Tuple"
                       />
                     </div>
                     <div className="flex justify-center px-1">
-                      <img
+                      <Image
+                        width={200}
+                        height={200}
                         className="h-9 sm:h-10"
                         src="https://tailwindui.com/img/logos/workcation-logo-gray-400.svg"
                         alt="Workcation"
                       />
                     </div>
                     <div className="flex justify-center px-1">
-                      <img
+                      <Image
+                        width={200}
+                        height={200}
                         className="h-9 sm:h-10"
                         src="https://tailwindui.com/img/logos/statickit-logo-gray-400.svg"
                         alt="StaticKit"
@@ -74,7 +81,7 @@ export default function Home() {
                 <div className="px-4 py-8 sm:px-10">
                   <div>
                     <p className="text-sm font-medium text-gray-700">
-                      Today's Matches
+                      {"Today's Matches"}
                     </p>
                   </div>
                 </div>

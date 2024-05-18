@@ -73,7 +73,7 @@ export function useMultistepForm({
     }
   };
 
-  console.log(methods.watch());
+  // console.log(methods.watch());
 
   return { methods, previousStep, currentStep, processForm, next, prev };
 }

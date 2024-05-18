@@ -1,4 +1,4 @@
-import { WalkoverMatchInputs } from "@/components/admin/finishMatch/walkover/WalkoverMultiForm";
+import { WalkoverMatchInputs } from "@/lib/matchFormTypes";
 import { Matches } from "@/model/Match";
 import { finishWalkoverMatch } from "@/services/matches";
 import { NextRequest } from "next/server";

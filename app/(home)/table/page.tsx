@@ -22,20 +22,20 @@ interface LeagueTableProps {
   teams: TeamProps[];
 }
 
-export const getLeagueTable = cache(async () => {
-  const data = await leagueTable([]); // Assuming you pass an empty array or your actual data here
-  return data;
-});
+// export const getLeagueTable = cache(async () => {
+//   const data = await leagueTable([]); // Assuming you pass an empty array or your actual data here
+//   return data;
+// });
 
 const Table = async () => {
-  const teams = await getLeagueTable();
+  // const teams = await getLeagueTable();
 
   return (
     <>
       <div className="bg-gray-800 pt-4 sm:pt-10 lg:pt-12">
         <Navbar />
         <h1 className="text-3xl text-center tracking-tight font-extrabold text-white sm:mt-1 sm:leading-none lg:mt-2 lg:text-2xl xl:text-2xl">
-                  <span className="md:block">Matches</span>
+          <span className="md:block">Matches</span>
         </h1>
       </div>
       <div className="bg-gray-400">
@@ -99,7 +99,7 @@ const Table = async () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {teams.map((team, regId) => (
+                    {/* {teams.map((team, regId) => (
                       <tr key={team.regId}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           {team.name}
@@ -133,7 +133,7 @@ const Table = async () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"></td>
                       </tr>
-                    ))}
+                    ))} */}
                   </tbody>
                 </table>
               </div>

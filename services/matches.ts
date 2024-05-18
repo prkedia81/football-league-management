@@ -6,11 +6,7 @@ import Team from "@/model/Team";
 import Player from "@/model/Player";
 import { getVenueFromId } from "./venues";
 import Venue, { Venues } from "@/model/Venue";
-import { z } from "zod";
-import {
-  NormalMatchFormSchema,
-  WalkoverMatchSchema,
-} from "@/lib/finishMatchSchema";
+import { NormalMatchInputs, WalkoverMatchInputs } from "@/lib/matchFormTypes";
 
 interface PlayerUpdate {
   playerId?: string;
@@ -29,9 +25,6 @@ interface PlayerUpdate {
     };
   };
 }
-
-type NormalMatchInputs = z.infer<typeof NormalMatchFormSchema>;
-type WalkoverMatchInputs = z.infer<typeof WalkoverMatchSchema>;
 
 function formatInputForMatchCreate(data: AddMatchInputs) {
   // {

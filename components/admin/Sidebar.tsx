@@ -202,10 +202,12 @@ export default function Sidebar({
           <div className="lg:hidden">
             <div className="flex items-center justify-between bg-gray-50 border-b border-gray-200 px-4 py-1.5">
               <div>
-                <img
+                <Image
+                  width={100}
+                  height={100}
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                  alt="Workflow"
+                  src="/Logo.png"
+                  alt="CFL Logo"
                 />
               </div>
               <div>
