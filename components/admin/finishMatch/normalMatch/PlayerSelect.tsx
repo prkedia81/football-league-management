@@ -40,9 +40,10 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
   return (
     <>
       <div>
-        <Table className="border">
+        {/* <ScrollArea className="w-full h-[400px] border"> */}
+        <Table className="relative border w-full">
           <TableCaption>Select the player list</TableCaption>
-          <TableHeader>
+          <TableHeader className="sticky top-0 z-50 bg-white border">
             <TableRow>
               {headings.map((heading, i) => (
                 <TableHead key={i} className="w-[100px] text-center border">
@@ -52,11 +53,10 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
             </TableRow>
           </TableHeader>
           <TableBody className="w-full">
-            {/* <ScrollArea className="w-full h-[200px]"> */}
             {playerList.map((player, index) => (
               <TableRow key={index} className="text-center">
                 <TableCell className="text-left border">
-                  {player.name}
+                  {player.name + " - " + player.regId}
                 </TableCell>
                 <TableCell className="border">
                   <input
@@ -105,9 +105,9 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
                 </TableCell>
               </TableRow>
             ))}
-            {/* </ScrollArea> */}
           </TableBody>
         </Table>
+        {/* </ScrollArea> */}
 
         {errors[props.starting11Field]?.message && (
           <p className="mt-0.5 text-base text-red-600">

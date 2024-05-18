@@ -8,7 +8,6 @@
 4. Middleware error while checking if user true or not in NextAuth (mongo db)
 5. Faster loading in every page
 6. Match Fixtures, venues, teams data consistency on every match, venue or team update
-7. Scroll in Player Select Table
 
 ## Homepage:
 
