@@ -1,7 +1,7 @@
 import Official, { Officials } from "@/model/Official";
-import connectMongo from "./mongoConnect";
 import { AddOfficialInput } from "@/app/admin/teams/manage-officials/[teamId]/add-officials/page";
 import { addOfficialToTeam, getTeamOfficialsFromId } from "./teams";
+import connectMongo from "../lib/mongoConnect";
 
 export async function createBulkNewOfficials(data: any[], teamId: string) {
   // @ts-ignore

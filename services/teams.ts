@@ -1,5 +1,5 @@
 import Team, { Teams } from "@/model/Team";
-import connectMongo from "./mongoConnect";
+import connectMongo from "../lib/mongoConnect";
 import { AddTeamInput } from "@/app/admin/teams/add-teams/page";
 import { updateTeamAllMatchFixtures } from "./matches";
 

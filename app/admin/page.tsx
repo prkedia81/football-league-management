@@ -5,11 +5,14 @@ import { Matches } from "@/model/Match";
 import { getAllMatches } from "@/services/matches";
 import { Suspense } from "react";
 import LoadingState from "../loading";
+import { normalEndMatchEmail } from "@/services/emailService";
 
 async function page() {
   const matches = JSON.parse(
     JSON.stringify(await getAllMatches())
   ) as Matches[];
+
+  // const email = await normalEndMatchEmail("662a6d7f73084ddf9ca38ccc");
 
   return (
     <>

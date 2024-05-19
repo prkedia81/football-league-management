@@ -1,5 +1,5 @@
 import { AddMatchInputs } from "@/app/admin/match/add-fixtures/page";
-import connectMongo from "./mongoConnect";
+import connectMongo from "../lib/mongoConnect";
 import Match, { Matches } from "@/model/Match";
 import { formatMultiInputEntry } from "@/lib/utils";
 import Team from "@/model/Team";

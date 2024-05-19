@@ -1,5 +1,5 @@
 import User, { Users } from "@/model/User";
-import connectMongo from "./mongoConnect";
+import connectMongo from "../lib/mongoConnect";
 
 export async function getUserFromDb(email: string): Promise<Users> {
   await connectMongo();

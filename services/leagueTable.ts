@@ -1,5 +1,5 @@
 import Team, { Teams } from "@/model/Team";
-import connectMongo from "./mongoConnect";
+import connectMongo from "../lib/mongoConnect";
 import { club } from "@/utils/clubs";
 
 export async function leagueTable(data: any[]) {
@@ -25,7 +25,7 @@ export async function leagueTable(data: any[]) {
       };
     })
   );
-  
+
   // Function to get the league table
   async function getLeagueTable(): Promise<Teams[]> {
     const teams = await Team.find({});

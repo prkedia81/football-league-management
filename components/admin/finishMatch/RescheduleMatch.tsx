@@ -20,6 +20,7 @@ import { Venues } from "@/model/Venue";
 import ComboBoxField from "../formElements/ComboBoxField";
 import { ComboBox, ComboBoxElement } from "../ComboBox";
 import { dateFormat, timeFormat } from "@/lib/utils";
+import { rescheduleEmail } from "@/services/emailService";
 
 interface Props {
   match: Matches;
@@ -90,11 +91,8 @@ function RescheduleMatch({
 
   const sendRescheduleEmail = async () => {
     setEmailLoading(true);
-    if (!formData) return;
-    // const reschedule = await rescheduleFn(match._id, formData.time);
-    // if (reschedule) setSuccess(true);
-
     // TODO: Send Reschedule Email
+    const email = await rescheduleEmail(match._id);
     setEmailLoading(false);
     setEmailSuccess(true);
   };
@@ -130,16 +128,11 @@ function RescheduleMatch({
               />
               <TimePickerField isRequired={true} label="Time" name="time" />
               {schedulingError && (
-                <p className="text-red-500 text-sm my-4">
+                <p className="text-red-600 text-sm my-4">
                   There is a scheduling conflict in the venue at that time, pick
                   another time.
                 </p>
               )}
-              {/* {success && (
-                <p className="text-green-500 text-sm my-4">
-                  The match has been rescheduled!
-                </p>
-              )} */}
               <Button type="submit">
                 {loading == false ? (
                   "Re-schedule Match"

@@ -1,4 +1,4 @@
-import connectMongo from "./mongoConnect";
+import connectMongo from "../lib/mongoConnect";
 import Venue, { Venues } from "@/model/Venue";
 import { AddVenueInput } from "@/app/admin/venues/add-venues/page";
 import { getMatchFromId, updateVenueAllMatchFixtures } from "./matches";

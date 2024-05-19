@@ -1,4 +1,4 @@
-import connectMongo from "./mongoConnect";
+import connectMongo from "../lib/mongoConnect";
 import Player, { Players } from "@/model/Player";
 import { AddPlayerInputs } from "@/app/admin/teams/manage-players/[teamId]/add-players/page";
 import { addPlayerToTeam, getTeamFromId, getTeamPlayersFromId } from "./teams";

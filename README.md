@@ -32,9 +32,10 @@
      - Teams
      - Officials
 3. Send emails for the following:
-   - Every end match
-   - Every Re-schedule
-   - Every Match fixture
+   - [x] Every end match
+   - [ ] Every walkover match
+   - [x] Every Re-schedule
+   - [ ] Every Match fixture
 
 ## Changes Requested:
 
@@ -42,8 +43,8 @@
 - [ ] Edit Player Details
 - [ ] Edit Venue Details
 - [ ] Edit Team Details
-- [ ] Set up emailing
 - [ ] Set up points count after match end
+- [x] Set up emailing
 - [x] Referee Report Upload - 1 Image or 1 PDF
 - [x] Add Officials options in team
 - [x] Show the data that is happening in re-schedule (double confirmation)

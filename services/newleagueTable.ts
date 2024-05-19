@@ -1,5 +1,5 @@
 import Team from "@/model/Team";
-import connectMongo from "./mongoConnect";
+import connectMongo from "../lib/mongoConnect";
 
 // Define the structure of the Team document in MongoDB using an interface
 interface ITeam {
@@ -30,14 +30,17 @@ interface TeamModel extends ITeam {
 // Function to update or create team data in the database
 export async function leagueTable(data: ITeam[]): Promise<TeamModel[]> {
   await connectMongo();
-  
+
   // Update each team entry in the database
   const updates = data.map((teamData) => {
     const updateData = {
       ...teamData,
       goalDifference: teamData.goalsFor - teamData.goalsAgainst,
     };
-    return Team.findOneAndUpdate({ regId: teamData.regId }, updateData, { upsert: true, new: true });
+    return Team.findOneAndUpdate({ regId: teamData.regId }, updateData, {
+      upsert: true,
+      new: true,
+    });
   });
 
   // Wait for all updates to complete
@@ -53,8 +56,9 @@ async function calculateTeamPoints(teamId: string): Promise<number> {
   const team: TeamModel | null = await Team.findById(teamId);
   if (!team) return 0;
 
-  let points = (team.wins * 3) + team.draws;
-  const penaltyPoints = team.penalties?.reduce((acc, penalty) => acc + penalty.number, 0) || 0;
+  let points = team.wins * 3 + team.draws;
+  const penaltyPoints =
+    team.penalties?.reduce((acc, penalty) => acc + penalty.number, 0) || 0;
   points -= penaltyPoints;
 
   return points;
