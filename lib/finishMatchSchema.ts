@@ -1,4 +1,4 @@
-import { optional, z } from "zod";
+import { z } from "zod";
 
 export const NormalMatchFormSchema = z.object({
   winner: z
@@ -96,7 +96,15 @@ export const NormalMatchFormSchema = z.object({
 export const WalkoverMatchSchema = z.object({
   winner: z.string().min(1, "Select a winner"),
   reason: z.string().min(1, "Select a reason"),
-  deduction: z.string().min(1, "Choose the number of points to be deducted"),
+  deduction: z
+    .string()
+    .min(1, "Choose the number of points to be deducted")
+    .refine((value) => parseInt(value) >= 0, {
+      message: "Do not enter the - sign, only enter the number",
+    })
+    .refine((value) => parseInt(value) <= 12, {
+      message: "Do not enter the a value greater than 12",
+    }),
   referee: z.string().min(1, "Add the referee name"),
   assistantReferee1: z.string().min(1, "Add the assistant referee 1's name"),
   assistantReferee2: z.string().min(1, "Add the assistant referee 2's name"),
@@ -108,4 +116,16 @@ export const WalkoverMatchSchema = z.object({
     .min(1, { message: "Referee Report is required" })
     .url({ message: "Must be a valid url" }),
   remarks: z.string(),
+});
+
+export const PenaltyEditSchema = z.object({
+  deduction: z
+    .string()
+    .min(1, "Choose the number of points to be deducted")
+    .refine((value) => parseInt(value) >= 0, {
+      message: "Do not enter the - sign, only enter the number",
+    })
+    .refine((value) => parseInt(value) <= 12, {
+      message: "Do not enter the a value greater than 12",
+    }),
 });

@@ -118,3 +118,21 @@ export async function checkSchedulingConflict(
   }
   return flag;
 }
+
+export async function finishMatchInVenue(matchId: string, venueId: string) {
+  // In Venue DB
+  // S1: Remove match from Match Scheduled
+  // S2: Push the match to match played
+  try {
+    const venue = await getVenueFromId(venueId);
+    const matchesScheduled = venue.matchesScheduled.filter((m) => m != matchId);
+    const updatedVenue = await Venue.findByIdAndUpdate(venueId, {
+      matchesScheduled: matchesScheduled,
+      $push: { matchesPlayed: matchId },
+    });
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}

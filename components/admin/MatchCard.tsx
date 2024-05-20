@@ -51,7 +51,7 @@ export default function MatchCard({
     },
     {
       status: "unruly",
-      class: "bg-red-100 bg-opacity-50 border-2 border-red-500",
+      class: "bg-indigo-100 bg-opacity-50 border-2 border-indigo-500",
     },
     {
       status: "informed",
@@ -59,7 +59,7 @@ export default function MatchCard({
     },
     {
       status: "noShow",
-      class: "bg-red-100 bg-opacity-50 border-2 border-red-500",
+      class: "bg-indigo-100 bg-opacity-50 border-2 border-indigo-500",
     },
     {
       status: "othersWalkover",
@@ -73,6 +73,13 @@ export default function MatchCard({
 
   const cardClass =
     classStatus.filter((item) => item.status === status)[0]?.class || "";
+
+  const editPenaltyStatuses = [
+    "noShow",
+    "othersWalkover",
+    "informed",
+    "unruly",
+  ];
 
   return (
     <Card className={cn(cardClass, "w-full max-w-80")}>
@@ -118,6 +125,13 @@ export default function MatchCard({
         </CardFooter>
       ) : (
         <CardFooter className="p-4 flex justify-center gap-2">
+          {editPenaltyStatuses.includes(status) && (
+            <Link href={"/admin/match/edit-penalty/" + _id} className="w-full">
+              <Button variant="ghost" className="w-full">
+                Edit Penalty
+              </Button>
+            </Link>
+          )}
           <Link href={"/admin/match/match-details/" + _id} className="w-full">
             <Button className="w-full">View Match Details</Button>
           </Link>

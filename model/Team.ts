@@ -71,6 +71,10 @@ const teamSchema = new Schema({
       type: String,
     },
   ],
+  points: {
+    type: Number,
+    default: 0,
+  },
   penalty: [
     {
       matchId: String,

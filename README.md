@@ -33,17 +33,14 @@
      - Officials
 3. Send emails for the following:
    - [x] Every end match
-   - [ ] Every walkover match
+   - [x] Every walkover match
    - [x] Every Re-schedule
    - [ ] Every Match fixture
 
 ## Changes Requested:
 
-- [ ] Edit Match Details after complete in not normal match -> Option to edit penalty points
-- [ ] Edit Player Details
-- [ ] Edit Venue Details
-- [ ] Edit Team Details
-- [ ] Set up points count after match end
+- [x] Edit Match Details after complete in not normal match -> Option to edit penalty points
+- [x] Set up points count after match end
 - [x] Set up emailing
 - [x] Referee Report Upload - 1 Image or 1 PDF
 - [x] Add Officials options in team
@@ -82,3 +79,6 @@ Player List in complete match changes:
 
 - Type Safety in upload section -> excel upload, single
 - Add upload team from Excel in the squad match with Registration ID
+- Edit Player Details
+- Edit Venue Details
+- Edit Team Details

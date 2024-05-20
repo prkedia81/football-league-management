@@ -4,9 +4,9 @@ import Match, { Matches } from "@/model/Match";
 import { formatMultiInputEntry } from "@/lib/utils";
 import Team from "@/model/Team";
 import Player from "@/model/Player";
-import { getVenueFromId } from "./venues";
-import Venue, { Venues } from "@/model/Venue";
+import { finishMatchInVenue, getVenueFromId } from "./venues";
 import { NormalMatchInputs, WalkoverMatchInputs } from "@/lib/matchFormTypes";
+import { getTeamFromId } from "./teams";
 
 interface PlayerUpdate {
   playerId?: string;
@@ -252,6 +252,7 @@ export async function finishNormalMatch(
         $inc: {
           goalScoredFor: data.goalsAgainstTeam2,
           goalScoredAgainst: data.goalsAgainstTeam1,
+          points: 1, // Points for draw
         },
         $push: {
           matchesPlayed: match._id,
@@ -262,6 +263,7 @@ export async function finishNormalMatch(
         $inc: {
           goalScoredFor: data.goalsAgainstTeam1,
           goalScoredAgainst: data.goalsAgainstTeam2,
+          points: 1, // Points for draw
         },
         $push: {
           matchesPlayed: match._id,
@@ -273,6 +275,7 @@ export async function finishNormalMatch(
         $inc: {
           goalScoredFor: data.goalsAgainstTeam2,
           goalScoredAgainst: data.goalsAgainstTeam1,
+          points: 3, // Points for TEAM 1 winning
         },
         $push: {
           matchesPlayed: match._id,
@@ -304,6 +307,7 @@ export async function finishNormalMatch(
         $inc: {
           goalScoredFor: data.goalsAgainstTeam1,
           goalScoredAgainst: data.goalsAgainstTeam2,
+          points: 3, // Points for TEAM 2 winning
         },
         $push: {
           matchesPlayed: match._id,
@@ -368,17 +372,12 @@ export async function finishNormalMatch(
       );
     const players = await Promise.all(playersPromises);
 
-    // In Venue DB
-    // S1: Remove match from Match Scheduled
-    // S2: Push the match to match played
-    const venue = await getVenueFromId(match.venue.venueId);
-    const matchesScheduled = venue.matchesScheduled.filter(
-      (m) => m != match._id
+    // Update Venue
+    const venueResult = await finishMatchInVenue(
+      match._id,
+      match.venue.venueId
     );
-    const updatedVenue = await Venue.findByIdAndUpdate(match.venue.venueId, {
-      matchesScheduled: matchesScheduled,
-      $push: { matchesPlayed: match._id },
-    });
+    if (!venueResult) return false;
 
     return true;
   } catch (err) {
@@ -421,6 +420,10 @@ export async function finishWalkoverMatch(
       );
 
       const team1 = await Team.findByIdAndUpdate(match.team1.teamId, {
+        $inc: {
+          goalScoredFor: 3,
+          points: 3, // Points for TEAM 1 winning
+        },
         $push: {
           matchesPlayed: match._id,
           matchesWon: match._id,
@@ -430,6 +433,9 @@ export async function finishWalkoverMatch(
       const updateTeamPenalty = await Team.findByIdAndUpdate(
         match.team2.teamId,
         {
+          $inc: {
+            points: -1 * parseInt(data.deduction), // Penalty for TEAM 2 walkover
+          },
           $push: {
             penalty: {
               matchId: match._id,
@@ -455,7 +461,11 @@ export async function finishWalkoverMatch(
         { new: true }
       );
 
-      const team1 = await Team.findByIdAndUpdate(match.team2.teamId, {
+      const team2 = await Team.findByIdAndUpdate(match.team2.teamId, {
+        $inc: {
+          goalScoredFor: 3,
+          points: 3, // Points for TEAM 2 winning
+        },
         $push: {
           matchesPlayed: match._id,
           matchesWon: match._id,
@@ -465,6 +475,9 @@ export async function finishWalkoverMatch(
       const updateTeamPenalty = await Team.findByIdAndUpdate(
         match.team1.teamId,
         {
+          $inc: {
+            points: -1 * parseInt(data.deduction), // Penalty for TEAM 1 walkover
+          },
           $push: {
             penalty: {
               matchId: match._id,
@@ -477,17 +490,12 @@ export async function finishWalkoverMatch(
       );
     }
 
-    // In Venue DB
-    // S1: Remove match from Match Scheduled
-    // S2: Push the match to match played
-    const venue = await getVenueFromId(match.venue.venueId);
-    const matchesScheduled = venue.matchesScheduled.filter(
-      (m) => m != match._id
+    // Update Venue
+    const venueResult = await finishMatchInVenue(
+      match._id,
+      match.venue.venueId
     );
-    const updatedVenue = await Venue.findByIdAndUpdate(match.venue.venueId, {
-      matchesScheduled: matchesScheduled,
-      $push: { matchesPlayed: match._id },
-    });
+    if (!venueResult) return false;
 
     return true;
   } catch (err) {
@@ -526,14 +534,12 @@ export async function cancelMatch(id: string) {
       },
     });
 
-    const venue = await getVenueFromId(match.venue.venueId);
-    const matchesScheduled = venue.matchesScheduled.filter(
-      (m) => m != match._id
+    // Update Venue
+    const venueResult = await finishMatchInVenue(
+      match._id,
+      match.venue.venueId
     );
-    const updatedVenue = await Venue.findByIdAndUpdate(match.venue.venueId, {
-      matchesScheduled: matchesScheduled,
-      $push: { matchesPlayed: match._id },
-    });
+    if (!venueResult) return false;
 
     return true;
   } catch (err) {
@@ -552,6 +558,44 @@ export async function rescheduleMatch(id: string, time: number) {
       },
       { new: true }
     );
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+export async function editMatchPenalty(
+  matchId: string,
+  losingTeamId: string,
+  deduction: string
+) {
+  try {
+    await connectMongo();
+    const losingTeam = await getTeamFromId(losingTeamId);
+    const penalty = losingTeam.penalty;
+
+    // Should not happen if the link is not there -> Malpractice with the code
+    if (!penalty) return false;
+
+    let oldPenalty = 0;
+    for (let i = 0; i < penalty.length; i++) {
+      if (matchId === penalty[i].matchId) oldPenalty = penalty[i].number;
+    }
+
+    oldPenalty = Math.abs(oldPenalty); // Take Absolute value
+    const newPoints =
+      (losingTeam.points || 0) + oldPenalty - parseInt(deduction);
+
+    const updatedTeam = await Team.updateOne(
+      { _id: losingTeamId, "penalty.matchId": matchId }, // Finding the document and the specific item in the array
+      {
+        $set: { "penalty.$.number": -1 * parseInt(deduction) },
+        points: newPoints,
+      },
+      { new: true }
+    ).exec();
+
     return true;
   } catch (err) {
     console.log(err);
