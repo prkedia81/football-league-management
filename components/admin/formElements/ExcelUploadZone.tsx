@@ -22,7 +22,6 @@ function ExcelUploadZone<T>({ setHeadings, setData, text }: Props) {
         raw: false,
         dateNF: "yyyy-mm-dd",
       });
-      // TODO: Check Type Safety here
       const tableHeadings = sheetData.shift() as string[];
       setHeadings(tableHeadings);
       // const tableData: any[] = [];

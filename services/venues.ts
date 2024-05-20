@@ -91,6 +91,12 @@ export async function getVenueFromId(id: string): Promise<Venues> {
   return venue;
 }
 
+export async function getVenueFromRegId(id: string): Promise<Venues> {
+  await connectMongo();
+  const venue = await Venue.findOne({ regId: id });
+  return venue;
+}
+
 export async function checkSchedulingConflict(
   id: string,
   matchTime: number
@@ -117,6 +123,27 @@ export async function checkSchedulingConflict(
     }
   }
   return flag;
+}
+
+export async function changeMatchVenues(
+  oldVenueId: string,
+  newVenueId: string,
+  matchId: string
+) {
+  try {
+    const oldVenue = await Venue.findOneAndUpdate(
+      { regId: oldVenueId },
+      { $pull: { matchesScheduled: matchId } }
+    );
+    const newVenue = await Venue.findOneAndUpdate(
+      { regId: newVenueId },
+      { $push: { matchesScheduled: matchId } }
+    );
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
 }
 
 export async function finishMatchInVenue(matchId: string, venueId: string) {

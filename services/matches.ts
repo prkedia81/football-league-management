@@ -4,7 +4,12 @@ import Match, { Matches } from "@/model/Match";
 import { formatMultiInputEntry } from "@/lib/utils";
 import Team from "@/model/Team";
 import Player from "@/model/Player";
-import { finishMatchInVenue, getVenueFromId } from "./venues";
+import {
+  changeMatchVenues,
+  finishMatchInVenue,
+  getVenueFromId,
+  getVenueFromRegId,
+} from "./venues";
 import { NormalMatchInputs, WalkoverMatchInputs } from "@/lib/matchFormTypes";
 import { getTeamFromId } from "./teams";
 
@@ -548,16 +553,37 @@ export async function cancelMatch(id: string) {
   }
 }
 
-export async function rescheduleMatch(id: string, time: number) {
+export async function rescheduleMatch(
+  id: string,
+  venueId: string,
+  time: number
+) {
   try {
     await connectMongo();
-    const updatedMatch = await Match.findByIdAndUpdate(
-      id,
-      {
-        time: time,
-      },
-      { new: true }
-    );
+    const originalMatch = await getMatchFromId(id);
+    const originalVenueRegId = originalMatch.venue.venueRegId;
+    if (originalVenueRegId === venueId) {
+      const updatedMatch = await Match.findByIdAndUpdate(
+        id,
+        {
+          time: time,
+        },
+        { new: true }
+      );
+    } else {
+      const resp = await changeMatchVenues(originalVenueRegId, venueId, id);
+      const newVenue = await getVenueFromRegId(venueId);
+      const updatedMatch = await Match.findByIdAndUpdate(
+        id,
+        {
+          time: time,
+          "venue.venueRegId": newVenue.regId,
+          "venue.venueId": newVenue._id,
+          "venue.venueName": newVenue.name,
+        },
+        { new: true }
+      );
+    }
     return true;
   } catch (err) {
     console.log(err);

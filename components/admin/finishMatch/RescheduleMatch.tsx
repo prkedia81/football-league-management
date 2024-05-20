@@ -25,7 +25,11 @@ import { rescheduleEmail } from "@/services/emailService";
 interface Props {
   match: Matches;
   checkConflict: (time: number, venueId: string) => Promise<boolean>;
-  rescheduleFn: (matchId: string, time: number) => Promise<boolean>;
+  rescheduleFn: (
+    matchId: string,
+    venueId: string,
+    time: number
+  ) => Promise<boolean>;
   rescheduleEmailFn: (matchId: string) => Promise<void>;
   venues: Venues[];
 }
@@ -86,7 +90,11 @@ function RescheduleMatch({
   const confirmReschedule = async () => {
     setConfirmLoading(true);
     if (!formData) return;
-    const reschedule = await rescheduleFn(match._id, formData.time);
+    const reschedule = await rescheduleFn(
+      match._id,
+      methods.getValues("venueId"),
+      formData.time
+    );
     if (reschedule) setSuccess(true);
     setConfirmLoading(false);
   };
