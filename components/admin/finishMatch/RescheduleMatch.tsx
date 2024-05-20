@@ -26,6 +26,7 @@ interface Props {
   match: Matches;
   checkConflict: (time: number, venueId: string) => Promise<boolean>;
   rescheduleFn: (matchId: string, time: number) => Promise<boolean>;
+  rescheduleEmailFn: (matchId: string) => Promise<void>;
   venues: Venues[];
 }
 
@@ -40,6 +41,7 @@ function RescheduleMatch({
   checkConflict,
   rescheduleFn,
   venues,
+  rescheduleEmailFn,
 }: Props) {
   const displayItems: ComboBoxElement[] = venues.map((venue) => {
     return {
@@ -91,8 +93,7 @@ function RescheduleMatch({
 
   const sendRescheduleEmail = async () => {
     setEmailLoading(true);
-    // TODO: Send Reschedule Email
-    const email = await rescheduleEmail(match._id);
+    const email = await rescheduleEmailFn(match._id);
     setEmailLoading(false);
     setEmailSuccess(true);
   };

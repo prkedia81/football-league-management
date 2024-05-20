@@ -5,6 +5,7 @@ import RescheduleMatch, {
   RescheduleMatchInputs,
 } from "@/components/admin/finishMatch/RescheduleMatch";
 import { Matches } from "@/model/Match";
+import { rescheduleEmail } from "@/services/emailService";
 import { getMatchFromId, rescheduleMatch } from "@/services/matches";
 import { checkSchedulingConflict, getAllVenues } from "@/services/venues";
 import { Suspense } from "react";
@@ -38,6 +39,12 @@ export default async function page({ params: { matchId } }: Props) {
     return resp;
   }
 
+  async function rescheduleEmailFn(matchId: string) {
+    "use server";
+    const email = await rescheduleEmail(match._id);
+    // return email;
+  }
+
   return (
     <>
       <Suspense fallback={<LoadingState />}>
@@ -51,6 +58,7 @@ export default async function page({ params: { matchId } }: Props) {
           checkConflict={checkConflict}
           rescheduleFn={rescheduleFn}
           venues={allVenue}
+          rescheduleEmailFn={rescheduleEmailFn}
         />
       </Suspense>
     </>
