@@ -2,11 +2,9 @@
 
 ## Bugs
 
-1. Need to add Suspense Boundary
-2. ComboBox highlight selected
-3. Middleware error while checking if user true or not in NextAuth (mongo db)
-4. Faster loading in every page
-5. Match Fixtures, venues, teams data consistency on every match, venue or team update
+1. ComboBox highlight selected
+2. Middleware error while checking if user true or not in NextAuth (mongo db)
+3. Match Fixtures, venues, teams data consistency on every match, venue or team update
 
 ## Homepage:
 

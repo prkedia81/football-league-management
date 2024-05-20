@@ -3,6 +3,8 @@ import PageHeading from "@/components/admin/Heading";
 import VenueCard from "@/components/admin/VenueCard";
 import { Venues } from "@/model/Venue";
 import { getAllVenues } from "@/services/venues";
+import { Suspense } from "react";
+import LoadingState from "../loading";
 
 async function page() {
   // const teams = JSON.parse(JSON.stringify(await getAllTeams())) as Teams[];
@@ -11,23 +13,25 @@ async function page() {
 
   return (
     <>
-      <PageHeading
-        heading="League Venues"
-        isPrimaryButton={true}
-        primaryButtonLink="/admin/venues/add-venues"
-        primaryButtonText="Add Venues"
-      />
-      {venues.length === 0 && (
-        <EmptyState
-          text="No venues added, click here to add venues"
-          link={"/admin/venues/add-venues"}
+      <Suspense fallback={<LoadingState />}>
+        <PageHeading
+          heading="League Venues"
+          isPrimaryButton={true}
+          primaryButtonLink="/admin/venues/add-venues"
+          primaryButtonText="Add Venues"
         />
-      )}
-      <div className="mt-4 mx-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {venues.map((venue, i) => (
-          <VenueCard key={i} {...venue} />
-        ))}
-      </div>
+        {venues.length === 0 && (
+          <EmptyState
+            text="No venues added, click here to add venues"
+            link={"/admin/venues/add-venues"}
+          />
+        )}
+        <div className="mt-4 mx-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {venues.map((venue, i) => (
+            <VenueCard key={i} {...venue} />
+          ))}
+        </div>
+      </Suspense>
     </>
   );
 }
