@@ -16,6 +16,7 @@ import { getTeamFromId } from "./teams";
 interface PlayerUpdate {
   playerId?: string;
   updates: {
+    $push: { matchesPlayed: string };
     goals?: {
       matchId: string;
       number: number;
@@ -150,7 +151,7 @@ export async function createNewMatch(data: AddMatchInputs) {
 
 export async function getAllMatches() {
   await connectMongo();
-  const match = await Match.find();
+  const match = await Match.find().sort({ time: "ascending" });
   return match;
 }
 
@@ -158,6 +159,21 @@ export async function getMatchFromId(id: string): Promise<Matches> {
   await connectMongo();
   const match = await Match.findById(id);
   return match;
+}
+
+export async function getSingleTeamMatch(
+  teamId: string
+): Promise<Matches[] | null> {
+  try {
+    await connectMongo();
+    const match = await Match.find({
+      $or: [{ "team1.teamId": teamId }, { "team2.teamId": teamId }],
+    });
+    return match;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 }
 
 function formatRefereesForMatchFinish(
@@ -330,7 +346,9 @@ export async function finishNormalMatch(
     allPlayers.forEach((player) => {
       const playerUpdate: PlayerUpdate = {
         playerId: player,
-        updates: {},
+        updates: {
+          $push: { matchesPlayed: match._id },
+        },
       };
       // Goals
       const goals1 = data.scorerAgainstTeam2?.filter((p) => p.id === player);
@@ -599,6 +617,7 @@ export async function editMatchPenalty(
   try {
     await connectMongo();
     const losingTeam = await getTeamFromId(losingTeamId);
+    if (!losingTeam) return false;
     const penalty = losingTeam.penalty;
 
     // Should not happen if the link is not there -> Malpractice with the code

@@ -5,12 +5,6 @@
 1. Middleware error while checking if user true or not in NextAuth (mongo db)
 2. Match Fixtures, venues, teams data consistency on every match, venue or team update
 
-## Homepage:
-
-1. Today's Match
-2. Points Table -> Need to add points in the finish match schema
-3. All matches data
-
 ## Admin:
 
 1. Login/ Sign-up
@@ -60,16 +54,15 @@ Player List in complete match changes:
 
 ## Reports to be Generated:
 
-1. League Table - Standing
-2. Club Performance:
+- [x] League Table - Standing
+- [x] Club Performance:
 
-- Each Match result
-- All player list
-- Goals, Yellow Card, Red Card
+  - Each Match result
+  - All player list
+  - Goals, Yellow Card, Red Card
 
-3. Player wise data:
-
-- Number of matches played, number of goals, yellow cards, red cards
+- [x] Player wise data:
+  - Number of matches played, number of goals, yellow cards, red cards
 
 ## Future Versions:
 
@@ -78,3 +71,4 @@ Player List in complete match changes:
 - Edit Player Details
 - Edit Venue Details
 - Edit Team Details
+- Only show selected players in the drop down for match finish

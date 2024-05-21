@@ -84,16 +84,30 @@ export async function addOfficialToTeam(teamId: string, playerId: string) {
   );
 }
 
-export async function getAllTeams() {
+export async function getAllTeams(): Promise<Teams[]> {
   await connectMongo();
   const team = await Team.find();
   return team;
 }
 
-export async function getTeamFromId(id: string): Promise<Teams> {
+export async function getAllTeamsSorted(): Promise<Teams[]> {
   await connectMongo();
-  const team = await Team.findById(id);
+  const team = await Team.find().sort({
+    points: "descending",
+    goalScoredFor: "ascending",
+  });
   return team;
+}
+
+export async function getTeamFromId(id: string): Promise<Teams | null> {
+  try {
+    await connectMongo();
+    const team = await Team.findById(id);
+    return team;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 }
 
 export async function getTeamPlayersFromId(id: string) {

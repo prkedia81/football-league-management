@@ -5,14 +5,12 @@ import { Matches } from "@/model/Match";
 import { getAllMatches } from "@/services/matches";
 import { Suspense } from "react";
 import LoadingState from "../loading";
-import { normalEndMatchEmail } from "@/services/emailService";
+import DisplayMatchesComponent from "@/components/admin/DisplayMatchesComponent";
 
 async function page() {
   const matches = JSON.parse(
     JSON.stringify(await getAllMatches())
   ) as Matches[];
-
-  // const email = await normalEndMatchEmail("662a6d7f73084ddf9ca38ccc");
 
   return (
     <>
@@ -29,11 +27,12 @@ async function page() {
             link={"/admin/match/add-fixtures"}
           />
         )}
-        <div className="my-8 w-full mx-4 flex flex-row flex-wrap gap-8">
+        <DisplayMatchesComponent matches={matches} />
+        {/* <div className="my-8 w-full mx-4 flex flex-row flex-wrap gap-8">
           {matches.map((match, i) => (
             <MatchCard key={i} {...match} />
           ))}
-        </div>
+        </div> */}
       </Suspense>
     </>
   );

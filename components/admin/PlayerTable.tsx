@@ -34,6 +34,7 @@ function PlayerTable({ caption, data, isOfficials = false }: Props) {
       "Sr Num",
       "Name",
       "Registration ID",
+      "Matches Played",
       "Goals",
       "Yellow Cards",
       "Red Cards",
@@ -63,6 +64,9 @@ function PlayerTable({ caption, data, isOfficials = false }: Props) {
               <TableCell>{row.position}</TableCell>
             ) : (
               <TableCell>{row.regId}</TableCell>
+            )}
+            {tsIsPlayer(row) && (
+              <TableCell>{row.matchesPlayed.length}</TableCell>
             )}
             {tsIsPlayer(row) && <TableCell>{row.goals.length}</TableCell>}
             <TableCell>{row.yellowCards.length}</TableCell>

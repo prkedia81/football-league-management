@@ -28,12 +28,11 @@ export default function MatchSheet({
   if (venue.venueName) {
     venueName = venue.venueName;
   } else {
-    // TODO: Get venue name from venue service class
     venueName = venue.venueRegId;
   }
 
   return (
-      <div className="w-[95%] mx-3 my-3 py-1 rounded-lg border text-card-foreground shadow-sm bg-gray-300">
+    <div className="w-[95%] mx-3 my-3 py-1 rounded-lg border text-card-foreground shadow-sm bg-gray-300">
       <div className="flex flex-col items-start justify-between h-full p-4">
         {status === "completed" && (
           <div className="flex justify-between w-full">
@@ -41,7 +40,9 @@ export default function MatchSheet({
               {/* Add Logo Code Here */}
               <p className="font-semibold">{team1Name}</p>
             </div>
-            <p className="text-3xl font-semibold">{team1Score} - {team2Score}</p>
+            <p className="text-3xl font-semibold">
+              {team1Score} - {team2Score}
+            </p>
             {/* <p className="text-3xl font-semibold"></p> */}
             <div className="flex items-center space-x-2">
               <p className="font-semibold">{team2Name}</p>
@@ -61,7 +62,7 @@ export default function MatchSheet({
         )}
         <div className="grid gap-1.5">
           <p className="text-sm">
-            <span >Date: </span>
+            <span>Date: </span>
             {dateFormat(time)}
           </p>
           <p className="text-sm">

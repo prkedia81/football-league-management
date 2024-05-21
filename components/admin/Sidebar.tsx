@@ -9,6 +9,7 @@ import {
   Bars3Icon,
   UserGroupIcon,
   XMarkIcon,
+  ChartBarIcon,
 } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
@@ -20,6 +21,7 @@ const navigation = [
   { name: "Matches", href: "/admin", icon: HomeIcon, current: false },
   { name: "Teams", href: "/admin/teams", icon: UserGroupIcon, current: false },
   { name: "Venues", href: "/admin/venues", icon: CalendarIcon, current: false },
+  { name: "League", href: "/admin/league", icon: ChartBarIcon, current: false },
   // { name: "Official", href: "/admin/officials", icon: MapIcon, current: false },
 ];
 

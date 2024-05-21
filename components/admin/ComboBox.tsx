@@ -72,8 +72,10 @@ export function ComboBox({
             onChange={(event) => setQuery(event.target.value)}
             displayValue={(sel: ComboBoxElement) => {
               if (!sel) return "";
-              const i = items.filter((item) => item.value == sel.value);
-              return i[0].label;
+              const totalItems = items.concat(props.items2 || []);
+              const i = totalItems.filter((item) => item.value == sel.value);
+              if (i.length == 1) return i[0].label;
+              else return "";
             }}
             placeholder={placeholderText}
           />

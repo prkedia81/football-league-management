@@ -12,7 +12,7 @@ export interface Teams extends Document {
   matchesLost: string[];
   matchesDrawn: string[];
   matchesPlayed?: string[];
-  points?: number;
+  points: number;
   penalty?: {
     matchId: string;
     number: number;
@@ -69,6 +69,7 @@ const teamSchema = new Schema({
   matchesPlayed: [
     {
       type: String,
+      default: [],
     },
   ],
   points: {
