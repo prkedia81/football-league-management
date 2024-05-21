@@ -42,7 +42,7 @@ function EditPenalty({ match, winner }: Props) {
       setLosingTeam(match.team1.teamName || "");
       setLosingTeamId(match.team1.teamId || "");
     }
-  }, []);
+  }, [match, winner]);
 
   const processForm: SubmitHandler<PenaltyEditInputs> = async (data) => {
     setIsDialogOpen(true);

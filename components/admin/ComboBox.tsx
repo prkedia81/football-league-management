@@ -55,7 +55,7 @@ export function ComboBox({
       const i = items.filter((item) => item.value == value);
       setSelectedItem(i[0]);
     }
-  }, []);
+  }, [items, value]);
 
   const handleSelect = (data: ComboBoxElement | null) => {
     setSelectedItem(data);
