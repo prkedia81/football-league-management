@@ -4,6 +4,7 @@
 
 1. Middleware error while checking if user true or not in NextAuth (mongo db)
 2. Match Fixtures, venues, teams data consistency on every match, venue or team update
+3. REDIRECT ON SIGN UP AND SIGN IN not happening
 
 ## Admin:
 

@@ -9,6 +9,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },
+  pages: {
+    signIn: "/login",
+  },
   providers: [
     Credentials({
       credentials: {
@@ -24,7 +27,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           );
 
           // logic to verify if user exists
-          // user = await getUserFromDb(email);
+          user = await getUserFromDb(email);
+          console.log(user);
 
           if (!user) {
             throw new Error("User not found.");
