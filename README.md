@@ -2,9 +2,8 @@
 
 ## Bugs
 
-1. ComboBox highlight selected
-2. Middleware error while checking if user true or not in NextAuth (mongo db)
-3. Match Fixtures, venues, teams data consistency on every match, venue or team update
+1. Middleware error while checking if user true or not in NextAuth (mongo db)
+2. Match Fixtures, venues, teams data consistency on every match, venue or team update
 
 ## Homepage:
 

@@ -1,4 +1,6 @@
-import { useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/solid";
 import { Combobox } from "@headlessui/react";
 import { cn } from "@/lib/utils";
@@ -27,6 +29,9 @@ export function ComboBox({
   ...props
 }: Props) {
   const [query, setQuery] = useState("");
+  const [selectedItem, setSelectedItem] = useState<ComboBoxElement | null>(
+    null
+  );
 
   const filteredItems =
     query === ""
@@ -44,19 +49,30 @@ export function ComboBox({
         : props.items2.filter((item) =>
             item.label.toLowerCase().includes(query.toLowerCase())
           );
-  // TODO: Highlight Selected
+
+  useEffect(() => {
+    if (value != null) {
+      const i = items.filter((item) => item.value == value);
+      setSelectedItem(i[0]);
+    }
+  }, []);
+
+  const handleSelect = (data: ComboBoxElement | null) => {
+    setSelectedItem(data);
+    onChange(data?.value);
+  };
 
   return (
-    <Combobox as="div" value={value} onChange={(e) => onChange(e.value)}>
+    <Combobox as="div" value={selectedItem} onChange={handleSelect}>
       <div className="relative mt-1">
         <Combobox.Button className="w-full">
           <Combobox.Input
             autoComplete="off"
             className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
             onChange={(event) => setQuery(event.target.value)}
-            displayValue={(sel) => {
+            displayValue={(sel: ComboBoxElement) => {
               if (!sel) return "";
-              const i = items.filter((item) => item.value == sel);
+              const i = items.filter((item) => item.value == sel.value);
               return i[0].label;
             }}
             placeholder={placeholderText}
@@ -93,10 +109,7 @@ export function ComboBox({
                   <>
                     <div className="flex">
                       <span
-                        className={cn(
-                          "truncate",
-                          selected ? "font-semibold" : ""
-                        )}>
+                        className={cn("truncate", selected ? "font-bold" : "")}>
                         {item.label}
                       </span>
                       {item.sublabel && (
