@@ -19,12 +19,11 @@ export default auth((req) => {
 export const config = {
   // matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
   matcher: ["/login", "/admin", "/admin(/.*)", "/api/admin(/.*)"],
-  // runtime: "experimental-edge",
+  runtime: "nodejs", // for Edge API Routes only
   unstable_allowDynamic: [
-    "./node_modules/mongoose/dist/browser.umd.js",
-    "./lib/mongoConnect.ts",
-    "./services/users.ts",
-    "./auth.ts",
+    "/node_modules/mongoose/dist/browser.umd.js",
+    "/lib/mongoConnect.ts",
+    "/services/users.ts",
+    "/auth.ts",
   ],
-  // matcher: [],
 };
