@@ -93,7 +93,7 @@ async function signUp(formData: FormData) {
         email,
         password,
         redirect: true,
-        redirectTo: "/admin",
+        redirectTo: "/login",
       });
       console.log(resp);
     }
