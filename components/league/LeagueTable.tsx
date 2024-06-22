@@ -23,6 +23,7 @@ async function LeagueTable() {
     "GF",
     "GA",
     "GD",
+    "Penalty",
     "Points",
   ];
 
@@ -58,6 +59,7 @@ async function LeagueTable() {
             <TableCell className="p-2">{row.gf}</TableCell>
             <TableCell className="p-2">{row.ga}</TableCell>
             <TableCell className="p-2">{row.gd}</TableCell>
+            <TableCell className="p-2">{row.penalty}</TableCell>
             <TableCell className="p-2">{row.points}</TableCell>
           </TableRow>
         ))}

@@ -9,6 +9,7 @@ import {
 import { getPlayerFromId } from "@/services/players";
 import LoadingState from "@/app/loading";
 import { getTeamFromId } from "@/services/teams";
+import Custom404 from "@/app/admin/500";
 
 interface Props {
   players: string[];
@@ -30,11 +31,12 @@ async function MatchPlayerCard({
     const playerId = players[i];
     const player = await getPlayerFromId(playerId);
     if (isTeam) {
-      const playerTeam = (await getTeamFromId(player.teamId)).name;
+      const playerTeam = await getTeamFromId(player.teamId);
+      if (!playerTeam) return <Custom404 />;
       playerData.push({
         id: playerId,
         name: player.name,
-        teamName: playerTeam,
+        teamName: playerTeam.name,
       });
     } else {
       playerData.push({
@@ -60,7 +62,7 @@ async function MatchPlayerCard({
                 return (
                   <li
                     key={player.id}
-                    className="relative bg-white py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                    className="relative bg-white py-2 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                     {player.name + " "}{" "}
                     <span className="text-gray-600 text-sm">
                       {isTeam ? ` - ${player.teamName}` : ""}

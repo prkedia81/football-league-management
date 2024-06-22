@@ -31,15 +31,40 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
   const headings = [
     "Player Name",
     "Starting XI",
-    "Players Substitutes",
+    "Played as Substitute",
     "Captain",
     "Goal Keeper",
-    "In Reserve",
+    "In Reserve Bench",
   ];
 
   return (
     <>
       <div>
+        {errors[props.starting11Field]?.message && (
+          <p className="mt-0.5 text-base text-red-600">
+            {errors[props.starting11Field]?.message as string}
+          </p>
+        )}
+        {errors[props.gkField]?.message && (
+          <p className="mt-0.5 text-base text-red-600">
+            {errors[props.gkField]?.message as string}
+          </p>
+        )}
+        {errors[props.captainField]?.message && (
+          <p className="mt-0.5 text-base text-red-600">
+            {errors[props.captainField]?.message as string}
+          </p>
+        )}
+        {errors[props.substituteField]?.message && (
+          <p className="mt-0.5 text-base text-red-600">
+            {errors[props.substituteField]?.message as string}
+          </p>
+        )}
+        {errors[props.reserveField]?.message && (
+          <p className="mt-0.5 text-base text-red-600">
+            {errors[props.reserveField]?.message as string}
+          </p>
+        )}
         {/* <ScrollArea className="w-full h-[400px] border"> */}
         <Table className="relative border w-full">
           <TableCaption>Select the player list</TableCaption>
@@ -108,32 +133,6 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
           </TableBody>
         </Table>
         {/* </ScrollArea> */}
-
-        {errors[props.starting11Field]?.message && (
-          <p className="mt-0.5 text-base text-red-600">
-            {errors[props.starting11Field]?.message as string}
-          </p>
-        )}
-        {errors[props.gkField]?.message && (
-          <p className="mt-0.5 text-base text-red-600">
-            {errors[props.gkField]?.message as string}
-          </p>
-        )}
-        {errors[props.captainField]?.message && (
-          <p className="mt-0.5 text-base text-red-600">
-            {errors[props.captainField]?.message as string}
-          </p>
-        )}
-        {errors[props.substituteField]?.message && (
-          <p className="mt-0.5 text-base text-red-600">
-            {errors[props.substituteField]?.message as string}
-          </p>
-        )}
-        {errors[props.reserveField]?.message && (
-          <p className="mt-0.5 text-base text-red-600">
-            {errors[props.reserveField]?.message as string}
-          </p>
-        )}
       </div>
     </>
   );

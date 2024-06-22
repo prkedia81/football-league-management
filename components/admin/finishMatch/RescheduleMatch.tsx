@@ -72,11 +72,15 @@ function RescheduleMatch({
     matchTime.setMinutes(parseInt(min));
     const time = matchTime.getTime();
 
-    const resp = await checkConflict(time, match.venue.venueId);
+    const resp = await checkConflict(time, methods.getValues("venueId"));
 
-    if (resp) setSchedulingError(true);
-    setLoading(false);
-    setFormData({ venueId: data.venueId, time: time });
+    if (resp) {
+      setSchedulingError(true);
+      setLoading(false);
+    } else {
+      setLoading(false);
+      setFormData({ venueId: data.venueId, time: time });
+    }
 
     // if (!resp) {
     //   const reschedule = await rescheduleFn(match._id, time);
@@ -135,7 +139,11 @@ function RescheduleMatch({
                 name="date"
                 id="date"
               />
-              <TimePickerField isRequired={true} label="Time" name="time" />
+              <TimePickerField
+                isRequired={true}
+                label="Start Time"
+                name="time"
+              />
               {schedulingError && (
                 <p className="text-red-600 text-sm my-4">
                   There is a scheduling conflict in the venue at that time, pick

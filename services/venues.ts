@@ -85,10 +85,14 @@ export async function getAllVenues(): Promise<Venues[]> {
   return venue;
 }
 
-export async function getVenueFromId(id: string): Promise<Venues> {
-  await connectMongo();
-  const venue = await Venue.findById(id);
-  return venue;
+export async function getVenueFromId(id: string): Promise<Venues | null> {
+  try {
+    await connectMongo();
+    const venue = await Venue.findById(id);
+    return venue;
+  } catch (err) {
+    return null;
+  }
 }
 
 export async function getVenueFromRegId(id: string): Promise<Venues> {
@@ -101,7 +105,7 @@ export async function checkSchedulingConflict(
   id: string,
   matchTime: number
 ): Promise<boolean> {
-  const venue = await getVenueFromId(id);
+  const venue = await getVenueFromRegId(id);
   const scheduledMatch = venue.matchesScheduled;
   let flag = false;
   for (let i = 0; i < scheduledMatch.length; i++) {
@@ -152,6 +156,7 @@ export async function finishMatchInVenue(matchId: string, venueId: string) {
   // S2: Push the match to match played
   try {
     const venue = await getVenueFromId(venueId);
+    if (venue == null) return false;
     const matchesScheduled = venue.matchesScheduled.filter((m) => m != matchId);
     const updatedVenue = await Venue.findByIdAndUpdate(venueId, {
       matchesScheduled: matchesScheduled,
