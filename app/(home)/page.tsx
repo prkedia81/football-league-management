@@ -1,96 +1,43 @@
-import { Fragment } from "react";
+// "use client";
+import React from "react";
+import { SparklesCore } from "@/components/ui/sparkles";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import Navbar from "@/components/home/Navbar";
-import Footer from "@/components/home/Footer";
-import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="relative bg-gray-800 overflow-hidden">
-      <div
-        className="hidden sm:block sm:absolute sm:inset-0"
-        aria-hidden="true">
-        {/* SVG background pattern */}
-      </div>
-      <Navbar />
-      <main className="mt-16 sm:mt-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="lg:grid lg:grid-cols-12 lg:gap-8">
-            <div className="px-4 sm:px-6 sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left lg:flex lg:items-center">
-              <div>
-                <Link
-                  href="#"
-                  className="inline-flex items-center text-white bg-gray-900 rounded-full p-1 pr-2 sm:text-base lg:text-sm xl:text-base hover:text-gray-200">
-                  <span className="px-3 py-0.5 text-white text-xs font-semibold leading-5 uppercase tracking-wide bg-indigo-500 rounded-full">
-                    Season Starts Soon
-                  </span>
-                  <span className="ml-4 text-sm">
-                    May 1<sup>st</sup>- May30<sup>th</sup>,2024
-                  </span>
-                </Link>
-                <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:leading-none lg:mt-6 lg:text-5xl xl:text-6xl">
-                  <span className="md:block">Callcutta Football League</span>{" "}
-                  <span className="text-indigo-400 md:block">
-                    {"Calcutta's Own League"}
-                  </span>
-                </h1>
-                <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                  Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure
-                  qui lorem cupidatat commodo. Elit sunt amet fugiat veniam
-                  occaecat fugiat aliqua ad ad non deserunt sunt.
-                </p>
-                <p className="mt-8 text-sm text-white uppercase tracking-wide font-semibold sm:mt-10">
-                  Used by
-                </p>
-                <div className="mt-5 w-full sm:mx-auto sm:max-w-lg lg:ml-0">
-                  <div className="flex flex-wrap items-start justify-between">
-                    <div className="flex justify-center px-1">
-                      <Image
-                        width={200}
-                        height={200}
-                        className="h-9 sm:h-10"
-                        src="https://tailwindui.com/img/logos/tuple-logo-gray-400.svg"
-                        alt="Tuple"
-                      />
-                    </div>
-                    <div className="flex justify-center px-1">
-                      <Image
-                        width={200}
-                        height={200}
-                        className="h-9 sm:h-10"
-                        src="https://tailwindui.com/img/logos/workcation-logo-gray-400.svg"
-                        alt="Workcation"
-                      />
-                    </div>
-                    <div className="flex justify-center px-1">
-                      <Image
-                        width={200}
-                        height={200}
-                        className="h-9 sm:h-10"
-                        src="https://tailwindui.com/img/logos/statickit-logo-gray-400.svg"
-                        alt="StaticKit"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-16 sm:mt-24 lg:mt-0 lg:col-span-6">
-              <div className="bg-white sm:max-w-md sm:w-full sm:mx-auto sm:rounded-lg sm:overflow-hidden">
-                <div className="px-4 py-8 sm:px-10">
-                  <div>
-                    <p className="text-sm font-medium text-gray-700">
-                      {"Today's Matches"}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div className="w-full h-screen bg-black flex flex-col items-center justify-center overflow-hidden">
+      <div className="flex flex-col gap-6 items-center">
+        <h1 className="md:text-5xl text-3xl lg:text-7xl font-bold text-center text-white relative z-20">
+          Calcutta Football League
+        </h1>
+        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
+          <Link href="/admin">
+            <button className="w-40 h-10 rounded-xl bg-white text-black border border-black  text-sm">
+              Sign In to Admin
+            </button>
+          </Link>
         </div>
-      </main>
-      <Footer />
+      </div>
+      <div className="mt-4 w-[50rem] h-40 relative">
+        {/* Gradients */}
+        <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm" />
+        <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
+        <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
+        <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px w-1/4" />
+
+        {/* Core component */}
+        <SparklesCore
+          background="transparent"
+          minSize={0.4}
+          maxSize={1}
+          particleDensity={1200}
+          className="w-full h-full"
+          particleColor="#FFFFFF"
+        />
+
+        {/* Radial Gradient to prevent sharp edges */}
+        <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
+      </div>
     </div>
   );
 }
