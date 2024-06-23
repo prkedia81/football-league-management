@@ -17,7 +17,7 @@ export interface Officials extends Document {
 }
 
 // Define the schema
-const officalSchema = new Schema({
+const officialSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -48,6 +48,6 @@ const officalSchema = new Schema({
 
 // Create the model
 // const Player = model<Players>("Player", playerSchema);
-const Offical = models.Offical || model<Officials>("Offical", officalSchema);
+const Official = models.Official || model<Officials>("Official", officialSchema);
 
-export default Offical;
+export default Official;

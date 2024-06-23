@@ -6,11 +6,9 @@
 2. Match Fixtures, venues, teams data consistency on every match, venue or team update
 3. Users can log into admin page,but REDIRECT ON SIGN UP AND SIGN IN not happening
 
-4. Player in Reserve -> Match Played add in match played
-5. Re-schedule venue check -> 6 hours
-6. Not less than 7 and not More than 11 in starting XI NOT Allowed
-7. ONLY IN RESERVE BENCH (Not Played)
-8. In Walkover - Opponent team refused to play (instead of unruly behaviour)
+4. Re-schedule venue check -> 6 hours
+5. ONLY IN RESERVE BENCH (Not Played)
+6. In Walkover - Opponent team refused to play (instead of unruly behaviour)
 
 ## Admin:
 
@@ -50,7 +48,8 @@
 - [x] AR1, AR2 compulsory
 - [x] Add Combobox in every drop down
 - [x] OG in own goal -> Showed team name instead
-- [x] If player in Reserve then not in match played
+- [ ] If player in Reserve then also in match played
+- [ ] Not less than 7 and not More than 11 in starting XI NOT Allowed
 
 ---
 
