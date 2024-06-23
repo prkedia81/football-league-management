@@ -2,7 +2,7 @@
 
 ## Bugs
 
-1. Match Fixtures, venues, teams data consistency on every match, venue or team update
+N/A
 
 ## Feature List:
 
@@ -57,7 +57,8 @@
 - [x] Not less than 7 and not More than 11 in starting XI NOT Allowed
 - [x] Re-schedule venue check -> 6 hours
 - [x] In Walkover - Opponent team refused to play (instead of unruly behaviour)
-- [x] Check match display page!!
+- [x] Check match display page
+- [x] Match Fixtures, venues, teams data consistency on every match, venue or team update
 
 ---
 
