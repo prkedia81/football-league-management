@@ -7,6 +7,7 @@ import { getMatchFromId } from "./matches";
 import { getPlayerFromId } from "./players";
 import { Players } from "@/model/Player";
 
+// TODO: Edit from email, referee email etc
 const FROM_EMAIL = "prannaykedia4@gmail.com";
 const REFEREE_EMAIL = "timeforstudy5@gmail.com, prannaykedia1@gmail.com";
 
@@ -24,21 +25,22 @@ export async function rescheduleEmail(matchId: string) {
 
   const fromEmail = FROM_EMAIL;
   const toEmail =
-    team1.email +
+    team1?.email +
     ", " +
-    team2.email +
+    team2?.email +
     ", " +
-    venue.email +
+    venue?.email +
     ", " +
     REFEREE_EMAIL;
 
-  const sub = `Rescheduled! The match ${team1.name} v/s ${team2.name} has been rescheduled.`;
+  const sub = `Rescheduled! The match ${team1?.name} v/s ${team2?.name} has been rescheduled.`;
 
-  const body = `The match between ${team1.name} and ${
-    team2.name
+  // TODO: Edit Phone Number
+  const body = `The match between ${team1?.name} and ${
+    team2?.name
   } has been re-scheduled with the following date, time and location:\n\n
   Date: ${dateFormat(time)}, ${timeFormat(time)}\n
-  Location: ${venue.name}\n\n
+  Location: ${venue?.name}\n\n
   Please reply back to this email for any problems or call at +91 8584011454\n\n
 
   Regards\n
@@ -71,15 +73,16 @@ export async function normalEndMatchEmail(matchId: string) {
   }
 
   const fromEmail = FROM_EMAIL;
-  const toEmail = team1.email + ", " + team2.email + ", " + REFEREE_EMAIL;
+  const toEmail = team1?.email + ", " + team2?.email + ", " + REFEREE_EMAIL;
 
-  const sub = `The result for the match - ${team1.name} v/s ${team2.name}.`;
+  const sub = `The result for the match - ${team1?.name} v/s ${team2?.name}.`;
 
+  // TODO: Edit Phone number
   const body = `
     Dear Sir/ Ma'am,
-    Below is the result for match between ${team1.name} and ${team2.name}:\n\n
-    ${team1.name} Score: ${match.team1Score}\n
-    ${team2.name} Score: ${match.team2Score}\n
+    Below is the result for match between ${team1?.name} and ${team2?.name}:\n\n
+    ${team1?.name} Score: ${match.team1Score}\n
+    ${team2?.name} Score: ${match.team2Score}\n
     Yellow Cards:\n
     ${
       yellowCardPlayers.length !== 0
@@ -124,17 +127,18 @@ export async function walkoverEndMatchEmail(matchId: string) {
   }
 
   const fromEmail = FROM_EMAIL;
-  const toEmail = team1.email + ", " + team2.email + ", " + REFEREE_EMAIL;
+  const toEmail = team1?.email + ", " + team2?.email + ", " + REFEREE_EMAIL;
 
-  const sub = `Walkover! The result for the match - ${team1.name} v/s ${team2.name}.`;
+  const sub = `Walkover! The result for the match - ${team1?.name} v/s ${team2?.name}.`;
 
+  // TODO: Edit Phone Number
   const body = `
       Dear Sir/ Ma'am,
       The match ended in a walkover. Below is the result for match between ${
-        team1.name
-      } and ${team2.name}:\n\n
-      ${team1.name} Score: ${match.team1Score}\n
-      ${team2.name} Score: ${match.team2Score}\n
+        team1?.name
+      } and ${team2?.name}:\n\n
+      ${team1?.name} Score: ${match?.team1Score}\n
+      ${team2?.name} Score: ${match?.team2Score}\n
       Yellow Cards:\n
       ${
         yellowCardPlayers.length !== 0

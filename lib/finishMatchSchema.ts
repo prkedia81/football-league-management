@@ -4,12 +4,12 @@ export const NormalMatchFormSchema = z.object({
   winner: z
     .string({ invalid_type_error: "Select a winner" })
     .min(1, "Select a winner"),
-  // TODO: Change back to 11
   team1Starting11: z
     .array(z.string(), {
       invalid_type_error: "Select atleast 11 players in Playing XI",
     })
-    .min(4, "Atleast 11 Players are required in playing XI"),
+    .min(7, "Atleast 7 Players are required in playing XI")
+    .max(11, "Maximum 11 Players can be selected in playing XI"),
   team1Gk: z
     .array(z.string(), {
       invalid_type_error: "Select atleast 1 players as Goal Keeper",
@@ -18,12 +18,12 @@ export const NormalMatchFormSchema = z.object({
   team1Captain: z.optional(z.array(z.string())),
   team1Substitute: z.array(z.string()),
   team1Reserve: z.array(z.string()),
-  // TODO: Change back to 11
   team2Starting11: z
     .array(z.string(), {
       invalid_type_error: "Select atleast 11 players in Playing XI",
     })
-    .min(4, "Atleast 11 Players are required in playing XI"),
+    .min(7, "Atleast 7 Players are required in playing XI")
+    .max(11, "Maximum 11 Players can be selected in playing XI"),
   team2Gk: z
     .array(z.string(), {
       invalid_type_error: "Select atleast 1 players as Goal Keeper",

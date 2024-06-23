@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // TODO: Change in production
   // typescript: {
   //   ignoreBuildErrors: true,
   // },
