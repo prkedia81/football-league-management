@@ -2,13 +2,10 @@
 
 ## Bugs
 
-1. Middleware error while checking if user true or not in NextAuth (mongo db)
+1. Next Auth Fix
 2. Match Fixtures, venues, teams data consistency on every match, venue or team update
-3. Users can log into admin page,but REDIRECT ON SIGN UP AND SIGN IN not happening
 
-4. Re-schedule venue check -> 6 hours
-5. ONLY IN RESERVE BENCH (Not Played)
-6. In Walkover - Opponent team refused to play (instead of unruly behaviour)
+3. ONLY IN RESERVE BENCH (Not Played)
 
 ## Admin:
 
@@ -50,6 +47,9 @@
 - [x] OG in own goal -> Showed team name instead
 - [ ] If player in Reserve then also in match played
 - [ ] Not less than 7 and not More than 11 in starting XI NOT Allowed
+- [ ] Re-schedule venue check -> 6 hours
+- [ ] In Walkover - Opponent team refused to play (instead of unruly behaviour)
+- [ ] Check match display page!!
 
 ---
 

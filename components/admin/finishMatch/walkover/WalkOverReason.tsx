@@ -26,7 +26,7 @@ const WalkOverReason = () => {
         id="unruly"
         name="reason"
         value="unruly"
-        display="The Opponent Team Displayed an Unruly Behaviour on the pitch"
+        display="The Opponent team refused to play"
       />
       <RadioElement
         id="othersWalkover"

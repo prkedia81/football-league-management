@@ -119,9 +119,9 @@ export async function checkSchedulingConflict(
     // Convert milliseconds to minutes
     const diffInMinutes = diffInMilliseconds / (1000 * 60);
 
-    // confirm atleast a difference of 180 minutes = 3 hours
-    if (diffInMinutes <= 180) {
-      console.log("In here");
+    // confirm atleast a difference of 360 minutes = 6 hours
+    if (diffInMinutes <= 360) {
+      // console.log("In here");
       flag = true;
       break;
     }
