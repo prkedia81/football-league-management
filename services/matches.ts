@@ -79,7 +79,7 @@ export async function updateTeamAllMatchFixtures(
     "team1.teamCode": teamCode,
   });
 
-  matches1.forEach(async (match) => {
+  const promises1 = matches1.map(async (match) => {
     const updatedMatch = await Match.findOneAndUpdate(
       { _id: match._id },
       { "team1.teamName": teamName, "team1.teamId": teamId }
@@ -91,12 +91,14 @@ export async function updateTeamAllMatchFixtures(
     "team2.teamCode": teamCode,
   });
 
-  matches2.forEach(async (match) => {
+  const promises2 = matches2.map(async (match) => {
     const updatedMatch = await Match.findOneAndUpdate(
       { _id: match._id },
       { "team2.teamName": teamName, "team2.teamId": teamId }
     );
   });
+
+  await Promise.all([promises1, promises2]);
 }
 
 export async function updateVenueAllMatchFixtures(

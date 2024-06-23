@@ -7,13 +7,13 @@ export default function Custom404() {
     <div className="min-h-full pt-16 pb-12 flex flex-col bg-white">
       <main className="flex-grow flex flex-col justify-center max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex-shrink-0 flex justify-center">
-          <Link href="/" className="inline-flex">
+          <Link href="/admin" className="inline-flex">
             <span className="sr-only">Calcutta Football League</span>
             <Image
               width={100}
               height={100}
               className="h-32 w-32"
-              src="/logo.png"
+              src="/Logo.png"
               alt="Logo"
             />
           </Link>

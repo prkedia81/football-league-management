@@ -28,9 +28,12 @@ export async function createBulkNewTeam(data: any[]) {
     });
 
     // Check if the particular teamCode has any matches and add to that
-    teams.forEach((team) =>
-      updateTeamAllMatchFixtures(team.teamCode, team._id, team.name)
+    const promises = teams.map(
+      async (team) =>
+        await updateTeamAllMatchFixtures(team.teamCode, team._id, team.name)
     );
+
+    await Promise.all(promises);
 
     return true;
   } catch (err) {
