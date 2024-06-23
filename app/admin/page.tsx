@@ -6,14 +6,13 @@ import { getAllMatches } from "@/services/matches";
 import { Suspense } from "react";
 import LoadingState from "../loading";
 import DisplayMatchesComponent from "@/components/admin/DisplayMatchesComponent";
-import axios from "axios";
+
+export const dynamic = "force-dynamic";
 
 async function page() {
   const matches = JSON.parse(
     JSON.stringify(await getAllMatches())
   ) as Matches[];
-
-  console.log(matches);
 
   return (
     <>

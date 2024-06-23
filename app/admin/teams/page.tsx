@@ -6,6 +6,8 @@ import { getAllTeams } from "@/services/teams";
 import { Suspense } from "react";
 import LoadingState from "../loading";
 
+export const dynamic = "force-dynamic";
+
 async function page() {
   const teams = JSON.parse(JSON.stringify(await getAllTeams())) as Teams[];
 
