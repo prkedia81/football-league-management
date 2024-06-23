@@ -31,7 +31,7 @@ function MultiFormSkeleton({
   return (
     <section className="flex flex-col justify-between pt-2 pb-12">
       {/* steps */}
-      <nav className="px-4" aria-label="Progress">
+      <nav className="hidden md:block px-4" aria-label="Progress">
         <ol role="list" className="space-y-4 md:flex md:space-x-2 md:space-y-0">
           {steps.map((step, index) => (
             <li key={index} className="md:flex-1">
@@ -65,9 +65,9 @@ function MultiFormSkeleton({
       </nav>
 
       {/* Form */}
-      <div className="px-16">
+      <div className="px-4 pt-4 md:py-12 md:px-16">
         <FormProvider {...methods}>
-          <form className="py-12" onSubmit={methods.handleSubmit(processForm)}>
+          <form className="" onSubmit={methods.handleSubmit(processForm)}>
             <div className="flex flex-col gap-8">
               <div className="flex flex-col">
                 <h2 className="text-base font-semibold text-gray-900">
@@ -83,7 +83,7 @@ function MultiFormSkeleton({
         </FormProvider>
 
         {/* Navigation */}
-        <div className="mt-8 pt-5">
+        <div className="mt-6 md:mt-8 md:pt-5">
           <div className="flex justify-between">
             <button
               type="button"

@@ -46,7 +46,7 @@ const CancelMatchComponent = ({ matchId }: Props) => {
               another day. Choose whichever is applicable.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
+          <DialogFooter className="flex flex-row flex-wrap gap-2 justify-center md:justify-end">
             <Link href={"/admin/match/reschedule/" + matchId}>
               <Button variant="outline">Re-schedule Match</Button>
             </Link>

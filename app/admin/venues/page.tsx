@@ -28,7 +28,7 @@ async function page() {
             link={"/admin/venues/add-venues"}
           />
         )}
-        <div className="mt-4 mx-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-4 mx-4 justify-center md:justify-normal flex flex-row flex-wrap gap-4">
           {venues.map((venue, i) => (
             <VenueCard key={i} {...venue} />
           ))}

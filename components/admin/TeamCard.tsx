@@ -19,7 +19,7 @@ interface Props {
 
 function TeamCard(props: Props) {
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-sm">
       <CardHeader className="p-4">
         <CardTitle>{props.name}</CardTitle>
       </CardHeader>

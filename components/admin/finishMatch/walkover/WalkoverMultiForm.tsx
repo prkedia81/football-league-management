@@ -60,7 +60,7 @@ export default function WalkoverForm({ match, team1, team2 }: Props) {
     },
     {
       id: "Step 5",
-      name: "",
+      name: "Complete",
       subheading: "",
       fields: [],
       component: (

@@ -10,7 +10,7 @@ import { signUp } from "@/services/users";
 
 export default function Page() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
+    <div className="flex min-h-screen flex-col items-center justify-between p-4 my-24 md:mt-0 md:p-24">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Sign Up</CardTitle>

@@ -44,9 +44,9 @@ const DatePickerField = ({
             )}
           />
           {errors[props.name] && (
-            <span className="text-red-600 text-sm mt-0.5">
+            <span className="block text-red-600 text-sm mt-0.5">
               {(errors[props.name]?.message as string) ||
-                (errorMessage ?? "This field is required")}
+                (errorMessage ?? "The date is required")}
             </span>
           )}
         </div>

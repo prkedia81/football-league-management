@@ -45,7 +45,7 @@ const TimePickerField = ({
           />
           {errors[props.name] && (
             <span className="text-red-600 text-sm mt-0.5">
-              {errorMessage ?? "This field is required"}
+              {errorMessage ?? "The time is required"}
             </span>
           )}
         </div>

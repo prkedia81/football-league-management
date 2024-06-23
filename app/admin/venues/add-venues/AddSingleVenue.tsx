@@ -59,7 +59,7 @@ function AddSingleVenue({ handleAddFn, ...props }: Props) {
               placeholder="Enter Venue's Registration ID"
             />
             <InputField
-              label="Club Email"
+              label="Venue Email"
               type="email"
               isRequired={true}
               name="email"

@@ -23,7 +23,7 @@ function UploadTable<T>({ caption, headings, data, cellNames }: Props) {
       <TableHeader>
         <TableRow>
           {headings.map((heading, i) => (
-            <TableHead key={i} className="w-[100px]">
+            <TableHead key={i} className="min-w-[100px]">
               {heading}
             </TableHead>
           ))}

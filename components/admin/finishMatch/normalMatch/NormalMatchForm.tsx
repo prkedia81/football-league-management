@@ -133,7 +133,7 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
 
     {
       id: "Step 6",
-      name: "",
+      name: "Complete",
       subheading: "",
       fields: [],
       component: (

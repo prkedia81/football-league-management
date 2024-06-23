@@ -114,7 +114,7 @@ function RescheduleMatch({
 
   return (
     <>
-      <Card className="mx-4 my-4 w-[95%] border-0 shadow-none">
+      <Card className="mx-2 my-2 md:mx-4 md:my-4 md:w-[95%] border-0 shadow-none">
         <CardHeader>
           <CardTitle>Re-schedule Match</CardTitle>
           <CardDescription>
@@ -164,7 +164,7 @@ function RescheduleMatch({
         </CardContent>
       </Card>
       {formData && (
-        <Card className="mx-8 w-[95%] shadow-none">
+        <Card className="mx-2 md:mx-8 md:w-[95%] shadow-none">
           <CardHeader>
             <CardTitle>Confirm Re-schedule</CardTitle>
             <CardDescription>Confirm the re-schedule</CardDescription>
@@ -198,7 +198,7 @@ function RescheduleMatch({
               </p>
             )}
           </CardContent>
-          <CardFooter className="flex flex-row gap-3">
+          <CardFooter className="flex flex-row flex-wrap gap-3">
             <Button onClick={confirmReschedule}>
               {confirmLoading == false ? (
                 "Confirm Re-schedule"

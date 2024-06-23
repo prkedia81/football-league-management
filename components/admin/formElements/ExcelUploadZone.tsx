@@ -42,7 +42,7 @@ function ExcelUploadZone<T>({ setHeadings, setData, text }: Props) {
   };
 
   return (
-    <div className="mx-4 w-[95%] my-4 relative group border border-dashed border-gray-300 rounded-lg p-8 items-center justify-center flex text-base text-gray-800 dark:text-gray-400">
+    <div className="mx-4 md:mx-4 md:w-[95%] my-4 relative group border border-dashed border-gray-300 rounded-lg p-8 items-center justify-center flex text-base text-gray-800 dark:text-gray-400">
       {text}
       <input
         className="absolute inset-0 z-0 w-full h-full opacity-0 cursor-pointer"

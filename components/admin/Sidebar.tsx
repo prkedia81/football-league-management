@@ -203,15 +203,15 @@ export default function Sidebar({
         <div className="flex flex-col min-w-0 flex-1 overflow-hidden">
           <div className="lg:hidden">
             <div className="flex items-center justify-between bg-gray-50 border-b border-gray-200 px-4 py-1.5">
-              <div>
+              <Link href="/admin">
                 <Image
                   width={100}
                   height={100}
-                  className="h-8 w-auto"
+                  className="h-10 w-auto"
                   src="/Logo.png"
                   alt="CFL Logo"
                 />
-              </div>
+              </Link>
               <div>
                 <button
                   type="button"
