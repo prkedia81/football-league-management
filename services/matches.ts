@@ -212,13 +212,13 @@ export async function finishNormalMatch(
   data: NormalMatchInputs
 ) {
   try {
-    const team1Squad = data.team1Starting11.concat(data.team1Substitute);
-    const team2Squad = data.team2Starting11.concat(data.team2Substitute);
+    // const team1Squad = data.team1Starting11.concat(data.team1Substitute);
+    // const team2Squad = data.team2Starting11.concat(data.team2Substitute);
 
-    const team1FullSquad = data.team1Starting11.concat(
+    const team1Squad = data.team1Starting11.concat(
       data.team1Substitute.concat(data.team1Reserve)
     );
-    const team2FullSquad = data.team2Starting11.concat(
+    const team2Squad = data.team2Starting11.concat(
       data.team2Substitute.concat(data.team2Reserve)
     );
 
@@ -240,14 +240,14 @@ export async function finishNormalMatch(
     const updatedMatch = await Match.findByIdAndUpdate(
       match._id,
       {
-        "team1.squad": team1FullSquad,
+        "team1.squad": team1Squad,
         "team1.playing11": data.team1Starting11,
         "team1.substitute": data.team1Substitute || [],
         "team1.bench": data.team1Reserve || [],
         "team1.goalKeeper": data.team1Gk || [],
         "team1.captain": data.team1Captain || [],
         "team1.goalsScored": formatMultiInputEntry(data.scorerAgainstTeam2),
-        "team2.squad": team2FullSquad,
+        "team2.squad": team2Squad,
         "team2.playing11": data.team2Starting11,
         "team2.substitute": data.team2Substitute || [],
         "team2.bench": data.team2Reserve || [],

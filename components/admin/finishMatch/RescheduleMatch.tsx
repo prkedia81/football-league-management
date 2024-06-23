@@ -76,9 +76,11 @@ function RescheduleMatch({
 
     if (resp) {
       setSchedulingError(true);
+      setFormData(undefined);
       setLoading(false);
     } else {
       setLoading(false);
+      setSchedulingError(false);
       setFormData({ venueId: data.venueId, time: time });
     }
 
