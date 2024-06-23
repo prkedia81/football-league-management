@@ -2,6 +2,7 @@ import AddElement from "@/components/admin/AddElement";
 import AddSinglePlayer from "./AddSinglePlayer";
 import { getTeamFromId } from "@/services/teams";
 import { createBulkNewPlayers, createNewPlayer } from "@/services/players";
+import Custom404 from "@/app/admin/500";
 
 export interface AddPlayerInputs {
   name: string;
@@ -22,6 +23,7 @@ const page = async ({ params: { teamId } }: Props) => {
   const cellNames = ["srNum", "name", "regId", "position"];
 
   const team = await getTeamFromId(teamId);
+  if (team === null) return <Custom404 />;
 
   const handleUpload = async (data: PlayerListUpload[]) => {
     "use server";

@@ -1,5 +1,9 @@
 import User, { Users } from "@/model/User";
 import connectMongo from "../lib/mongoConnect";
+import bcrypt from "bcryptjs";
+import { signUpSchema } from "@/lib/signInSchema";
+import { ZodError } from "zod";
+import { signIn } from "@/auth";
 
 export async function getUserFromDb(email: string): Promise<Users> {
   await connectMongo();
@@ -13,7 +17,36 @@ export async function checkIfUserExists(email: string): Promise<boolean> {
   return false;
 }
 
-export async function signUpUser(
+export async function signUp(formData: FormData) {
+  try {
+    const SALT_ROUNDS = 10;
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
+    const { name, email, password } = await signUpSchema.parseAsync(data);
+    const hash = bcrypt.hashSync(password, SALT_ROUNDS);
+    const newUser = await addUserToDb(name, email, hash);
+    if (newUser) {
+      const resp = await signIn("credentials", {
+        email,
+        password,
+        redirect: true,
+        redirectTo: "/admin",
+      });
+      // console.log(resp);
+    }
+  } catch (error) {
+    console.log(error);
+    if (error instanceof ZodError) {
+      return null;
+    }
+    return null;
+  }
+}
+
+export async function addUserToDb(
   name: string,
   email: string,
   password: string

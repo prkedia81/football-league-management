@@ -38,6 +38,8 @@ export default async function page({ params: { matchId } }: Props) {
   team1Players = JSON.parse(JSON.stringify(team1Players));
   team2Players = JSON.parse(JSON.stringify(team2Players));
 
+  if (team1 === null || team2 === null) return <Custom404 />;
+
   const props = {
     match: match,
     team1Players: team1Players,

@@ -7,24 +7,28 @@ export interface Users extends Document {
   role: string;
 }
 
-const userSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
+const userSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: false,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      default: "admin",
+    },
   },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: String,
-    default: "admin",
-  },
-} as const);
+  { timestamps: true }
+);
 
 const User = models?.User || model<Users>("User", userSchema);
 export default User;

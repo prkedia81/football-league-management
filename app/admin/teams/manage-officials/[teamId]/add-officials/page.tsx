@@ -5,6 +5,7 @@ import {
   createBulkNewOfficials,
   createNewOfficial,
 } from "@/services/officials";
+import Custom404 from "@/app/admin/500";
 
 export interface AddOfficialInput {
   name: string;
@@ -24,6 +25,7 @@ const page = async ({ params: { teamId } }: Props) => {
   const cellNames = ["srNum", "name", "regId", "position"];
 
   const team = await getTeamFromId(teamId);
+  if (team === null) return <Custom404 />;
 
   const handleUpload = async (data: OfficialListUpload[]) => {
     "use server";

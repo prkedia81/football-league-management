@@ -1,3 +1,4 @@
+import Custom404 from "@/app/admin/500";
 import LoadingState from "@/app/loading";
 import EmptyState from "@/components/admin/EmptyState";
 import PageHeading from "@/components/admin/Heading";
@@ -13,6 +14,7 @@ interface Props {
 export default async function page({ params: { teamId } }: Props) {
   const team = await getTeamFromId(teamId);
   const officialsList = await getAllOfficialDataFromTeamId(teamId);
+  if (team === null) return <Custom404 />;
 
   return (
     <>
