@@ -8,6 +8,7 @@ import PointDeduction from "./PointDeduction";
 import WalkoverWinner from "./WalkoverWinner";
 import { Matches } from "@/model/Match";
 import MultiFormSkeleton from "../MultiFormSkeleton";
+import SuccessComponent from "../SuccessComponent";
 
 interface Props {
   match: Matches;
@@ -59,10 +60,15 @@ export default function WalkoverForm({ match, team1, team2 }: Props) {
     },
     {
       id: "Step 5",
-      name: "Complete",
+      name: "",
       subheading: "",
       fields: [],
-      component: <h1>Successfully Submitted!</h1>,
+      component: (
+        <SuccessComponent
+          successText="Match Finished"
+          successSubtext="Match finished in walkover."
+        />
+      ),
     },
   ];
 

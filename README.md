@@ -21,8 +21,9 @@
      - Teams
      - Officials
 3. Send emails for the following:
-   - [ ] Every end match
-   - [ ] Every walkover match
+   - [x] Every end match
+   - [x] Every walkover match
+   - [x] Every cancel match
    - [x] Every Re-schedule
    - [ ] Every Match fixture
 4. Show penalty in match details page
@@ -46,7 +47,7 @@
 - [x] Not less than 7 and not More than 11 in starting XI NOT Allowed
 - [x] Re-schedule venue check -> 6 hours
 - [x] In Walkover - Opponent team refused to play (instead of unruly behaviour)
-- [ ] Check match display page!!
+- [x] Check match display page!!
 
 ---
 

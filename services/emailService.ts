@@ -49,6 +49,42 @@ export async function rescheduleEmail(matchId: string) {
   const email = sendMail(fromEmail, toEmail, sub, body);
 }
 
+export async function cancelMatchEmail(matchId: string) {
+  const match = await getMatchFromId(matchId);
+  const team1Id = match.team1.teamId || "";
+  const team2Id = match.team2.teamId || "";
+  const time = match.time;
+  const venueData = match.venue;
+  const [team1, team2, venue] = await Promise.all([
+    getTeamFromId(team1Id),
+    getTeamFromId(team2Id),
+    getVenueFromId(venueData.venueId),
+  ]);
+
+  const fromEmail = FROM_EMAIL;
+  const toEmail =
+    team1?.email +
+    ", " +
+    team2?.email +
+    ", " +
+    venue?.email +
+    ", " +
+    REFEREE_EMAIL;
+
+  const sub = `Cancelled! The match ${team1?.name} v/s ${team2?.name} has been cancelled.`;
+
+  // TODO: Edit Phone Number
+  const body = `
+  Dear Sir/ Ma'am,
+  The match between ${team1?.name} and ${team2?.name} has been cancelled with no result.\n
+  Please reply back to this email for any problems or call at +91 8584011454.
+
+  Regards\n
+  IFA (WB)`;
+
+  const email = sendMail(fromEmail, toEmail, sub, body);
+}
+
 export async function normalEndMatchEmail(matchId: string) {
   const match = await getMatchFromId(matchId);
   const team1Id = match.team1.teamId || "";

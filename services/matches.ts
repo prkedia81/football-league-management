@@ -12,6 +12,11 @@ import {
 } from "./venues";
 import { NormalMatchInputs, WalkoverMatchInputs } from "@/lib/matchFormTypes";
 import { getTeamFromId } from "./teams";
+import {
+  cancelMatchEmail,
+  normalEndMatchEmail,
+  walkoverEndMatchEmail,
+} from "./emailService";
 
 interface PlayerUpdate {
   playerId?: string;
@@ -407,6 +412,8 @@ export async function finishNormalMatch(
     );
     if (!venueResult) return false;
 
+    const email = await normalEndMatchEmail(match._id);
+
     return true;
   } catch (err) {
     console.error(err);
@@ -525,6 +532,8 @@ export async function finishWalkoverMatch(
     );
     if (!venueResult) return false;
 
+    const email = await walkoverEndMatchEmail(match._id);
+
     return true;
   } catch (err) {
     console.error(err);
@@ -568,6 +577,8 @@ export async function cancelMatch(id: string) {
       match.venue.venueId
     );
     if (!venueResult) return false;
+
+    const email = await cancelMatchEmail(match._id);
 
     return true;
   } catch (err) {

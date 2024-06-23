@@ -9,6 +9,7 @@ import { Matches } from "@/model/Match";
 import RedYellowCards from "./RedYellowCards";
 import Officials from "./Officials";
 import MultiFormSkeleton from "../MultiFormSkeleton";
+import SuccessComponent from "../SuccessComponent";
 
 interface Props {
   team1: Teams;
@@ -132,10 +133,15 @@ export default function NormalMatchForm({ team1, team2, ...props }: Props) {
 
     {
       id: "Step 6",
-      name: "Complete",
+      name: "",
       subheading: "",
       fields: [],
-      component: <h1>Successfully Finished Match!</h1>,
+      component: (
+        <SuccessComponent
+          successText="Match Finished"
+          successSubtext="Match successsfully completed."
+        />
+      ),
     },
   ];
 
