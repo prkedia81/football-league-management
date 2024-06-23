@@ -9,9 +9,10 @@ import {
   finishMatchInVenue,
   getVenueFromId,
   getVenueFromRegId,
+  updateAllVenueInMatch,
 } from "./venues";
 import { NormalMatchInputs, WalkoverMatchInputs } from "@/lib/matchFormTypes";
-import { getTeamFromId } from "./teams";
+import { getTeamFromId, updateAllTeamInMatch } from "./teams";
 import {
   cancelMatchEmail,
   normalEndMatchEmail,
@@ -67,7 +68,7 @@ function formatInputForMatchCreate(data: AddMatchInputs) {
   };
 }
 
-export async function updateTeamAllMatchFixtures(
+export async function updateTeamInAllMatchFixtures(
   teamCode: string,
   teamId: string,
   teamName: string
@@ -101,7 +102,7 @@ export async function updateTeamAllMatchFixtures(
   await Promise.all([promises1, promises2]);
 }
 
-export async function updateVenueAllMatchFixtures(
+export async function updateVenueInAllMatchFixtures(
   venueId: string,
   venueRegId: string,
   venueName: string
@@ -145,6 +146,8 @@ export async function createBulkNewMatch(data: any[]) {
       return false;
     });
 
+  await Promise.all([updateAllVenueInMatch(), updateAllTeamInMatch()]);
+
   return match;
 }
 
@@ -153,6 +156,8 @@ export async function createNewMatch(data: AddMatchInputs) {
   const match = await Match.create(formatInputForMatchCreate(data))
     .then(() => true)
     .catch(() => false);
+
+  await Promise.all([updateAllVenueInMatch(), updateAllTeamInMatch()]);
   return match;
 }
 

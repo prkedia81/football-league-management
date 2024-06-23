@@ -1,7 +1,7 @@
 import connectMongo from "../lib/mongoConnect";
 import Venue, { Venues } from "@/model/Venue";
 import { AddVenueInput } from "@/app/admin/venues/add-venues/page";
-import { getMatchFromId, updateVenueAllMatchFixtures } from "./matches";
+import { getMatchFromId, updateVenueInAllMatchFixtures } from "./matches";
 import Match from "@/model/Match";
 
 export async function createBulkNewVenue(data: any[]) {
@@ -27,10 +27,11 @@ export async function createBulkNewVenue(data: any[]) {
     });
 
     // Check if the particular venueCode has any matches and add to that
-    venues.forEach((venue: Venues) => {
-      updateVenueAllMatchFixtures(venue._id, venue.regId || "", venue.name);
-      addAllMatchToVenue(venue.regId || "");
-    });
+    // venues.forEach((venue: Venues) => {
+    //   updateVenueInAllMatchFixtures(venue._id, venue.regId || "", venue.name);
+    //   addAllMatchToVenue(venue.regId || "");
+    // });
+    await updateAllVenueInMatch();
 
     return true;
   } catch (err) {
@@ -52,12 +53,30 @@ export async function createNewVenue(data: AddVenueInput) {
     });
 
     // Check if the particular venueCode has any matches and add to that
-    updateVenueAllMatchFixtures(venue._id, venue.regId, venue.name);
-    addAllMatchToVenue(venue.regId);
+    await updateAllVenueInMatch();
     return true;
   } catch (err) {
     return false;
   }
+}
+
+export async function updateAllVenueInMatch() {
+  const venues = await Venue.find();
+
+  const promisesMatchUpdate = venues.map(
+    async (venue) =>
+      await updateVenueInAllMatchFixtures(
+        venue._id,
+        venue.regId || "",
+        venue.name
+      )
+  );
+
+  const promisesVenueMatchUpdate = venues.map(
+    async (venue) => await addAllMatchToVenue(venue.regId || "")
+  );
+
+  await Promise.all([promisesMatchUpdate, promisesVenueMatchUpdate]);
 }
 
 export async function addAllMatchToVenue(venueRegId: string) {

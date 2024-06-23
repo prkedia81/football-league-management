@@ -1,7 +1,7 @@
 import Team, { Teams } from "@/model/Team";
 import connectMongo from "../lib/mongoConnect";
 import { AddTeamInput } from "@/app/admin/teams/add-teams/page";
-import { updateTeamAllMatchFixtures } from "./matches";
+import { updateTeamInAllMatchFixtures } from "./matches";
 
 export async function createBulkNewTeam(data: any[]) {
   // @ts-ignore
@@ -27,18 +27,22 @@ export async function createBulkNewTeam(data: any[]) {
       throw Error(err);
     });
 
-    // Check if the particular teamCode has any matches and add to that
-    const promises = teams.map(
-      async (team) =>
-        await updateTeamAllMatchFixtures(team.teamCode, team._id, team.name)
-    );
-
-    await Promise.all(promises);
-
+    await updateAllTeamInMatch();
     return true;
   } catch (err) {
     return false;
   }
+}
+
+export async function updateAllTeamInMatch() {
+  const teams = await Team.find();
+  // Check if the particular teamCode has any matches and add to that
+  const promises = teams.map(
+    async (team) =>
+      await updateTeamInAllMatchFixtures(team.teamCode, team._id, team.name)
+  );
+
+  await Promise.all(promises);
 }
 
 export async function createNewTeam(data: AddTeamInput) {
@@ -56,7 +60,7 @@ export async function createNewTeam(data: AddTeamInput) {
     });
 
     // Check if the particular teamCode has any matches and add to that
-    updateTeamAllMatchFixtures(data.teamCode, team._id, team.name);
+    updateAllTeamInMatch();
     return true;
   } catch (err) {
     return false;
