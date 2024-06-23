@@ -6,12 +6,15 @@ export default auth((req) => {
   const { pathname } = req.nextUrl;
 
   // Login API Routes
-  if (pathname.startsWith("/api/auth")) {
+  if (
+    pathname.startsWith("/api/auth") ||
+    pathname.startsWith("/api/uploadthing")
+  ) {
     return NextResponse.next();
   }
 
   // Not logged in API Routes
-  if (pathname.startsWith("/api/")) {
+  if (req.auth === null && pathname.startsWith("/api/")) {
     return Response.json({ message: "Unauthorised" }, { status: 401 });
   }
 

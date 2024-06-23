@@ -205,6 +205,8 @@ function formatRefereesForMatchFinish(
       name: data.refereeAssessor,
     },
   ];
+
+  return referees;
 }
 
 export async function finishNormalMatch(

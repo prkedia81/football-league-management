@@ -29,44 +29,46 @@ export default async function page({ params: { matchId } }: Props) {
           heading={match.team1.teamName + " v/s " + match.team2.teamName}
         />
       </Suspense>
-      <h1 className="mx-4 mt-4 scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-2xl">
-        Choose the outcome of the match:
-      </h1>
-      <div className="flex flex-col gap-4 justify-center w-full p-4">
-        <Link href={"/admin/match/normal-finish/" + matchId}>
-          <Card>
-            <CardHeader className="p-4">
-              <div className="flex items-center gap-2">
-                <div className="text-sm font-bold leading-none">
-                  Normal Match
+      <Suspense fallback={<LoadingState />}>
+        <h1 className="mx-4 mt-4 scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-2xl">
+          Choose the outcome of the match:
+        </h1>
+        <div className="flex flex-col gap-4 justify-center w-full p-4">
+          <Link href={"/admin/match/normal-finish/" + matchId}>
+            <Card>
+              <CardHeader className="p-4">
+                <div className="flex items-center gap-2">
+                  <div className="text-sm font-bold leading-none">
+                    Normal Match
+                  </div>
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent className="p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                The match ended without any hiccups
-              </p>
-            </CardContent>
-          </Card>
-        </Link>
-        <CancelMatchComponent matchId={matchId} />
-        <Link href={"/admin/match/walkover/" + matchId}>
-          <Card>
-            <CardHeader className="p-4">
-              <div className="flex items-center gap-2">
-                <div className="text-sm font-bold leading-none">
-                  Match Walk-over
+              </CardHeader>
+              <CardContent className="p-4">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  The match ended without any hiccups
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
+          <CancelMatchComponent matchId={matchId} />
+          <Link href={"/admin/match/walkover/" + matchId}>
+            <Card>
+              <CardHeader className="p-4">
+                <div className="flex items-center gap-2">
+                  <div className="text-sm font-bold leading-none">
+                    Match Walk-over
+                  </div>
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent className="p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                There was a walkover with one team winning
-              </p>
-            </CardContent>
-          </Card>
-        </Link>
-      </div>
+              </CardHeader>
+              <CardContent className="p-4">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  There was a walkover with one team winning
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
+      </Suspense>
     </>
   );
 }

@@ -44,7 +44,7 @@ function MatchOfficials({ officials }: Props) {
             <dl className="sm:divide-y sm:divide-gray-200">
               {officials.map((official) => {
                 return (
-                  official.displayName && (
+                  official.name && (
                     <div
                       key={official.pos}
                       className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

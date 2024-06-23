@@ -6,6 +6,7 @@ import { getAllMatches } from "@/services/matches";
 import { Suspense } from "react";
 import LoadingState from "../loading";
 import DisplayMatchesComponent from "@/components/admin/DisplayMatchesComponent";
+import axios from "axios";
 
 async function page() {
   const matches = JSON.parse(
@@ -21,6 +22,8 @@ async function page() {
           primaryButtonLink="/admin/match/add-fixtures"
           primaryButtonText="Add Fixtures"
         />
+      </Suspense>
+      <Suspense fallback={<LoadingState />}>
         {matches.length === 0 && (
           <EmptyState
             text="No matches added, click here to add fixtures"
