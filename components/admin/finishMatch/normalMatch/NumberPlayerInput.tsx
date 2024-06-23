@@ -31,6 +31,7 @@ function NumberPlayerInput({
     register,
     control,
     getValues,
+    reset,
     formState: { errors },
   } = useFormContext();
 
@@ -51,6 +52,15 @@ function NumberPlayerInput({
           type="button"
           onClick={() => {
             const numFields = parseInt(getValues(numberName), 10);
+            reset(
+              {
+                [inputName]: [], // Assuming inputName is the name of your field array
+              },
+              {
+                keepErrors: true, // Keep any validation errors
+                keepDirty: false, // Don't mark fields as dirty
+              }
+            );
             for (let i = 0; i < numFields; i++) {
               append({ id: "" });
             }
