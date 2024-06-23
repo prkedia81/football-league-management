@@ -13,6 +13,8 @@ async function page() {
     JSON.stringify(await getAllMatches())
   ) as Matches[];
 
+  console.log(matches);
+
   return (
     <>
       <Suspense fallback={<LoadingState />}>
