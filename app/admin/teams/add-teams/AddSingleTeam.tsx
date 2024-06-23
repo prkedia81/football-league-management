@@ -52,18 +52,18 @@ function AddSingleTeam({ handleAddFn, ...props }: Props) {
               placeholder="Enter Club's Name"
             />
             <InputField
-              label="Team Registration ID"
+              label="Team Registration ID (CRS ID)"
               isRequired={true}
               name="regId"
               id="regId"
               placeholder="Enter team 1's Registration ID"
             />
             <InputField
-              label="Team Tournament Code"
+              label="Team Lottery Code"
               isRequired={true}
               name="teamCode"
               id="teamCode"
-              placeholder="Add a short hand for the team (For eg, RMA or BAR or LIV etc)"
+              placeholder="Add the lottery code for the team (eg. A, B etc)"
             />
             <InputField
               label="Club Email"

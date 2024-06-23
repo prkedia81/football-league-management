@@ -4,10 +4,11 @@
 
 1. Match Fixtures, venues, teams data consistency on every match, venue or team update
 
-## Admin:
+## Feature List:
 
 1. Login/ Sign-up
 2. End to End Testing
+
    - Single Upload
      - Match
      - Venue
@@ -20,6 +21,15 @@
      - Player
      - Teams
      - Officials
+   - Matches:
+     - Re-schedule Conflict
+     - Re-schedule Success + Email
+     - Match Cancelled
+     - Match Walkover
+     - Match Walkover Edit Penalty
+     - Match Normal Finish with Red Cards, Yellow Cards, Goals etc
+     - Match Details Page
+
 3. Send emails for the following:
    - [x] Every end match
    - [x] Every walkover match
@@ -80,3 +90,4 @@ Player List in complete match changes:
 - Edit Venue Details
 - Edit Team Details
 - Only show selected players in the drop down for match finish
+- New Users from Logged in Users
