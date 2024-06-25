@@ -1,8 +1,11 @@
 # Feature List & Bugs:
 
-## Bugs
+## Updates Required
 
-N/A
+1. Add players unique replacement
+2. Add multi league management
+3. Add forgot password
+4. Add front-end league data
 
 ## Feature List:
 

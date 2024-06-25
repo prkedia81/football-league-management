@@ -30,6 +30,27 @@ export function timeFormat(epoch: number) {
   });
 }
 
+export function formatNonDateString(dateString: string): Date {
+  // Split the string into [day, month, year]
+  const parts = dateString.split(".");
+
+  // Convert the day and month to integers
+  const day = parseInt(parts[0], 10);
+  let month = parseInt(parts[1], 10);
+  const year = parseInt(parts[2]);
+
+  // Adjust the month to be zero-indexed
+  month -= 1;
+
+  // Create the Date object
+  const date = new Date(year, month, day);
+  return date;
+}
+
+export function isValidDateFormat(dateString: string) {
+  return !isNaN(Date.parse(dateString));
+}
+
 export function formatMultiInputEntry(data: MultiInputData[] | undefined) {
   if (!data) return [];
 

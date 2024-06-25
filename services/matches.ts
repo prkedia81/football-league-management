@@ -1,7 +1,11 @@
 import { AddMatchInputs } from "@/app/admin/match/add-fixtures/page";
 import connectMongo from "../lib/mongoConnect";
 import Match, { Matches } from "@/model/Match";
-import { formatMultiInputEntry } from "@/lib/utils";
+import {
+  formatMultiInputEntry,
+  formatNonDateString,
+  isValidDateFormat,
+} from "@/lib/utils";
 import Team from "@/model/Team";
 import Player from "@/model/Player";
 import {
@@ -46,8 +50,11 @@ function formatInputForMatchCreate(data: AddMatchInputs) {
   //     time: '00:00',
   //     location: 'asd'
   //   }
+  const date = data.date.trim();
 
-  const time = new Date(data.date);
+  const time = isValidDateFormat(date)
+    ? new Date(date)
+    : formatNonDateString(date);
   const [hour, min] = data.time.split(":");
   time.setHours(parseInt(hour));
   time.setMinutes(parseInt(min));
