@@ -24,7 +24,7 @@ function ExcelUploadZone<T>({ setHeadings, setData, text }: Props) {
       });
       const tableHeadings = sheetData.shift() as string[];
       sheetData = sheetData.filter((row) => row.length > 1);
-      sheetData = sheetData.filter((row) => row.length <= tableHeadings.length);
+      sheetData = sheetData.filter((row) => row[0] !== undefined);
       setHeadings(tableHeadings);
       // const tableData: any[] = [];
       // sheetData.forEach((row) => {
