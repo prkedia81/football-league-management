@@ -51,6 +51,19 @@ export function isValidDateFormat(dateString: string) {
   return !isNaN(Date.parse(dateString));
 }
 
+export function canParseToInt(value: string) {
+  try {
+    // Attempt to parse the value into an integer
+    const intValue = parseInt(value);
+
+    // Check if the parsed value is NaN
+    return !isNaN(intValue);
+  } catch (error) {
+    // If an error occurs during parsing, return false
+    return false;
+  }
+}
+
 export function formatMultiInputEntry(data: MultiInputData[] | undefined) {
   if (!data) return [];
 

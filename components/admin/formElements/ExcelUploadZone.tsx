@@ -17,12 +17,14 @@ function ExcelUploadZone<T>({ setHeadings, setData, text }: Props) {
       const workbook = XLSX.read(bstr, { type: "binary" });
       const worksheetName = workbook.SheetNames[0];
       const ws = workbook.Sheets[worksheetName];
-      const sheetData = XLSX.utils.sheet_to_json(ws, {
+      let sheetData: string[][] = XLSX.utils.sheet_to_json(ws, {
         header: 1,
         raw: false,
         dateNF: "yyyy-mm-dd",
       });
       const tableHeadings = sheetData.shift() as string[];
+      sheetData = sheetData.filter((row) => row.length > 1);
+      sheetData = sheetData.filter((row) => row.length <= tableHeadings.length);
       setHeadings(tableHeadings);
       // const tableData: any[] = [];
       // sheetData.forEach((row) => {

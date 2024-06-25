@@ -2,6 +2,7 @@ import { AddMatchInputs } from "@/app/admin/match/add-fixtures/page";
 import connectMongo from "../lib/mongoConnect";
 import Match, { Matches } from "@/model/Match";
 import {
+  canParseToInt,
   formatMultiInputEntry,
   formatNonDateString,
   isValidDateFormat,
@@ -56,8 +57,8 @@ function formatInputForMatchCreate(data: AddMatchInputs) {
     ? new Date(date)
     : formatNonDateString(date);
   const [hour, min] = data.time.split(":");
-  time.setHours(parseInt(hour));
-  time.setMinutes(parseInt(min));
+  time.setHours(canParseToInt(hour) ? parseInt(hour) : 12);
+  time.setMinutes(canParseToInt(min) ? parseInt(min) : 0);
 
   return {
     team1: {
