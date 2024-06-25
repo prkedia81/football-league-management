@@ -21,19 +21,23 @@ export async function createBulkNewVenue(data: any[]) {
   await connectMongo();
   try {
     // @ts-ignore-ignore
-    const venues = await Venue.create(dbEntries).catch((err) => {
-      console.log(err);
-      throw Error(err);
-    });
+    const venues = await Venue.create(dbEntries)
+      .then(() => console.log("Uploaded Venues"))
+      .catch((err) => {
+        console.log(err);
+        throw Error(err);
+      });
 
     // Check if the particular venueCode has any matches and add to that
     // venues.forEach((venue: Venues) => {
     //   updateVenueInAllMatchFixtures(venue._id, venue.regId || "", venue.name);
     //   addAllMatchToVenue(venue.regId || "");
     // });
-    await updateAllVenueInMatch();
+    const result = await updateAllVenueInMatch()
+      .then(() => true)
+      .catch(() => false);
 
-    return true;
+    return result;
   } catch (err) {
     return false;
   }
@@ -63,20 +67,23 @@ export async function createNewVenue(data: AddVenueInput) {
 export async function updateAllVenueInMatch() {
   const venues = await Venue.find();
 
-  const promisesMatchUpdate = venues.map(
-    async (venue) =>
-      await updateVenueInAllMatchFixtures(
-        venue._id,
-        venue.regId || "",
-        venue.name
-      )
-  );
+  const allPromises = [];
+  for (let i = 0; i < venues.length; i++) {
+    const venue = venues[i];
+    const matchUpdatePromise = updateVenueInAllMatchFixtures(
+      venue._id,
+      venue.regId || "",
+      venue.name
+    );
 
-  const promisesVenueMatchUpdate = venues.map(
-    async (venue) => await addAllMatchToVenue(venue.regId || "")
-  );
+    const venueMatchUpdatePromise = addAllMatchToVenue(venue.regId || "");
 
-  await Promise.all([promisesMatchUpdate, promisesVenueMatchUpdate]);
+    allPromises.push(matchUpdatePromise);
+    allPromises.push(venueMatchUpdatePromise);
+  }
+
+  // Wait for all promises to resolve
+  await Promise.all(allPromises);
 }
 
 export async function addAllMatchToVenue(venueRegId: string) {

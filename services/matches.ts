@@ -67,17 +67,17 @@ function formatInputForMatchCreate(data: AddMatchInputs) {
 
   return {
     team1: {
-      teamCode: data.team1Id,
+      teamCode: data.team1Id.trim(),
     },
     team2: {
-      teamCode: data.team2Id,
+      teamCode: data.team2Id.trim(),
     },
     team1Score: 0,
     team2Score: 0,
     result: -1,
     time: time.getTime(),
     // Get venue from ID
-    venue: { venueRegId: data.location },
+    venue: { venueRegId: data.location.trim() },
   };
 }
 
@@ -89,30 +89,18 @@ export async function updateTeamInAllMatchFixtures(
   await connectMongo();
 
   // Team 1:
-  const matches1 = await Match.find({
-    "team1.teamCode": teamCode,
-  });
-
-  const promises1 = matches1.map(async (match) => {
-    const updatedMatch = await Match.findOneAndUpdate(
-      { _id: match._id },
-      { "team1.teamName": teamName, "team1.teamId": teamId }
-    );
-  });
+  const updatedMatch1 = Match.updateMany(
+    { "team1.teamCode": teamCode },
+    { "team1.teamName": teamName, "team1.teamId": teamId }
+  );
 
   // Team 2:
-  const matches2 = await Match.find({
-    "team2.teamCode": teamCode,
-  });
+  const updatedMatch2 = Match.updateMany(
+    { "team2.teamCode": teamCode },
+    { "team2.teamName": teamName, "team2.teamId": teamId }
+  );
 
-  const promises2 = matches2.map(async (match) => {
-    const updatedMatch = await Match.findOneAndUpdate(
-      { _id: match._id },
-      { "team2.teamName": teamName, "team2.teamId": teamId }
-    );
-  });
-
-  await Promise.all([promises1, promises2]);
+  await Promise.all([updatedMatch1, updatedMatch2]);
 }
 
 export async function updateVenueInAllMatchFixtures(
@@ -122,7 +110,7 @@ export async function updateVenueInAllMatchFixtures(
 ) {
   await connectMongo();
 
-  const updatedMatch = await Match.findOneAndUpdate(
+  const updatedMatch = await Match.updateMany(
     { venue: { venueRegId: venueRegId } },
     {
       venue: {
