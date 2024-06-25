@@ -11,8 +11,8 @@ export async function createBulkNewPlayers(data: any[], teamId: string) {
     // [ '1', 'Bhaichung Bhutia', 'AB12'],
     if (item.length == 0) return;
     const row = {
-      name: item[1],
-      regId: item[2],
+      name: item[2],
+      regId: item[1],
       teamId: teamId,
       //   teamCode: item[3],
       //   email: item[4],
