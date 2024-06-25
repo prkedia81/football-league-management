@@ -3,8 +3,10 @@ import connectMongo from "../lib/mongoConnect";
 import Match, { Matches } from "@/model/Match";
 import {
   canParseToInt,
+  convertTo24HourFormat,
   formatMultiInputEntry,
   formatNonDateString,
+  getTimeFormat,
   isValidDateFormat,
 } from "@/lib/utils";
 import Team from "@/model/Team";
@@ -56,7 +58,10 @@ function formatInputForMatchCreate(data: AddMatchInputs) {
   const time = isValidDateFormat(date)
     ? new Date(date)
     : formatNonDateString(date);
-  const [hour, min] = data.time.split(":");
+  const [hour, min] =
+    getTimeFormat(data.time) === "12-hour"
+      ? convertTo24HourFormat(data.time).split(":")
+      : data.time.split(":");
   time.setHours(canParseToInt(hour) ? parseInt(hour) : 12);
   time.setMinutes(canParseToInt(min) ? parseInt(min) : 0);
 

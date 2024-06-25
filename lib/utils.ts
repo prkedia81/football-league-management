@@ -64,6 +64,54 @@ export function canParseToInt(value: string) {
   }
 }
 
+export function getTimeFormat(timeString: string) {
+  // Check for AM/PM indicator
+  const amPmIndicator = timeString.includes("AM") || timeString.includes("PM");
+
+  // let data = timeString.match(/\d{1,2}:\d{2}/)?.slice(0, 2);
+  const regex = /(\d{1,2}):(\d{2})\s?(AM|PM)/i;
+  const match = timeString.match(regex);
+
+  // Parse the time string into hours and minutes
+  if (match) {
+    let [_, hours, minute, period] = match;
+    // Convert to 24-hour format for comparison
+    const standardHour = parseInt(hours) % 12 === 0 ? 12 : parseInt(hours) % 12;
+
+    // Check if the parsed hour falls within the expected ranges for 12-hour or 24-hour format
+    if (standardHour >= 1 && standardHour <= 12 && amPmIndicator) {
+      return "12-hour";
+    } else if (standardHour >= 0 && standardHour < 23 && !amPmIndicator) {
+      return "24-hour";
+    }
+  }
+
+  return "Unknown";
+}
+
+export function convertTo24HourFormat(timeString: string) {
+  // Regular expression to match the time string format HH:MM AM/PM
+  const regex = /(\d{1,2}):(\d{2})\s?(AM|PM)/i;
+
+  // Match the input time string against the regular expression
+  const match = timeString.match(regex);
+
+  if (match) {
+    let [_, hour, minute, period] = match;
+    let newHour = parseInt(hour);
+
+    // Adjust the hour for PM times
+    if (period.toUpperCase() === "PM" && newHour !== 12) {
+      newHour += 12;
+    }
+
+    // Return the time in 24-hour format
+    return `${newHour}:${minute.padStart(2, "0")}`;
+  } else {
+    throw new Error("Invalid time format");
+  }
+}
+
 export function formatMultiInputEntry(data: MultiInputData[] | undefined) {
   if (!data) return [];
 
