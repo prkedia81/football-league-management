@@ -3,9 +3,10 @@
 ## Updates Required
 
 1. Add players unique replacement
-2. Add multi league management
+2. Add matches unique replacement
 3. Add forgot password
 4. Add front-end league data
+5. Add multi league management
 
 ## Feature List:
 
