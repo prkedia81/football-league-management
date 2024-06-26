@@ -112,6 +112,16 @@ export function convertTo24HourFormat(timeString: string) {
   }
 }
 
+export function convertToTitleCase(str: string) {
+  return str
+    .split(" ") // Split the string into an array of words
+    .map((word) => {
+      // Capitalize the first letter and make the rest lowercase
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" "); // Join all the words back together with spaces
+}
+
 export function formatMultiInputEntry(data: MultiInputData[] | undefined) {
   if (!data) return [];
 

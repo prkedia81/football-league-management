@@ -1,6 +1,7 @@
 import connectMongo from "../lib/mongoConnect";
 import Player, { Players } from "@/model/Player";
 import { AddPlayerInputs } from "@/app/admin/teams/manage-players/[teamId]/add-players/page";
+import { convertToTitleCase } from "@/lib/utils";
 
 export async function createBulkNewPlayers(data: any[], teamId: string) {
   // @ts-ignore
@@ -10,7 +11,7 @@ export async function createBulkNewPlayers(data: any[], teamId: string) {
     // [ '1', 'Bhaichung Bhutia', 'AB12'],
     if (item.length == 0) return;
     const row = {
-      name: item[2],
+      name: convertToTitleCase(item[2]),
       regId: item[1],
       teamId: teamId,
       //   teamCode: item[3],
