@@ -227,6 +227,7 @@ export async function finishNormalMatch(
   data: NormalMatchInputs
 ) {
   try {
+    console.log("In Finish Normal Match");
     // const team1Squad = data.team1Starting11.concat(data.team1Substitute);
     // const team2Squad = data.team2Starting11.concat(data.team2Substitute);
 
@@ -281,6 +282,7 @@ export async function finishNormalMatch(
       },
       { new: true }
     );
+    console.log("Updated match");
 
     // In Team DB (for each team):
     // S1: Update goalsScoredFor
@@ -354,6 +356,7 @@ export async function finishNormalMatch(
         },
       });
     }
+    console.log("Updated Teams");
 
     // In Player DB (for each player who scored a goal, got a red card or got a yellow card)
     // S1: Update all players who have goals
@@ -412,6 +415,7 @@ export async function finishNormalMatch(
           )
       );
     const players = await Promise.all(playersPromises);
+    console.log("Players update done");
 
     // Update Venue
     const venueResult = await finishMatchInVenue(
@@ -419,6 +423,7 @@ export async function finishNormalMatch(
       match.venue.venueId
     );
     if (!venueResult) return false;
+    console.log("Venue update done");
 
     const email = await normalEndMatchEmail(match._id);
 
