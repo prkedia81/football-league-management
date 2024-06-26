@@ -67,6 +67,6 @@ export async function getPlayerFromId(id: string): Promise<Players> {
 }
 
 export async function getAllPlayerDataFromTeamId(id: string) {
-  const players = await Player.find({ teamId: id });
+  const players = await Player.find({ teamId: id }).sort({ name: 1 });
   return players;
 }

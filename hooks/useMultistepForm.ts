@@ -40,11 +40,11 @@ export function useMultistepForm({
   });
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
+    console.log("In process form");
     const resp = await axios.post(submitApiEndpoint, {
       match: match,
       formData: data,
     });
-    methods.reset();
   };
 
   const next = async () => {
@@ -57,11 +57,9 @@ export function useMultistepForm({
 
     if (currentStep < steps.length - 1) {
       if (currentStep === steps.length - 2) {
-        try {
-          await methods.handleSubmit(processForm)();
-        } catch (error) {
-          console.error("Failed to submit form:", error);
-        }
+        console.log("Here in this step");
+        methods.handleSubmit(processForm)();
+        methods.reset();
       }
       setPreviousStep(currentStep);
       setCurrentStep((step) => step + 1);
