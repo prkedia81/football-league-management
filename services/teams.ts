@@ -67,30 +67,6 @@ export async function createNewTeam(data: AddTeamInput) {
   }
 }
 
-export async function addPlayerToTeam(teamId: string, playerId: string) {
-  await connectMongo();
-  const team = await Team.findOneAndUpdate(
-    {
-      _id: teamId,
-    },
-    {
-      $push: { playerList: playerId },
-    }
-  );
-}
-
-export async function addOfficialToTeam(teamId: string, playerId: string) {
-  await connectMongo();
-  const team = await Team.findOneAndUpdate(
-    {
-      _id: teamId,
-    },
-    {
-      $push: { officialList: playerId },
-    }
-  );
-}
-
 export async function getAllTeams(): Promise<Teams[]> {
   await connectMongo();
   const team = await Team.find();
@@ -115,16 +91,4 @@ export async function getTeamFromId(id: string): Promise<Teams | null> {
     console.log(err);
     return null;
   }
-}
-
-export async function getTeamPlayersFromId(id: string) {
-  await connectMongo();
-  const team = await Team.findById(id);
-  return team.playerList;
-}
-
-export async function getTeamOfficialsFromId(id: string) {
-  await connectMongo();
-  const team = await Team.findById(id);
-  return team.officialList;
 }

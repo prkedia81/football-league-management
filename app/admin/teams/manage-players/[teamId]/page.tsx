@@ -4,7 +4,7 @@ import EmptyState from "@/components/admin/EmptyState";
 import PageHeading from "@/components/admin/Heading";
 import PlayerTable from "@/components/admin/PlayerTable";
 import { getAllPlayerDataFromTeamId } from "@/services/players";
-import { getTeamFromId, getTeamPlayersFromId } from "@/services/teams";
+import { getTeamFromId } from "@/services/teams";
 import { Suspense } from "react";
 
 interface Props {

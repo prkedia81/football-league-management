@@ -1,7 +1,6 @@
 import connectMongo from "../lib/mongoConnect";
 import Player, { Players } from "@/model/Player";
 import { AddPlayerInputs } from "@/app/admin/teams/manage-players/[teamId]/add-players/page";
-import { addPlayerToTeam, getTeamFromId, getTeamPlayersFromId } from "./teams";
 
 export async function createBulkNewPlayers(data: any[], teamId: string) {
   // @ts-ignore
@@ -28,9 +27,6 @@ export async function createBulkNewPlayers(data: any[], teamId: string) {
       throw Error(err);
     });
 
-    // Add player to team's player list
-    players.forEach((player) => addPlayerToTeam(teamId, player._id));
-
     return true;
   } catch (err) {
     return false;
@@ -51,8 +47,6 @@ export async function createNewPlayer(data: AddPlayerInputs, teamId: string) {
       }
     );
 
-    // Add player to team's player list
-    addPlayerToTeam(teamId, player._id);
     return true;
   } catch (err) {
     return false;
@@ -71,14 +65,7 @@ export async function getPlayerFromId(id: string): Promise<Players> {
   return player;
 }
 
-export async function getPlayerDataFromList(idList: string[]) {
-  const playersPromises = idList.map((id) => getPlayerFromId(id));
-  const players = await Promise.all(playersPromises);
-  return players;
-}
-
 export async function getAllPlayerDataFromTeamId(id: string) {
-  const playerList = await getTeamPlayersFromId(id);
-  const players = await getPlayerDataFromList(playerList);
+  const players = await Player.find({ teamId: id });
   return players;
 }

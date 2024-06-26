@@ -1,6 +1,5 @@
 import Official, { Officials } from "@/model/Official";
 import { AddOfficialInput } from "@/app/admin/teams/manage-officials/[teamId]/add-officials/page";
-import { addOfficialToTeam, getTeamOfficialsFromId } from "./teams";
 import connectMongo from "../lib/mongoConnect";
 
 export async function createBulkNewOfficials(data: any[], teamId: string) {
@@ -28,9 +27,6 @@ export async function createBulkNewOfficials(data: any[], teamId: string) {
       throw Error(err);
     });
 
-    // Add official to team's official list
-    officials.forEach((official) => addOfficialToTeam(teamId, official._id));
-
     return true;
   } catch (err) {
     return false;
@@ -54,8 +50,6 @@ export async function createNewOfficial(
       }
     );
 
-    // Add official to team's official list
-    addOfficialToTeam(teamId, official._id);
     return true;
   } catch (err) {
     return false;
@@ -74,14 +68,7 @@ export async function getOfficialFromId(id: string): Promise<Officials> {
   return official;
 }
 
-export async function getOfficialDataFromList(idList: string[]) {
-  const playersPromises = idList.map((id) => getOfficialFromId(id));
-  const officials = await Promise.all(playersPromises);
-  return officials;
-}
-
 export async function getAllOfficialDataFromTeamId(id: string) {
-  const officialList = await getTeamOfficialsFromId(id);
-  const officials = await getOfficialDataFromList(officialList);
+  const officials = await Official.find({ teamId: id });
   return officials;
 }

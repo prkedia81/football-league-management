@@ -82,18 +82,6 @@ const teamSchema = new Schema({
       number: Number,
     },
   ],
-  playerList: [
-    {
-      type: String,
-      default: [],
-    },
-  ],
-  officialList: [
-    {
-      type: String,
-      default: [],
-    },
-  ],
 });
 
 // teamSchema.index({ regId: 1, teamCode: 1 }, { unique: true });
