@@ -47,8 +47,6 @@ export function useMultistepForm({
     methods.reset();
   };
 
-  // type FieldName = keyof Inputs;
-
   const next = async () => {
     const fields = steps[currentStep].fields;
     const output = await methods.trigger(fields, {
@@ -59,7 +57,11 @@ export function useMultistepForm({
 
     if (currentStep < steps.length - 1) {
       if (currentStep === steps.length - 2) {
-        await methods.handleSubmit(processForm)();
+        try {
+          await methods.handleSubmit(processForm)();
+        } catch (error) {
+          console.error("Failed to submit form:", error);
+        }
       }
       setPreviousStep(currentStep);
       setCurrentStep((step) => step + 1);

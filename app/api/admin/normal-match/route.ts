@@ -10,6 +10,7 @@ interface Data {
 
 export async function POST(req: NextRequest) {
   try {
+    console.log("In normal match finish");
     const data: Data = await req.json();
     const resp = await finishNormalMatch(data.match, data.formData);
     if (resp) return Response.json({ message: "Success" }, { status: 201 });

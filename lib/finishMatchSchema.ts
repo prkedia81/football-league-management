@@ -6,7 +6,8 @@ export const NormalMatchFormSchema = z.object({
     .min(1, "Select a winner"),
   team1Starting11: z
     .array(z.string(), {
-      invalid_type_error: "Select atleast 11 players in Playing XI",
+      invalid_type_error:
+        "Select atleast 7 players and maximum 11 players in Playing XI",
     })
     .min(7, "Atleast 7 Players are required in playing XI")
     .max(11, "Maximum 11 Players can be selected in playing XI"),
@@ -20,7 +21,8 @@ export const NormalMatchFormSchema = z.object({
   team1Reserve: z.array(z.string()),
   team2Starting11: z
     .array(z.string(), {
-      invalid_type_error: "Select atleast 11 players in Playing XI",
+      invalid_type_error:
+        "Select atleast 7 players and maximum 11 players in Playing XI",
     })
     .min(7, "Atleast 7 Players are required in playing XI")
     .max(11, "Maximum 11 Players can be selected in playing XI"),
@@ -58,14 +60,14 @@ export const NormalMatchFormSchema = z.object({
   ),
   numYellowCards: z
     .string({
-      invalid_type_error: "Enter the number of goals scored",
+      invalid_type_error: "Enter the number of yellow cards",
     })
-    .min(1, "Enter the number of goals scored"),
+    .min(1, "Enter the number of yellow cards"),
   numRedCards: z
     .string({
-      invalid_type_error: "Enter the number of goals scored",
+      invalid_type_error: "Enter the number of red cards",
     })
-    .min(1, "Enter the number of goals scored"),
+    .min(1, "Enter the number of red cards"),
   yellowCards: z.optional(
     z.array(
       z.object({
