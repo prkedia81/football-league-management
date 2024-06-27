@@ -1,6 +1,7 @@
-import { AuthProvider } from "./providers";
 import type { Metadata } from "next";
 import "./globals.css";
+import { Suspense } from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Calcutta Football League",
@@ -15,7 +16,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <Suspense>{children}</Suspense>
+        <Toaster />
       </body>
     </html>
   );

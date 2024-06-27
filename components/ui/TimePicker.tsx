@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 
-const TimePicker = ({ initialTime, onChange }) => {
+interface Props {
+  initialTime: string;
+  onChange: any;
+}
+
+const TimePicker = ({ initialTime, onChange }: Props) => {
   const [selectedTime, setSelectedTime] = useState(initialTime);
 
-  const handleTimeChange = (e) => {
+  const handleTimeChange = (e: any) => {
     setSelectedTime(e.target.value);
     onChange(e.target.value);
   };

@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import AddIndividualEntryCard from "@/components/admin/AddIndividualEntryCard";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import InputField from "@/components/admin/formElements/InputField";
-import { AddMatchInputs } from "@/app/admin/match/add-fixtures/page";
 import { useState } from "react";
 import SuccessFailModal from "@/components/admin/SuccessFailModal";
-import LoadingSpinner from "@/components/admin/LoadingSpinner";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { AddPlayerInputs } from "./page";
 
 interface Props {
   handleAddFn: (data: any) => Promise<boolean>;
@@ -22,11 +22,11 @@ interface Props {
 }
 
 function AddSinglePlayer({ handleAddFn, ...props }: Props) {
-  const methods = useForm<AddMatchInputs>();
+  const methods = useForm<AddPlayerInputs>();
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
   const [statusModal, setStatusModal] = useState<boolean | undefined>();
 
-  const onSubmit: SubmitHandler<AddMatchInputs> = async (data) => {
+  const onSubmit: SubmitHandler<AddPlayerInputs> = async (data) => {
     setUploadLoading(true);
     const response = await handleAddFn(data);
     setUploadLoading(false);

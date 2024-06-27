@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Feature List & Bugs:
 
-## Getting Started
+## Updates Required
 
-First, run the development server:
+1. Add players unique replacement
+2. Add matches unique replacement
+3. Add forgot password
+4. Add front-end league data
+5. Add multi league management
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Feature List:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Login/ Sign-up
+2. End to End Testing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   - Single Upload
+     - Match
+     - Venue
+     - Player
+     - Teams
+     - Officials
+   - Multiple Upload
+     - Venue
+     - Match
+     - Player
+     - Teams
+     - Officials
+   - Matches:
+     - Re-schedule Conflict
+     - Re-schedule Success + Email
+     - Match Cancelled
+     - Match Walkover
+     - Match Walkover Edit Penalty
+     - Match Normal Finish with Red Cards, Yellow Cards, Goals etc
+     - Match Details Page
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Send emails for the following:
+   - [x] Every end match
+   - [x] Every walkover match
+   - [x] Every cancel match
+   - [x] Every Re-schedule
+   - [ ] Every Match fixture
+4. Show penalty in match details page
 
-## Learn More
+## Changes Requested:
 
-To learn more about Next.js, take a look at the following resources:
+- [x] Edit Match Details after complete in not normal match -> Option to edit penalty points
+- [x] Set up points count after match end
+- [x] Set up emailing
+- [x] Referee Report Upload - 1 Image or 1 PDF
+- [x] Add Officials options in team
+- [x] Show the data that is happening in re-schedule (double confirmation)
+- [x] In Re-schedule match -> Add 1 button for confirm and 1 button for send email to club
+- [x] Not match Fixture - Match Sequence
+- [x] Change from Venue ID to Venue Drop down
+- [x] Not match observer -> Referee Assessor
+- [x] AR1, AR2 compulsory
+- [x] Add Combobox in every drop down
+- [x] OG in own goal -> Showed team name instead
+- [x] If player in Reserve then also in match played
+- [x] Not less than 7 and not More than 11 in starting XI NOT Allowed
+- [x] Re-schedule venue check -> 6 hours
+- [x] In Walkover - Opponent team refused to play (instead of unruly behaviour)
+- [x] Check match display page
+- [x] Match Fixtures, venues, teams data consistency on every match, venue or team update
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Player List in complete match changes:
 
-## Deploy on Vercel
+- [x] Player select combo box
+- [x] In the players list, add the CRS ID along with it
+- [ ] Add officials in red card, yellow card area
+- [x] Change the way players are selected -> GOAL KEEPER, Captain In Player List
+- [x] Update DB
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Reports to be Generated:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [x] League Table - Standing
+- [x] Penalty In League Table
+- [x] Club Performance:
+
+  - Each Match result
+  - All player list
+  - Goals, Yellow Card, Red Card
+
+- [x] Player wise data:
+  - Number of matches played, number of goals, yellow cards, red cards
+
+## Future Versions:
+
+- Type Safety in upload section -> excel upload, single
+- Add upload team from Excel in the squad match with Registration ID
+- Edit Player Details
+- Edit Venue Details
+- Edit Team Details
+- Only show selected players in the drop down for match finish
+- New Users from Logged in Users

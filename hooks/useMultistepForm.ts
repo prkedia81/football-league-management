@@ -1,40 +1,79 @@
 import { ReactElement, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm, useFormContext } from "react-hook-form";
+import { z } from "zod";
+import axios from "axios";
+import { Matches } from "@/model/Match";
 
-export function useMultistepForm(steps: ReactElement[]) {
-  const { trigger } = useFormContext();
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+export interface Step {
+  id: string;
+  name: string;
+  subheading: string;
+  fields: string[];
+  component: ReactElement;
+}
 
-  async function next(fields: string[]) {
-    const output = await trigger(fields, { shouldFocus: true });
+interface Props {
+  steps: Step[];
+  zodSchema: any;
+  match: Matches;
+  submitApiEndpoint: string;
+  formDefaultValues: any;
+}
+
+export function useMultistepForm({
+  steps,
+  zodSchema,
+  match,
+  submitApiEndpoint,
+  formDefaultValues,
+}: Props) {
+  type Inputs = z.infer<typeof zodSchema>;
+
+  const [previousStep, setPreviousStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
+  const delta = currentStep - previousStep;
+
+  const methods = useForm<Inputs>({
+    resolver: zodResolver(zodSchema),
+    defaultValues: formDefaultValues,
+  });
+
+  const processForm: SubmitHandler<Inputs> = async (data) => {
+    console.log("In process form");
+    const resp = await axios.post(submitApiEndpoint, {
+      match: match,
+      formData: data,
+    });
+  };
+
+  const next = async () => {
+    const fields = steps[currentStep].fields;
+    const output = await methods.trigger(fields, {
+      shouldFocus: true,
+    });
 
     if (!output) return;
 
-    setCurrentStepIndex((i) => {
-      if (i >= steps.length - 1) return i;
-      return i + 1;
-    });
-  }
-
-  function back() {
-    setCurrentStepIndex((i) => {
-      if (i <= 0) return i;
-      return i - 1;
-    });
-  }
-
-  function goTo(index: number) {
-    setCurrentStepIndex(index);
-  }
-
-  return {
-    currentStepIndex,
-    step: steps[currentStepIndex],
-    steps,
-    isFirstStep: currentStepIndex === 0,
-    isLastStep: currentStepIndex === steps.length - 1,
-    goTo,
-    next,
-    back,
+    if (currentStep < steps.length - 1) {
+      if (currentStep === steps.length - 2) {
+        console.log("Here in this step");
+        methods.handleSubmit(processForm)();
+        methods.reset();
+      }
+      setPreviousStep(currentStep);
+      setCurrentStep((step) => step + 1);
+    }
   };
+
+  const prev = () => {
+    if (currentStep > 0) {
+      setPreviousStep(currentStep);
+      setCurrentStep((step) => step - 1);
+    }
+  };
+
+  // console.log(methods.watch());
+
+  return { methods, previousStep, currentStep, processForm, next, prev };
 }

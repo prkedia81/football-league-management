@@ -5,14 +5,17 @@ export interface Players extends Document {
   name: string;
   regId: string;
   teamId: string;
-  goal: string[];
+  goals: {
+    matchId: string;
+    number: number;
+  }[];
   yellowCards: {
     matchId: string;
-    amount: number;
+    number: number;
   }[];
   redCards: {
     matchId: string;
-    amount: number;
+    number: number;
   }[];
   matchesPlayed: string[];
 }
@@ -31,22 +34,22 @@ const playerSchema = new Schema({
     type: String,
     required: true,
   },
-  goal: [
+  goals: [
     {
-      type: String,
-      default: 0,
+      matchId: String,
+      number: Number,
     },
   ],
   yellowCards: [
     {
       matchId: String,
-      amount: Number,
+      number: Number,
     },
   ],
   redCards: [
     {
       matchId: String,
-      amount: Number,
+      number: Number,
     },
   ],
   matchesPlayed: [
@@ -58,6 +61,7 @@ const playerSchema = new Schema({
 });
 
 // Create the model
+// const Player = model<Players>("Player", playerSchema);
 const Player = models.Player || model<Players>("Player", playerSchema);
 
 export default Player;

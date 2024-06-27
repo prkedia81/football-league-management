@@ -1,6 +1,5 @@
 import { Document, Schema, model, models } from "mongoose";
 
-// TODO: Fix unique issue
 // Define the TypeScript interface for the Team document
 export interface Teams extends Document {
   name: string;
@@ -13,11 +12,13 @@ export interface Teams extends Document {
   matchesLost: string[];
   matchesDrawn: string[];
   matchesPlayed?: string[];
-  abandonPenalty?: {
+  points: number;
+  penalty?: {
     matchId: string;
-    amount: number;
+    number: number;
   }[];
   playerList: string[];
+  officialList: string[];
 }
 
 // Define the schema
@@ -68,18 +69,17 @@ const teamSchema = new Schema({
   matchesPlayed: [
     {
       type: String,
+      default: [],
     },
   ],
-  abandonPenalty: [
+  points: {
+    type: Number,
+    default: 0,
+  },
+  penalty: [
     {
       matchId: String,
-      amount: Number,
-    },
-  ],
-  playerList: [
-    {
-      type: String,
-      default: [],
+      number: Number,
     },
   ],
 });

@@ -1,7 +1,7 @@
-import Team from "@/model/Team";
-import connectMongo from "./mongoConnect";
+import Team, { Teams } from "@/model/Team";
+import connectMongo from "../lib/mongoConnect";
 import { AddTeamInput } from "@/app/admin/teams/add-teams/page";
-import { updateTeamAllMatchFixtures } from "./matches";
+import { updateTeamInAllMatchFixtures } from "./matches";
 
 export async function createBulkNewTeam(data: any[]) {
   // @ts-ignore
@@ -27,15 +27,22 @@ export async function createBulkNewTeam(data: any[]) {
       throw Error(err);
     });
 
-    // Check if the particular teamCode has any matches and add to that
-    teams.forEach((team) =>
-      updateTeamAllMatchFixtures(team.teamCode, team._id, team.name)
-    );
-
+    await updateAllTeamInMatch();
     return true;
   } catch (err) {
     return false;
   }
+}
+
+export async function updateAllTeamInMatch() {
+  const teams = await Team.find();
+  // Check if the particular teamCode has any matches and add to that
+  const promises = teams.map(
+    async (team) =>
+      await updateTeamInAllMatchFixtures(team.teamCode, team._id, team.name)
+  );
+
+  await Promise.all(promises);
 }
 
 export async function createNewTeam(data: AddTeamInput) {
@@ -53,39 +60,35 @@ export async function createNewTeam(data: AddTeamInput) {
     });
 
     // Check if the particular teamCode has any matches and add to that
-    updateTeamAllMatchFixtures(data.teamCode, team._id, team.name);
+    updateAllTeamInMatch();
     return true;
   } catch (err) {
     return false;
   }
 }
 
-export async function addPlayerToTeam(teamId: string, playerId: string) {
-  await connectMongo();
-  const team = await Team.findOneAndUpdate(
-    {
-      _id: teamId,
-    },
-    {
-      $push: { playerList: playerId },
-    }
-  );
-}
-
-export async function getAllTeams() {
+export async function getAllTeams(): Promise<Teams[]> {
   await connectMongo();
   const team = await Team.find();
   return team;
 }
 
-export async function getTeamFromId(id: string) {
+export async function getAllTeamsSorted(): Promise<Teams[]> {
   await connectMongo();
-  const team = await Team.findById(id);
+  const team = await Team.find().sort({
+    points: "descending",
+    goalScoredFor: "ascending",
+  });
   return team;
 }
 
-export async function getTeamPlayersFromId(id: string) {
-  await connectMongo();
-  const team = await Team.findById(id);
-  return team.playerList;
+export async function getTeamFromId(id: string): Promise<Teams | null> {
+  try {
+    await connectMongo();
+    const team = await Team.findById(id);
+    return team;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 }

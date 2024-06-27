@@ -1,7 +1,5 @@
 "use client";
 
-// TODO: Make this more performant
-
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
@@ -11,13 +9,19 @@ import {
   Bars3Icon,
   UserGroupIcon,
   XMarkIcon,
+  ChartBarIcon,
 } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
+import { signOut } from "next-auth/react";
+import { Button } from "../ui/button";
+import Image from "next/image";
+import Link from "next/link";
 
 const navigation = [
   { name: "Matches", href: "/admin", icon: HomeIcon, current: false },
   { name: "Teams", href: "/admin/teams", icon: UserGroupIcon, current: false },
   { name: "Venues", href: "/admin/venues", icon: CalendarIcon, current: false },
+  { name: "League", href: "/admin/league", icon: ChartBarIcon, current: false },
   // { name: "Official", href: "/admin/officials", icon: MapIcon, current: false },
 ];
 
@@ -78,11 +82,15 @@ export default function Sidebar({
                 </Transition.Child>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                   <div className="flex-shrink-0 flex items-center px-4">
-                    <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-900-text.svg"
-                      alt="Workflow"
-                    />
+                    <Link href="/admin">
+                      <Image
+                        width={100}
+                        height={100}
+                        className="h-16 w-16"
+                        src="/Logo.png"
+                        alt="CFL Logo"
+                      />
+                    </Link>
                   </div>
                   <nav aria-label="Sidebar" className="mt-5">
                     <div className="px-2 space-y-1">
@@ -112,25 +120,7 @@ export default function Sidebar({
                   </nav>
                 </div>
                 <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                  <a href="#" className="flex-shrink-0 group block">
-                    <div className="flex items-center">
-                      <div>
-                        <img
-                          className="inline-block h-10 w-10 rounded-full"
-                          src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-                          alt=""
-                        />
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">
-                          Whitney Francis
-                        </p>
-                        <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">
-                          View profile
-                        </p>
-                      </div>
-                    </div>
-                  </a>
+                  <Button onClick={() => signOut()}>Sign Out</Button>
                 </div>
               </div>
             </Transition.Child>
@@ -142,16 +132,21 @@ export default function Sidebar({
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:flex lg:flex-shrink-0">
-          <div className="flex flex-col w-60">
+          <div className="flex flex-col w-52">
             {/* Sidebar component, swap this element with another sidebar if you like */}
             <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-gray-50">
-              <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-                <div className="flex items-center flex-shrink-0 px-4">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-900-text.svg"
-                    alt="Workflow"
-                  />
+              <div className="flex-1 flex flex-col pt-5 pb-2 overflow-y-auto">
+                <div className="flex items-center flex-shrink-0 px-2">
+                  <Link href="/admin">
+                    <Image
+                      width={100}
+                      height={100}
+                      className="h-16 w-16"
+                      src="/Logo.png"
+                      alt="CFL Logo"
+                    />
+                  </Link>
+                  {/* <p className="font-extrabold">Calcutta Football League</p> */}
                 </div>
                 <nav className="mt-5 flex-1" aria-label="Sidebar">
                   <div className="px-2 space-y-1">
@@ -180,8 +175,9 @@ export default function Sidebar({
                   </div>
                 </nav>
               </div>
-              <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                <a href="#" className="flex-shrink-0 w-full group block">
+              <div className="flex-col flex-shrink-0 flex border-t border-gray-200 p-4">
+                <Button onClick={() => signOut()}>Sign Out</Button>
+                {/* <a href="#" className="flex-shrink-0 w-full group block">
                   <div className="flex items-center">
                     <div>
                       <img
@@ -199,7 +195,7 @@ export default function Sidebar({
                       </p>
                     </div>
                   </div>
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
@@ -207,13 +203,15 @@ export default function Sidebar({
         <div className="flex flex-col min-w-0 flex-1 overflow-hidden">
           <div className="lg:hidden">
             <div className="flex items-center justify-between bg-gray-50 border-b border-gray-200 px-4 py-1.5">
-              <div>
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                  alt="Workflow"
+              <Link href="/admin">
+                <Image
+                  width={100}
+                  height={100}
+                  className="h-10 w-auto"
+                  src="/Logo.png"
+                  alt="CFL Logo"
                 />
-              </div>
+              </Link>
               <div>
                 <button
                   type="button"

@@ -16,7 +16,7 @@ interface Props {
 
 function AddIndividualEntryCard({ title, description = "", children }: Props) {
   return (
-    <Card className="mx-4 my-4 w-[95%]">
+    <Card className="mx-4 my-2 md:my-4 md:w-[95%]">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

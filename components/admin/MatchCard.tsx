@@ -36,16 +36,53 @@ export default function MatchCard({
   if (venue.venueName) {
     venueName = venue.venueName;
   } else {
-    // TODO: Get venue name from venue service class
     venueName = venue.venueRegId;
   }
 
+  // status => unplayed, completed, unruly, noShow, informed, othersWalkover, cancelled
+  const classStatus = [
+    {
+      status: "unplayed",
+      class: "",
+    },
+    {
+      status: "completed",
+      class: "bg-green-100 bg-opacity-50 border-2 border-green-500",
+    },
+    {
+      status: "unruly",
+      class: "bg-indigo-100 bg-opacity-50 border-2 border-indigo-500",
+    },
+    {
+      status: "informed",
+      class: "bg-indigo-100 bg-opacity-50 border-2 border-indigo-500",
+    },
+    {
+      status: "noShow",
+      class: "bg-indigo-100 bg-opacity-50 border-2 border-indigo-500",
+    },
+    {
+      status: "othersWalkover",
+      class: "bg-indigo-100 bg-opacity-50 border-2 border-indigo-500",
+    },
+    {
+      status: "cancelled",
+      class: "bg-red-100 bg-opacity-50 border-2 border-red-500",
+    },
+  ];
+
+  const cardClass =
+    classStatus.filter((item) => item.status === status)[0]?.class || "";
+
+  const editPenaltyStatuses = [
+    "noShow",
+    "othersWalkover",
+    "informed",
+    "unruly",
+  ];
+
   return (
-    <Card
-      className={cn(
-        status === "completed" ? "bg-green-50" : "",
-        "w-full max-w-sm"
-      )}>
+    <Card className={cn(cardClass, "w-full max-w-80")}>
       <CardHeader className="p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -75,7 +112,7 @@ export default function MatchCard({
           {timeFormat(time)}
         </p>
       </CardContent>
-      {status !== "completed" && (
+      {status === "unplayed" ? (
         <CardFooter className="p-4 flex justify-center gap-2">
           <Link href={"/admin/match/reschedule/" + _id} className="w-full">
             <Button type="button" className="w-full" variant="outline">
@@ -84,6 +121,19 @@ export default function MatchCard({
           </Link>
           <Link href={"/admin/match/finish-match/" + _id} className="w-full">
             <Button className="w-full">Finish Match</Button>
+          </Link>
+        </CardFooter>
+      ) : (
+        <CardFooter className="p-4 flex justify-center gap-2">
+          {editPenaltyStatuses.includes(status) && (
+            <Link href={"/admin/match/edit-penalty/" + _id} className="w-full">
+              <Button variant="ghost" className="w-full">
+                Edit Penalty
+              </Button>
+            </Link>
+          )}
+          <Link href={"/admin/match/match-details/" + _id} className="w-full">
+            <Button className="w-full">View Match Details</Button>
           </Link>
         </CardFooter>
       )}

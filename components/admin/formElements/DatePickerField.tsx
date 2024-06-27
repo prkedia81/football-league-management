@@ -14,7 +14,7 @@ interface Props
   name: string;
 }
 
-const InputField = ({
+const DatePickerField = ({
   errorMessage,
   label,
   isRequired = false,
@@ -38,13 +38,15 @@ const InputField = ({
             name="date"
             control={control}
             defaultValue={null}
-            render={({ field: { onChange, value } }) => (
+            rules={{ required: isRequired }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
               <DatePicker onChange={onChange} value={value} />
             )}
           />
           {errors[props.name] && (
-            <span className="text-red-600 text-sm mt-0.5">
-              {errorMessage ?? "This field is required"}
+            <span className="block text-red-600 text-sm mt-0.5">
+              {(errors[props.name]?.message as string) ||
+                (errorMessage ?? "The date is required")}
             </span>
           )}
         </div>
@@ -53,4 +55,4 @@ const InputField = ({
   );
 };
 
-export default InputField;
+export default DatePickerField;

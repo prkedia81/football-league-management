@@ -1,7 +1,7 @@
-import connectMongo from "./mongoConnect";
+import connectMongo from "../lib/mongoConnect";
 import Player, { Players } from "@/model/Player";
 import { AddPlayerInputs } from "@/app/admin/teams/manage-players/[teamId]/add-players/page";
-import { addPlayerToTeam, getTeamFromId, getTeamPlayersFromId } from "./teams";
+import { convertToTitleCase } from "@/lib/utils";
 
 export async function createBulkNewPlayers(data: any[], teamId: string) {
   // @ts-ignore
@@ -11,8 +11,8 @@ export async function createBulkNewPlayers(data: any[], teamId: string) {
     // [ '1', 'Bhaichung Bhutia', 'AB12'],
     if (item.length == 0) return;
     const row = {
-      name: item[1],
-      regId: item[2],
+      name: convertToTitleCase(item[2]),
+      regId: item[1],
       teamId: teamId,
       //   teamCode: item[3],
       //   email: item[4],
@@ -27,9 +27,6 @@ export async function createBulkNewPlayers(data: any[], teamId: string) {
       console.log(err);
       throw Error(err);
     });
-
-    // Add player to team's player list
-    players.forEach((player) => addPlayerToTeam(teamId, player._id));
 
     return true;
   } catch (err) {
@@ -51,8 +48,6 @@ export async function createNewPlayer(data: AddPlayerInputs, teamId: string) {
       }
     );
 
-    // Add player to team's player list
-    addPlayerToTeam(teamId, player._id);
     return true;
   } catch (err) {
     return false;
@@ -65,20 +60,13 @@ export async function getAllPlayers() {
   return player;
 }
 
-export async function getPlayerFromId(id: string) {
+export async function getPlayerFromId(id: string): Promise<Players> {
   await connectMongo();
   const player = await Player.findById(id);
   return player;
 }
 
-export async function getPlayerDataFromList(idList: string[]) {
-  const playersPromises = idList.map((id) => getPlayerFromId(id));
-  const players = await Promise.all(playersPromises);
-  return players;
-}
-
 export async function getAllPlayerDataFromTeamId(id: string) {
-  const playerList = await getTeamPlayersFromId(id);
-  const players = await getPlayerDataFromList(playerList);
+  const players = await Player.find({ teamId: id }).sort({ name: 1 });
   return players;
 }

@@ -8,11 +8,10 @@ import DatePickerField from "@/components/admin/formElements/DatePickerField";
 import { AddMatchInputs } from "@/app/admin/match/add-fixtures/page";
 import { useState } from "react";
 import SuccessFailModal from "@/components/admin/SuccessFailModal";
-import LoadingSpinner from "@/components/admin/LoadingSpinner";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import TimePickerField from "@/components/admin/formElements/TimePickerField";
 
 interface Props {
-  // TODO: Fix type
   handleAddFn: (data: any) => Promise<boolean>;
   modalSuccessHeading: string;
   modalSuccessBody: string;
@@ -31,7 +30,6 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
 
   const onSubmit: SubmitHandler<AddMatchInputs> = async (data) => {
     setUploadLoading(true);
-    console.log(data);
     const response = await handleAddFn(data);
     setUploadLoading(false);
     if (response == true) {
@@ -68,8 +66,7 @@ function AddSingleMatch({ handleAddFn, ...props }: Props) {
               name="date"
               id="date"
             />
-            {/* TODO: Fix This */}
-            <TimePickerField label="Time" name="time" />
+            <TimePickerField isRequired={true} label="Time" name="time" />
             <InputField
               label="Venue"
               isRequired={true}

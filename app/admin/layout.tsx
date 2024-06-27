@@ -1,4 +1,6 @@
 import Sidebar from "@/components/admin/Sidebar";
+import LoadingState from "./loading";
+import { Suspense } from "react";
 
 export default function Layout({
   children,
@@ -6,8 +8,10 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <Sidebar>
-      <div className="my-2">{children}</div>
-    </Sidebar>
+    <Suspense fallback={<LoadingState />}>
+      <Sidebar>
+        <div className="my-2">{children}</div>
+      </Sidebar>
+    </Suspense>
   );
 }

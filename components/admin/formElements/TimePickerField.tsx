@@ -14,7 +14,7 @@ interface Props
   name: string;
 }
 
-const InputField = ({
+const TimePickerField = ({
   errorMessage,
   label,
   isRequired = false,
@@ -38,13 +38,14 @@ const InputField = ({
             name="time"
             control={control}
             defaultValue={null}
-            render={({ field: { onChange, value } }) => (
+            rules={{ required: isRequired }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
               <TimePicker onChange={onChange} value={value} />
             )}
           />
           {errors[props.name] && (
             <span className="text-red-600 text-sm mt-0.5">
-              {errorMessage ?? "This field is required"}
+              {errorMessage ?? "The time is required"}
             </span>
           )}
         </div>
@@ -53,4 +54,4 @@ const InputField = ({
   );
 };
 
-export default InputField;
+export default TimePickerField;

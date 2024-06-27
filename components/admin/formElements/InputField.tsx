@@ -47,7 +47,7 @@ const InputField = ({
             <input
               {...props}
               className={cn(
-                "form-input focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300",
+                "form-input w-full  focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300",
                 withAddOn ? "flex-1 rounded-none rounded-r-md" : "rounded-md"
               )}
               {...register(props.name, { required: isRequired })}
@@ -55,7 +55,9 @@ const InputField = ({
           </div>
           {errors[props.name] && (
             <span className="text-red-600 text-sm mt-0.5">
-              {errorMessage ?? "This field is required"}
+              {(errors[props.name]?.message as string) ??
+                errorMessage ??
+                "This field is required"}
             </span>
           )}
         </div>

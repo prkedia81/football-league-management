@@ -25,7 +25,6 @@ const page = () => {
 
   const handleSingleUpload = async (data: AddMatchInputs) => {
     "use server";
-    // console.log(data);
     const response = await createNewMatch(data);
     return response;
   };

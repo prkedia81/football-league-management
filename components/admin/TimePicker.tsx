@@ -14,23 +14,21 @@ interface TimePickerProps {
   onChange: (...event: any[]) => void;
 }
 const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
-  const [hourValue, setHourValue] = useState("00");
-  const [minuteValue, setMinuteValue] = useState("00");
-  const [selectedTime, setSelectedTime] = useState(value || "12:00 PM");
+  const [hourValue, setHourValue] = useState<string | undefined>();
+  const [minuteValue, setMinuteValue] = useState<string | undefined>();
 
   const handleHourChange = (selectedValue: string) => {
     setHourValue(selectedValue);
-    onChange(hourValue + ":" + minuteValue);
-    // handleTimeChange();
+    handleTimeChange(selectedValue, minuteValue || "00");
   };
 
   const handleMinuteChange = (selectedValue: string) => {
     setMinuteValue(selectedValue);
-    onChange(hourValue + ":" + minuteValue);
+    handleTimeChange(hourValue || "00", selectedValue);
   };
 
-  const handleTimeChange = () => {
-    value = hourValue + ":" + minuteValue;
+  const handleTimeChange = (hour: string, minute: string) => {
+    value = hour + ":" + minute;
     onChange(value);
   };
   return (
