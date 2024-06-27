@@ -45,6 +45,8 @@ function PlayerTable({ caption, data, isOfficials = false }: Props) {
 
   return (
     <Table>
+      {/* wrapped this to a sticky style, if the scroll still continues add a z index to the div */}
+      <div style={{position: 'sticky', top: 0}}> 
       <TableCaption>{caption}</TableCaption>
       <TableHeader>
         <TableRow>
@@ -55,6 +57,7 @@ function PlayerTable({ caption, data, isOfficials = false }: Props) {
           ))}
         </TableRow>
       </TableHeader>
+      </div>
       <TableBody>
         {data.map((row, i) => (
           <TableRow key={i}>
