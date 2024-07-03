@@ -7,9 +7,14 @@ export async function createBulkNewPlayers(data: any[], teamId: string) {
   // @ts-ignore
   const dbEntries = [];
 
-  data.forEach((item) => {
-    // [ '1', 'Bhaichung Bhutia', 'AB12'],
-    if (item.length == 0) return;
+  for (let i = 0; i < data.length; i++) {
+    const item = data[i];
+    if (item.length === 0) continue;
+
+    const isPlayerExist = await checkPlayerExists(item[1]);
+    if (isPlayerExist) continue;
+
+    // [ '1', 'AB12', 'Bhaichung Bhutia'],
     const row = {
       name: convertToTitleCase(item[2]),
       regId: item[1],
@@ -18,7 +23,20 @@ export async function createBulkNewPlayers(data: any[], teamId: string) {
       //   email: item[4],
     };
     dbEntries.push(row);
-  });
+  }
+
+  // data.forEach((item) => {
+  //   // [ '1', 'Bhaichung Bhutia', 'AB12'],
+  //   if (item.length == 0) return;
+  //   const row = {
+  //     name: convertToTitleCase(item[2]),
+  //     regId: item[1],
+  //     teamId: teamId,
+  //     //   teamCode: item[3],
+  //     //   email: item[4],
+  //   };
+  //   dbEntries.push(row);
+  // });
 
   await connectMongo();
   try {
@@ -41,6 +59,9 @@ export async function createNewPlayer(data: AddPlayerInputs, teamId: string) {
   // }
   await connectMongo();
   try {
+    const isPlayerExist = await checkPlayerExists(data.regId);
+    if (isPlayerExist) return false;
+
     const player = await Player.create({ ...data, teamId: teamId }).catch(
       (err) => {
         console.log(err);
@@ -52,6 +73,15 @@ export async function createNewPlayer(data: AddPlayerInputs, teamId: string) {
   } catch (err) {
     return false;
   }
+}
+
+async function checkPlayerExists(playerRegId: string) {
+  await connectMongo();
+  // console.log(playerRegId);
+  const result = await Player.findOne({ regId: playerRegId });
+  // console.log(result);
+  if (result !== null) return true;
+  else return false;
 }
 
 export async function getAllPlayers() {

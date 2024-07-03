@@ -2,7 +2,6 @@
 
 ## Updates Required
 
-1. Add players unique replacement
 2. Add matches unique replacement
 3. Add forgot password
 4. Add front-end league data
@@ -63,6 +62,7 @@
 - [x] In Walkover - Opponent team refused to play (instead of unruly behaviour)
 - [x] Check match display page
 - [x] Match Fixtures, venues, teams data consistency on every match, venue or team update
+- [x] Add players unique replacement
 
 ---
 
