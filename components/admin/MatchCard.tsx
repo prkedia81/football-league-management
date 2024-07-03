@@ -19,6 +19,13 @@ export interface Props {
   time: number;
 }
 
+export const editPenaltyStatuses = [
+  "noShow",
+  "othersWalkover",
+  "informed",
+  "unruly",
+];
+
 export default function MatchCard({
   _id,
   team1,
@@ -73,13 +80,6 @@ export default function MatchCard({
 
   const cardClass =
     classStatus.filter((item) => item.status === status)[0]?.class || "";
-
-  const editPenaltyStatuses = [
-    "noShow",
-    "othersWalkover",
-    "informed",
-    "unruly",
-  ];
 
   return (
     <Card className={cn(cardClass, "w-full max-w-80")}>
