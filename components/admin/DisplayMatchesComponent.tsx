@@ -18,7 +18,7 @@ function DisplayMatchesComponent({ matches }: { matches: Matches[] }) {
 
   const playedMatches = matches.filter((match) => match.status !== "unplayed");
   return (
-    <div className="my-2 md:mx-4 ">
+    <div className="my-2 mx-4 ">
       <div className="flex items-center gap-4">
         <Button
           size="sm"
