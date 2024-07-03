@@ -50,7 +50,7 @@ async function MatchDetailsPage({ match }: Props) {
             emptyStateText="No yellow cards in the match"
           />
           <MatchPlayerCard
-            players={match.team2.goalsScored || []}
+            players={match.redCards || []}
             isTeam={true}
             cardTitle={"Red Cards"}
             cardDescription="List of players who received a red card in the match"
