@@ -126,7 +126,8 @@ export async function createBulkNewMatch(data: any[]) {
   // @ts-ignore
   const dbEntries = [];
 
-  data.forEach((item) => {
+  for (let i = 0; i < data.length; i++) {
+    const item = data[i];
     // [ '1', 'A', 'E', '1/2/23', '07:00', 'Rabindra Sarovar Stadium' ],
     if (item.length == 0) return;
     const row = {
@@ -136,8 +137,11 @@ export async function createBulkNewMatch(data: any[]) {
       time: item[4],
       location: item[5],
     };
-    dbEntries.push(formatInputForMatchCreate(row));
-  });
+    const formattedInput = formatInputForMatchCreate(row);
+    const isMatchExists = await checkMatchExists(formattedInput);
+    if (isMatchExists) continue;
+    dbEntries.push(formattedInput);
+  }
   await connectMongo();
   // @ts-ignore-ignore
   const match = await Match.create(dbEntries)
@@ -153,13 +157,30 @@ export async function createBulkNewMatch(data: any[]) {
 }
 
 export async function createNewMatch(data: AddMatchInputs) {
+  // TODO: BUG ALERT
   await connectMongo();
-  const match = await Match.create(formatInputForMatchCreate(data))
+  const formattedInput = formatInputForMatchCreate(data);
+  const isMatchExists = await checkMatchExists(formattedInput);
+  if (isMatchExists) return false;
+
+  const match = await Match.create()
     .then(() => true)
     .catch(() => false);
 
   await Promise.all([updateAllVenueInMatch(), updateAllTeamInMatch()]);
   return match;
+}
+
+async function checkMatchExists(match: any) {
+  await connectMongo();
+  const result = await Match.findOne({
+    "team1.teamCode": match.team1.teamCode,
+    "team2.teamCode": match.team2.teamCode,
+    time: match.time,
+    "venue.venueRegId": match.venue.venueRegId,
+  });
+  if (result !== null) return true;
+  else return false;
 }
 
 export async function getAllMatches() {

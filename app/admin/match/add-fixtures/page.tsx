@@ -20,6 +20,7 @@ const page = () => {
   const handleFixtureUpload = async (data: MatchFixtureUpload[]) => {
     "use server";
     const response = await createBulkNewMatch(data);
+    if (response === undefined) return false;
     return response;
   };
 
