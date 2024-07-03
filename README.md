@@ -2,9 +2,8 @@
 
 ## Updates Required
 
-3. Add forgot password
-4. Add front-end league data
-5. Add multi league management
+1. Add forgot password
+2. Add multi league management
 
 ## Feature List:
 
@@ -63,6 +62,7 @@
 - [x] Match Fixtures, venues, teams data consistency on every match, venue or team update
 - [x] Add players unique replacement
 - [x] Add matches unique replacement
+- [x] Add simple UI for front-end match viewing
 
 ---
 

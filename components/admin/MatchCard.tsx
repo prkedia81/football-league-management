@@ -17,6 +17,7 @@ export interface Props {
   venue: { venueRegId: string; venueName?: string };
   status: string;
   time: number;
+  isAdmin?: boolean;
 }
 
 export const editPenaltyStatuses = [
@@ -35,6 +36,7 @@ export default function MatchCard({
   status,
   venue,
   time,
+  isAdmin = true,
 }: Props) {
   const team1Name = team1.teamName ? team1.teamName : "Team " + team1.teamCode;
   const team2Name = team2.teamName ? team2.teamName : "Team " + team2.teamCode;
@@ -112,31 +114,34 @@ export default function MatchCard({
           {timeFormat(time)}
         </p>
       </CardContent>
-      {status === "unplayed" ? (
-        <CardFooter className="p-4 flex justify-center gap-2">
-          <Link href={"/admin/match/reschedule/" + _id} className="w-full">
-            <Button type="button" className="w-full" variant="outline">
-              Re-schedule
-            </Button>
-          </Link>
-          <Link href={"/admin/match/finish-match/" + _id} className="w-full">
-            <Button className="w-full">Finish Match</Button>
-          </Link>
-        </CardFooter>
-      ) : (
-        <CardFooter className="p-4 flex justify-center gap-2">
-          {editPenaltyStatuses.includes(status) && (
-            <Link href={"/admin/match/edit-penalty/" + _id} className="w-full">
-              <Button variant="ghost" className="w-full">
-                Edit Penalty
+      {isAdmin == true &&
+        (status === "unplayed" ? (
+          <CardFooter className="p-4 flex justify-center gap-2">
+            <Link href={"/admin/match/reschedule/" + _id} className="w-full">
+              <Button type="button" className="w-full" variant="outline">
+                Re-schedule
               </Button>
             </Link>
-          )}
-          <Link href={"/admin/match/match-details/" + _id} className="w-full">
-            <Button className="w-full">View Match Details</Button>
-          </Link>
-        </CardFooter>
-      )}
+            <Link href={"/admin/match/finish-match/" + _id} className="w-full">
+              <Button className="w-full">Finish Match</Button>
+            </Link>
+          </CardFooter>
+        ) : (
+          <CardFooter className="p-4 flex justify-center gap-2">
+            {editPenaltyStatuses.includes(status) && (
+              <Link
+                href={"/admin/match/edit-penalty/" + _id}
+                className="w-full">
+                <Button variant="ghost" className="w-full">
+                  Edit Penalty
+                </Button>
+              </Link>
+            )}
+            <Link href={"/admin/match/match-details/" + _id} className="w-full">
+              <Button className="w-full">View Match Details</Button>
+            </Link>
+          </CardFooter>
+        ))}
     </Card>
   );
 }

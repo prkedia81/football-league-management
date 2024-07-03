@@ -16,10 +16,10 @@ import { editPenaltyStatuses } from "./MatchCard";
 
 interface Props {
   data: Matches[];
-  isActions?: boolean;
+  isAdmin?: boolean;
 }
 
-function MatchTable({ data, isActions = true }: Props) {
+function MatchTable({ data, isAdmin: isActions = true }: Props) {
   let headings: string[] = [];
 
   if (isActions) {

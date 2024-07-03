@@ -7,7 +7,12 @@ import { Button } from "../ui/button";
 import { ArrowUpDownIcon, CalendarIcon, TableIcon } from "lucide-react";
 import MatchTable from "./MatchTable";
 
-function DisplayMatchesComponent({ matches }: { matches: Matches[] }) {
+interface Props {
+  isAdmin?: boolean;
+  matches: Matches[];
+}
+
+function DisplayMatchesComponent({ matches, isAdmin = true }: Props) {
   const [selectedView, setSelectedView] = useState<"status" | "table" | "date">(
     "date"
   );
@@ -46,21 +51,23 @@ function DisplayMatchesComponent({ matches }: { matches: Matches[] }) {
         {selectedView === "status" && (
           <>
             {unplayedMatches.map((match, i) => (
-              <MatchCard key={match._id} {...match} />
+              <MatchCard key={match._id} {...match} isAdmin={isAdmin} />
             ))}
             {playedMatches.map((match, i) => (
-              <MatchCard key={match._id} {...match} />
+              <MatchCard key={match._id} {...match} isAdmin={isAdmin} />
             ))}
           </>
         )}
         {selectedView === "date" && (
           <>
             {matches.map((match, i) => (
-              <MatchCard key={match._id} {...match} />
+              <MatchCard key={match._id} {...match} isAdmin={isAdmin} />
             ))}
           </>
         )}
-        {selectedView === "table" && <MatchTable data={matches} />}
+        {selectedView === "table" && (
+          <MatchTable isAdmin={isAdmin} data={matches} />
+        )}
       </div>
     </div>
   );
