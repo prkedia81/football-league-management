@@ -231,11 +231,16 @@ export async function finishNormalMatch(
     // const team1Squad = data.team1Starting11.concat(data.team1Substitute);
     // const team2Squad = data.team2Starting11.concat(data.team2Substitute);
 
+    const team1Substitute = data.team1Substitute || [];
+    const team2Substitute = data.team2Substitute || [];
+    const team1Reserve = data.team1Reserve || [];
+    const team2Reserve = data.team2Reserve || [];
+
     const team1Squad = data.team1Starting11.concat(
-      data.team1Substitute.concat(data.team1Reserve)
+      team1Substitute.concat(team1Reserve)
     );
     const team2Squad = data.team2Starting11.concat(
-      data.team2Substitute.concat(data.team2Reserve)
+      team2Substitute.concat(team2Reserve)
     );
 
     // In Match DB
