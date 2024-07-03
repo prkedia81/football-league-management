@@ -58,10 +58,10 @@ async function MatchPlayerCard({
             <p className="text-gray-600 text-sm">{emptyStateText}</p>
           ) : (
             <ul role="list" className="divide-y divide-gray-200">
-              {playerData.map((player) => {
+              {playerData.map((player, i) => {
                 return (
                   <li
-                    key={player.id}
+                    key={`${i}_${player.id}`}
                     className="relative bg-white py-2 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                     {player.name + " "}{" "}
                     <span className="text-gray-600 text-sm">

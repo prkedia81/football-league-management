@@ -53,7 +53,7 @@ async function MatchPlayerList({
                 {team1Squad.map((player) => {
                   return (
                     <li
-                      key={player._id}
+                      key={"team1Squad_" + player._id}
                       className="relative bg-white py-2 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                       {player.name}
                     </li>
@@ -69,7 +69,7 @@ async function MatchPlayerList({
                 {team2Squad.map((player) => {
                   return (
                     <li
-                      key={player._id}
+                      key={"team2Squad_" + player._id}
                       className="relative bg-white py-2 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                       {player.name}
                     </li>

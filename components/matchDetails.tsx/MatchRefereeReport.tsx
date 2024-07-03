@@ -19,8 +19,8 @@ function MatchRefereeReport({ refereeReportLink }: Props) {
     <Card className="w-full h-full">
       <Suspense fallback={<LoadingState />}>
         <CardHeader>
-          <CardTitle>Referee Remarks</CardTitle>
-          <CardDescription>Remarks for the match</CardDescription>
+          <CardTitle>Referee Report</CardTitle>
+          <CardDescription>Report for the match</CardDescription>
         </CardHeader>
         <CardContent className="flex">
           <div className="w-0 flex-1 flex items-center">

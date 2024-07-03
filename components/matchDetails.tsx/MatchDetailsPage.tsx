@@ -25,7 +25,7 @@ async function MatchDetailsPage({ match }: Props) {
           team2Score={match.team2Score}
           time={match.time}
         />
-        <div className="flex gap-4 w-full">
+        <div className="flex flex-col md:flex-row gap-4 w-full">
           <MatchPlayerCard
             players={match.team1.goalsScored || []}
             isTeam={true}
@@ -41,7 +41,7 @@ async function MatchDetailsPage({ match }: Props) {
             emptyStateText="No goals scored by the team"
           />
         </div>
-        <div className="flex gap-4 w-full">
+        <div className="flex flex-col md:flex-row gap-4 w-full">
           <MatchPlayerCard
             players={match.yellowCards || []}
             isTeam={true}
