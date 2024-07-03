@@ -75,9 +75,22 @@ export async function getAllTeams(): Promise<Teams[]> {
 
 export async function getAllTeamsSorted(): Promise<Teams[]> {
   await connectMongo();
-  const team = await Team.find().sort({
-    points: "descending",
-    goalScoredFor: "ascending",
+  const team = await Team.find();
+  team.sort((team1, team2) => {
+    if (team1.points > team2.points) return -1;
+    else if (team1.points === team2.points) {
+      const gd1 = team1.goalScoredFor - team1.goalScoredAgainst;
+      const gd2 = team2.goalScoredFor - team2.goalScoredAgainst;
+      if (gd1 > gd2) return -1;
+      else if (gd1 < gd2) return 1;
+      else {
+        if (team1.goalScoredFor > team2.goalScoredFor) return -1;
+        else if (team1.goalScoredFor < team2.goalScoredFor) return 1;
+        else return 0;
+      }
+    } else if (team1.points < team2.points) return 1;
+
+    return 0;
   });
   return team;
 }
