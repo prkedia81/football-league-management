@@ -23,6 +23,8 @@ export function dateFormat(epoch: number) {
 
 export function timeFormat(epoch: number) {
   const date = new Date(epoch);
+  // To GMT
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
   return date.toLocaleString("en-US", {
     hour: "numeric",
     minute: "numeric",
