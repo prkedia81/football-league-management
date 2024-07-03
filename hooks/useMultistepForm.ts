@@ -45,6 +45,7 @@ export function useMultistepForm({
       match: match,
       formData: data,
     });
+    methods.reset();
   };
 
   const next = async () => {
@@ -58,8 +59,10 @@ export function useMultistepForm({
     if (currentStep < steps.length - 1) {
       if (currentStep === steps.length - 2) {
         console.log("Here in this step");
+        const trigger = await methods.trigger();
+        console.log(trigger);
+        if (!output) return;
         methods.handleSubmit(processForm)();
-        methods.reset();
       }
       setPreviousStep(currentStep);
       setCurrentStep((step) => step + 1);
@@ -73,6 +76,7 @@ export function useMultistepForm({
     }
   };
 
+  // console.log(steps[currentStep].id);
   // console.log(methods.watch());
 
   return { methods, previousStep, currentStep, processForm, next, prev };

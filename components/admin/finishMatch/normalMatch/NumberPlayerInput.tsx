@@ -32,10 +32,11 @@ function NumberPlayerInput({
     control,
     getValues,
     reset,
+    watch,
     formState: { errors },
   } = useFormContext();
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     name: inputName,
     control,
   });
@@ -52,15 +53,8 @@ function NumberPlayerInput({
           type="button"
           onClick={() => {
             const numFields = parseInt(getValues(numberName), 10);
-            reset(
-              {
-                [inputName]: [], // Assuming inputName is the name of your field array
-              },
-              {
-                keepErrors: true, // Keep any validation errors
-                keepDirty: false, // Don't mark fields as dirty
-              }
-            );
+            // Clearing the earlier fields and appending new fields
+            remove();
             for (let i = 0; i < numFields; i++) {
               append({ id: "" });
             }
@@ -75,6 +69,7 @@ function NumberPlayerInput({
         )}
       </div>
       <div className="mt-5 flex flex-col gap-2 rounded-md ">
+        {/* TODO: Uncontrolled to controlled error fix */}
         {fields.map((field, index) => (
           <div className="flex flex-col gap-1 text-sm" key={field.id}>
             <ComboBoxField
