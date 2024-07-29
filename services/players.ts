@@ -86,7 +86,7 @@ async function checkPlayerExists(playerRegId: string) {
 
 export async function getAllPlayers() {
   await connectMongo();
-  const player = await Player.find();
+  const player = await Player.find().sort({ matchesPlayed: -1 });
   return player;
 }
 

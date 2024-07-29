@@ -58,6 +58,7 @@ async function page({ params: { teamId } }: Props) {
               </TabsContent>
               <TabsContent value="playerList">
                 <PlayerTable
+                  teamName={team.name}
                   caption="List of players in the team"
                   data={players}
                 />

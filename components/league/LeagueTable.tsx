@@ -10,6 +10,7 @@ import {
   TableCell,
 } from "../ui/table";
 import Link from "next/link";
+import DownloadTableComponent from "../admin/DownloadTableComponent";
 
 async function LeagueTable() {
   const leagueTable = await getLeagueTable();
@@ -28,8 +29,16 @@ async function LeagueTable() {
   ];
 
   return (
-    <Table>
-      <TableCaption>The League Table</TableCaption>
+    <Table id="league-table">
+      <TableCaption>
+        <div className="flex flex-col gap-2 items-center">
+          The League Table
+          <DownloadTableComponent
+            tableId={"league-table"}
+            fileName={"League Table"}
+          />
+        </div>
+      </TableCaption>
       <TableHeader>
         <TableRow>
           {headings.map((heading, i) => (

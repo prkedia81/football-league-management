@@ -35,6 +35,7 @@ export default async function page({ params: { teamId } }: Props) {
         )}
         {playerList.length !== 0 && (
           <PlayerTable
+            teamName={team.name}
             data={playerList}
             caption={"Table of players in " + team.name}
           />

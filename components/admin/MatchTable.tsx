@@ -13,6 +13,7 @@ import { dateFormat, timeFormat } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { editPenaltyStatuses } from "./MatchCard";
+import DownloadTableComponent from "./DownloadTableComponent";
 
 interface Props {
   data: Matches[];
@@ -29,7 +30,7 @@ function MatchTable({ data, isAdmin: isActions = true }: Props) {
   }
 
   return (
-    <Table>
+    <Table className="match-list">
       <TableHeader>
         <TableRow>
           {headings.map((heading, i) => (
