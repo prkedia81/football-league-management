@@ -252,10 +252,18 @@ export async function finishNormalMatch(
     // const team1Squad = data.team1Starting11.concat(data.team1Substitute);
     // const team2Squad = data.team2Starting11.concat(data.team2Substitute);
 
-    const team1Substitute = data.team1Substitute || [];
-    const team2Substitute = data.team2Substitute || [];
-    const team1Reserve = data.team1Reserve || [];
-    const team2Reserve = data.team2Reserve || [];
+    let team1Substitute = data.team1Substitute || [];
+    let team2Substitute = data.team2Substitute || [];
+    let team1Reserve = data.team1Reserve || [];
+    let team2Reserve = data.team2Reserve || [];
+
+    // Making sure that no players are repeated in both reserve and substitute!!
+    team1Reserve = team1Reserve.filter(
+      (player) => team1Substitute.indexOf(player) === -1
+    );
+    team2Reserve = team2Reserve.filter(
+      (player) => team2Substitute.indexOf(player) === -1
+    );
 
     const team1Squad = data.team1Starting11.concat(
       team1Substitute.concat(team1Reserve)
