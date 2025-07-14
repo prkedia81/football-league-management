@@ -8,7 +8,7 @@ export default auth((req) => {
   // Login API Routes
   if (
     pathname.startsWith("/api/auth") ||
-    pathname.startsWith("/api/uploadthing")
+    pathname.startsWith("/api/upload")
   ) {
     return NextResponse.next();
   }
