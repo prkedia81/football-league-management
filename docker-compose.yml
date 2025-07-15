@@ -1,0 +1,56 @@
+version: '4.4'
+
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    command: ["--config=/etc/otel-config.yaml"]
+    volumes:
+      - ./otel-config.yaml:/etc/otel-config.yaml
+    ports:
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
+    depends_on:
+      - loki
+      - tempo
+      - mimir
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    environment:
+      - DEPLOYMENT_ENV=${NODE_ENV:-development}
+
+  tempo:
+    image: grafana/tempo:latest
+    ports:
+      - "3200:3200"
+    command: ["-config.file=/etc/tempo.yaml"]
+
+  mimir:
+    image: grafana/mimir:latest
+    ports:
+      - "3300:3300"
+    command: ["-config.file=/etc/mimir.yaml"]
+
+  lgtm:
+    image: grafana/otel-lgtm:latest
+    ports:
+      - "3069:3000" # Grafana
+      - "3100:3100" # Loki
+      - "3200:3200" # Tempo
+      - "3300:3300" # Mimir
+      - "4317:4317" # OTLP gRPC
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_FEATURE_TOGGLES_ENABLE=tempoSearch,tempoServiceGraph
+    volumes:
+      - lgtm-data:/var/lib/grafana
+    depends_on:
+      - loki
+      - tempo
+      - mimir
+
+volumes:
+  lgtm-data:

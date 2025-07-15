@@ -1,0 +1,93 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+      http:
+        endpoint: "0.0.0.0:4318"
+
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: 'nextjs-ftp'
+          scrape_interval: 10s
+          metrics_path: '/api/otel-metrics'  # New endpoint we'll create
+          static_configs:
+            - targets: ['host.docker.internal:3000'] # Local dev
+              labels:
+                env: 'development'
+                service: 'nextjs-ftp'
+          # # For Vercel production (if using custom metrics endpoint):
+          # - job_name: 'nextjs-ftp-vercel'
+          #   scrape_interval: 30s
+          #   metrics_path: '/api/otel-metrics'
+          #   static_configs:
+          #     - targets: ['xyz.vercel.app'] # Your Vercel URL
+          #       labels:
+          #         env: 'production'
+          #         service: 'nextjs-ftp'
+
+processors:
+  batch:
+    timeout: 5s
+    send_batch_size: 100
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 1000
+    spike_limit_mib: 500
+
+exporters:
+  logging:
+    loglevel: ${OTEL_LOG_LEVEL:-debug}
+    sampling_initial: 5
+    sampling_thereafter: 200
+  
+  prometheusremotewrite:
+    endpoint: "http://mimir:9009/api/v1/push"
+    headers:
+      "X-Scope-Org-ID": "demo"
+    retry_on_failure:
+      enabled: true
+      initial_interval: 5s
+      max_interval: 30s
+      max_elapsed_time: 300s
+  
+  loki:
+    endpoint: "http://loki:3100/loki/api/v1/push"
+    labels:
+      resource:
+        "service.name": "nextjs-ftp"
+        "deployment.environment": "${DEPLOYMENT_ENV:-development}"
+    retry_on_failure:
+      enabled: true
+  
+  tempo:
+    endpoint: "tempo:3200"
+    insecure: true
+    retry_on_failure:
+      enabled: true
+    sending_queue:
+      enabled: true
+      num_consumers: 4
+      queue_size: 100
+
+service:
+  telemetry:
+    logs:
+      level: ${OTEL_LOG_LEVEL:-info}
+  
+  pipelines:
+    metrics:
+      receivers: [otlp, prometheus]
+      processors: [memory_limiter, batch]
+      exporters: [logging, prometheusremotewrite]
+    
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [logging, loki]
+    
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [logging, tempo]

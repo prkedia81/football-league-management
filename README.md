@@ -96,3 +96,8 @@ Player List in complete match changes:
 - Edit Team Details
 - Only show selected players in the drop down for match finish
 - New Users from Logged in Users
+
+
+## To Run:
+- (For DEV) type ```NEXT_OTEL=1 npm run dev``` on terminal and get started
+- ```docker-compose up -d```
