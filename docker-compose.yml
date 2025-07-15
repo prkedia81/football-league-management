@@ -1,56 +1,36 @@
-version: '4.4'
-
 services:
-  otel-collector:
-    image: otel/opentelemetry-collector-contrib:latest
-    command: ["--config=/etc/otel-config.yaml"]
+  grafana:
+    image: grafana/grafana:9.5.2
+    ports: ["3001:3000"]
     volumes:
-      - ./otel-config.yaml:/etc/otel-config.yaml
-    ports:
-      - "4317:4317" # OTLP gRPC
-      - "4318:4318" # OTLP HTTP
+      - grafana-storage:/var/lib/grafana
     depends_on:
       - loki
       - tempo
-      - mimir
+      - prometheus
 
   loki:
-    image: grafana/loki:latest
-    ports:
-      - "3100:3100"
-    environment:
-      - DEPLOYMENT_ENV=${NODE_ENV:-development}
+    image: grafana/loki:2.8.2
+    ports: ["3100:3100"]
+    command: ["-config.file=/etc/loki/local-config.yaml"]
 
   tempo:
-    image: grafana/tempo:latest
-    ports:
-      - "3200:3200"
+    image: grafana/tempo:2.1.1
+    ports: ["3200:3200"]
     command: ["-config.file=/etc/tempo.yaml"]
 
-  mimir:
-    image: grafana/mimir:latest
-    ports:
-      - "3300:3300"
-    command: ["-config.file=/etc/mimir.yaml"]
-
-  lgtm:
-    image: grafana/otel-lgtm:latest
-    ports:
-      - "3069:3000" # Grafana
-      - "3100:3100" # Loki
-      - "3200:3200" # Tempo
-      - "3300:3300" # Mimir
-      - "4317:4317" # OTLP gRPC
-    environment:
-      - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-      - GF_FEATURE_TOGGLES_ENABLE=tempoSearch,tempoServiceGraph
+  prometheus:
+    image: prom/prometheus:latest
+    ports: ["9090:9090"]
     volumes:
-      - lgtm-data:/var/lib/grafana
-    depends_on:
-      - loki
-      - tempo
-      - mimir
+      - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.85.0
+    command: ["--config=/etc/otel-config.yaml"]
+    ports: ["4317:4317", "4318:4318"]
+    volumes:
+      - ./otel-config.yaml:/etc/otel-config.yaml
 
 volumes:
-  lgtm-data:
+  grafana-storage:

@@ -78,9 +78,9 @@ service:
   
   pipelines:
     metrics:
-      receivers: [otlp, prometheus]
+      receivers: [otlp]
       processors: [memory_limiter, batch]
-      exporters: [logging, prometheusremotewrite]
+      exporters: [logging,prometheus, prometheusremotewrite]
     
     logs:
       receivers: [otlp]
