@@ -46,18 +46,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    async signIn({
-      user,
-      account,
-    }: {
-      user: AuthUser;
-      account: Account | null;
-    }) {
-      if (account?.provider == "credentials") {
-        return true;
-      }
-      return false;
-    },
+  async signIn({ user, account }) {
+    if (account?.provider === "credentials") {
+     return true;
+    }
+    return false;
+  },
     async redirect({ url, baseUrl }) {
       if (url.startsWith("/")) return `${baseUrl}${url}`;
       if (new URL(url).origin === baseUrl) return url;

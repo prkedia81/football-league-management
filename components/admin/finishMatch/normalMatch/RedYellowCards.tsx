@@ -17,7 +17,7 @@ interface Props {
 function RedYellowCards({ ...props }: Props) {
   const displayTeam1: ComboBoxElement[] = props.team1Players.map((player) => {
     return {
-      value: player._id,
+      value: player._id as string,
       label: player.name,
       sublabel: player.regId,
     };
@@ -25,7 +25,7 @@ function RedYellowCards({ ...props }: Props) {
 
   const displayTeam2: ComboBoxElement[] = props.team2Players.map((player) => {
     return {
-      value: player._id,
+      value: player._id as string,
       label: player.name,
       sublabel: player.regId,
     };

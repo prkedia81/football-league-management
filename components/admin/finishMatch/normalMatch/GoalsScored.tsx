@@ -34,7 +34,7 @@ function GoalsScored({ ...props }: Props) {
 
   const displayItems1: ComboBoxElement[] = props.team1Players.map((player) => {
     return {
-      value: player._id,
+      value: player._id as string,
       label: player.name,
       sublabel: player.regId,
     };
@@ -42,7 +42,7 @@ function GoalsScored({ ...props }: Props) {
 
   const displayItems2: ComboBoxElement[] = props.team2Players.map((player) => {
     return {
-      value: player._id,
+      value: player._id as string,
       label: player.name,
       sublabel: player.regId,
     };

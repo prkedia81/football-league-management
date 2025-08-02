@@ -88,7 +88,7 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
                     id={props.starting11Field + "." + player._id}
                     type="checkbox"
                     {...register(props.starting11Field)}
-                    value={player._id}
+                    value={player._id as string}
                     className="focus:ring-indigo-500 h-5 w-5 text-indigo-600 border-gray-500 rounded"
                   />
                 </TableCell>
@@ -97,7 +97,7 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
                     id={props.substituteField + "." + player._id}
                     type="checkbox"
                     {...register(props.substituteField)}
-                    value={player._id}
+                    value={player._id as string}
                     className="focus:ring-indigo-500 h-5 w-5 text-indigo-600 border-gray-500 rounded"
                   />
                 </TableCell>
@@ -106,7 +106,7 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
                     id={props.captainField + "." + player._id}
                     type="checkbox"
                     {...register(props.captainField)}
-                    value={player._id}
+                    value={player._id as string}
                     className="focus:ring-indigo-500 h-5 w-5 text-indigo-600 border-gray-500 rounded"
                   />
                 </TableCell>
@@ -115,7 +115,7 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
                     id={props.gkField + "." + player._id}
                     type="checkbox"
                     {...register(props.gkField)}
-                    value={player._id}
+                    value={player._id as string}
                     className="focus:ring-indigo-500 h-5 w-5 text-indigo-600 border-gray-500 rounded"
                   />
                 </TableCell>
@@ -124,7 +124,7 @@ export default function PlayerSelect({ playerList, ...props }: Props) {
                     id={props.reserveField + "." + player._id}
                     type="checkbox"
                     {...register(props.reserveField)}
-                    value={player._id}
+                    value={player._id as string}
                     className="focus:ring-indigo-500 h-5 w-5 text-indigo-600 border-gray-500 rounded"
                   />
                 </TableCell>

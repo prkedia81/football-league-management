@@ -31,7 +31,7 @@ export async function getLeagueTable(): Promise<LeagueTableData[]> {
     }
     const data = {
       name: team.name,
-      id: team._id,
+      id: String(team._id),
       mp: team.matchesPlayed?.length || 0,
       w: team.matchesWon.length,
       d: team.matchesDrawn.length,

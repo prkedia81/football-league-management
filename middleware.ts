@@ -10,6 +10,7 @@ export default auth((req) => {
     pathname.startsWith("/api/auth") ||
     pathname.startsWith("/api/upload")
   ) {
+    console.log(`[Middleware] Path is public, allowing request to proceed.`);
     return NextResponse.next();
   }
 

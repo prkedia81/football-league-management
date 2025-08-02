@@ -1,9 +1,14 @@
-import { metrics } from '@opentelemetry/api';
+import { meter } from '@/lib/otel';
 
 export async function GET() {
-  const meter = metrics.getMeter('nextjs-ftp');
-  const requestCounter = meter.createCounter('http.requests');
-  requestCounter.add(1);
-  
-  return new Response('Metrics collected', { status: 200 });
+  const counter = meter.createCounter('http_requests_total', {
+    description: 'Counts all HTTP GET requests to /otel-metrics',
+  });
+
+  counter.add(1, {
+    method: 'GET',
+    route: '/api/otel-metrics',
+  });
+
+  return new Response('Metric recorded', { status: 200 });
 }

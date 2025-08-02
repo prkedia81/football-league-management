@@ -5,14 +5,16 @@ import { useFormContext } from 'react-hook-form';
 import { CheckIcon } from '@heroicons/react/16/solid';
 
 interface FTPUploadButtonProps {
-  endpoint?: string; // Kept for compatibility
+  endpoint?: string;
   field: string;
+  path?: string; // Optional path prop
   onClientUploadComplete?: (res: { url: string; name: string }[]) => void;
   onUploadError?: (error: Error) => void;
 }
 
 export function FTPUploadButton({
   field,
+  path, // Receive the path
   onClientUploadComplete,
   onUploadError,
 }: FTPUploadButtonProps) {
@@ -31,20 +33,32 @@ export function FTPUploadButton({
     const file = e.target.files?.[0];
     if (!file) return;
 
+    console.log('[FTP Button] File selected:', file.name);
     setIsUploading(true);
     
     try {
       const formData = new FormData();
       formData.append('file', file);
       
+      // If a path is provided as a prop, add it to the form data.
+      if (path) {
+        formData.append('path', path);
+        console.log(`[FTP Button] Appending custom path to FormData: "${path}"`);
+      } else {
+        console.log('[FTP Button] No custom path provided. API will use default.');
+      }
+      
+      console.log('[FTP Button] Sending request to /api/upload...');
       const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
       });
 
       const result = await response.json();
+      console.log('[FTP Button] Received response from API:', result);
 
       if (result.success) {
+        console.log('[FTP Button] Upload successful.');
         setValue(field, result.fileUrl);
         setFileName(result.name);
         setUploaded(true);
@@ -55,6 +69,7 @@ export function FTPUploadButton({
         throw new Error(result.message);
       }
     } catch (error: any) {
+      console.error('[FTP Button] An error occurred:', error.message);
       setError(field, {
         type: 'upload',
         message: error.message,

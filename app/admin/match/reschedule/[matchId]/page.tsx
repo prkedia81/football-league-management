@@ -15,9 +15,9 @@ interface Props {
 }
 
 export default async function page({ params: { matchId } }: Props) {
-  const match: Matches = JSON.parse(
+  const match = JSON.parse(
     JSON.stringify(await getMatchFromId(matchId))
-  );
+  ) as Matches;
 
   const team1Id = match?.team1?.teamId;
   const team2Id = match?.team2?.teamId;
@@ -40,7 +40,7 @@ export default async function page({ params: { matchId } }: Props) {
 
   async function rescheduleEmailFn(matchId: string) {
     "use server";
-    const email = await rescheduleEmail(match._id);
+    const email = await rescheduleEmail(match._id as string);
     // return email;
   }
 

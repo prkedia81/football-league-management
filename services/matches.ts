@@ -696,13 +696,11 @@ export async function editMatchPenalty(
       (losingTeam.points || 0) + oldPenalty - parseInt(deduction);
 
     const updatedTeam = await Team.updateOne(
-      { _id: losingTeamId, "penalty.matchId": matchId }, // Finding the document and the specific item in the array
-      {
-        $set: { "penalty.$.number": -1 * parseInt(deduction) },
-        points: newPoints,
-      },
-      { new: true }
-    ).exec();
+  { _id: losingTeamId, "penalty.matchId": matchId },
+  {
+    $set: { "penalty.$.number": -1 * parseInt(deduction), points: newPoints },
+  }
+  ).exec();
 
     return true;
   } catch (err) {

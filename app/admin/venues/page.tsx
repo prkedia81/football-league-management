@@ -30,7 +30,7 @@ async function page() {
         )}
         <div className="mt-4 mx-4 justify-center md:justify-normal flex flex-row flex-wrap gap-4">
           {venues.map((venue, i) => (
-            <VenueCard key={i} {...venue} />
+            <VenueCard key={i} {...venue} _id={venue._id?.toString()} />
           ))}
         </div>
       </Suspense>
