@@ -2,6 +2,7 @@ import { Document, Schema, model, models } from "mongoose";
 
 // Define the TypeScript interface for the Match document
 export interface Matches extends Document {
+  _id: string;
   team1: {
     teamCode: string;
     teamId?: string;

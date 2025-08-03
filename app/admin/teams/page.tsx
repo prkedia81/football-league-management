@@ -28,7 +28,7 @@ async function page() {
         )}
         <div className="mt-4 mx-4 justify-center md:justify-normal flex flex-row flex-wrap gap-4">
           {teams.map((team, i) => (
-            <TeamCard key={i} {...team} />
+            <TeamCard key={i} {...team} _id={typeof team._id === "string" ? team._id : undefined} />
           ))}
         </div>
       </Suspense>

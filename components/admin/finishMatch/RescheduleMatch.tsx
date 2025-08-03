@@ -49,7 +49,7 @@ function RescheduleMatch({
 }: Props) {
   const displayItems: ComboBoxElement[] = venues.map((venue) => {
     return {
-      value: venue.regId || venue._id,
+      value: venue.regId || venue._id as string,
       label: venue.name,
       sublabel: venue.regId,
     };
