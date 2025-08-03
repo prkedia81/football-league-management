@@ -69,6 +69,31 @@ function DisplayMatchesComponent({ matches, isAdmin = true }: Props) {
           <MatchTable isAdmin={isAdmin} data={matches} />
         )}
       </div>
+ <div className="mt-4 mb-2 w-full flex justify-center">
+  <div className="flex flex-row gap-3 px-4 py-1 rounded-md shadow-sm text-xs text-gray-700 items-center justify-center">
+    <div className="flex items-center gap-1 group relative">
+      <div className="w-3 h-3 sm:w-4 sm:h-4 bg-green-100 border border-green-300 rounded-sm" />
+      <span className="hidden sm:inline">Complete</span>
+      <span className="absolute sm:hidden bottom-full mb-1 px-2 py-1 text-[10px] bg-gray-200 text-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+        Complete
+      </span>
+    </div>
+    <div className="flex items-center gap-1 group relative">
+      <div className="w-3 h-3 sm:w-4 sm:h-4 bg-red-100 border border-red-300 rounded-sm" />
+      <span className="hidden sm:inline">Cancelled</span>
+      <span className="absolute sm:hidden bottom-full mb-1 px-2 py-1 text-[10px] bg-gray-200 text-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+        Cancelled
+      </span>
+    </div>
+    <div className="flex items-center gap-1 group relative">
+      <div className="w-3 h-3 sm:w-4 sm:h-4 bg-indigo-100 border border-indigo-300 rounded-sm" />
+      <span className="hidden sm:inline">Other</span>
+      <span className="absolute sm:hidden bottom-full mb-1 px-2 py-1 text-[10px] bg-gray-200 text-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+        Other
+      </span>
+    </div>
+  </div>
+</div>
     </div>
   );
 }

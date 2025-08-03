@@ -16,7 +16,8 @@ export default function Layout({
           <footer className="text-xs text-gray-400 py-3 text-center">
             Developed by Jadavpur University ({"Institution's"} Innovation
             Council). Developer -{" "}
-            <Link href="www.linkedin.com/in/prannay-kedia">Prannay Kedia</Link>
+            <Link href="www.linkedin.com/in/prannay-kedia">Prannay Kedia</Link> ,
+            <Link href="https://www.linkedin.com/in/kumarpiyushgupta"> Piyush Gupta</Link>
           </footer>
         </div>
       </Sidebar>

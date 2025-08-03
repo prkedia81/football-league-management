@@ -29,7 +29,9 @@ interface UploadResult {
 
 class FTPService {
   private config: FTPConfig;
-  private baseUrl = "https://kickoffonline.in";
+
+  // Ensure this matches your actual public path
+  private baseUrl = "https://kickoffonline.in/portal/ifa-uploads/uploads";
 
   constructor() {
     this.config = {
@@ -41,65 +43,65 @@ class FTPService {
     };
   }
 
-  async uploadFile(file: File, path: string): Promise<UploadResult> {
-    console.log(`[FTP Service] 'uploadFile' method initiated.`);
-    return tracer.startActiveSpan('ftp.upload', async (span) => {
-      const startTime = Date.now();
-      uploadCounter.add(1);
+async uploadFile(file: File, path: string): Promise<UploadResult> {
+  console.log(`[FTP Service] 'uploadFile' method initiated.`);
+  return tracer.startActiveSpan('ftp.upload', async (span) => {
+    const startTime = Date.now();
+    uploadCounter.add(1);
 
-      const client = new Client();
-      try {
-        span.setAttribute('file.name', file.name);
-        span.setAttribute('file.size', file.size);
-        span.setAttribute('file.type', file.type);
-        span.setAttribute('ftp.path', path);
+    const client = new Client();
+    try {
+      span.setAttribute('file.name', file.name);
+      span.setAttribute('file.size', file.size);
+      span.setAttribute('file.type', file.type);
+      span.setAttribute('ftp.path', path);
 
-        const remotePath = `${path}${file.name}`;
-        console.log(`[FTP Service] Full remote path will be: "${remotePath}"`);
+      const filename = file.name;
+      const ftpPath = path.endsWith('/') ? path : path + '/';
+      const remotePath = `${ftpPath}${filename}`;
 
-        // Censor password for logging
-        const secureConfig = { ...this.config, password: '***' };
-        console.log('[FTP Service] Connecting with config:', secureConfig);
-        await client.access(this.config);
-        console.log('[FTP Service] Connection successful.');
+      console.log(`[FTP Service] Uploading to FTP path: "${remotePath}"`);
 
-        console.log(`[FTP Service] Ensuring directory exists: "${path}"`);
-        await client.ensureDir(path);
-        console.log('[FTP Service] Directory check complete.');
-        
-        const stream = Readable.from(Buffer.from(await file.arrayBuffer()));
+      const secureConfig = { ...this.config, password: '***' };
+      console.log('[FTP Service] Connecting with config:', secureConfig);
+      await client.access(this.config);
+      console.log('[FTP Service] Connection successful.');
 
-        console.log(`[FTP Service] Starting upload to "${remotePath}"...`);
-        await client.uploadFrom(stream, remotePath);
-        console.log('[FTP Service] Upload completed successfully.');
-        
-        const duration = Date.now() - startTime;
-        uploadDuration.record(duration);
-        
-        return {
-          success: true,
-          message: 'File uploaded successfully',
-          url: `${this.baseUrl}/${remotePath}`,
-          name: file.name
-        };
-      } catch (error: any) {
-        console.error('[FTP Service] An error occurred during FTP operation:', error);
-        span.recordException(error);
-        span.setStatus({ 
-          code: SpanStatusCode.ERROR,
-          message: error.message 
-        });
-        return {
-          success: false,
-          message: error.message || 'Failed to upload file'
-        };
-      } finally {
-        console.log('[FTP Service] Closing FTP client connection.');
-        client.close(); // Ensure client is always closed
-        span.end();
-      }
-    });
+      await client.ensureDir(ftpPath);
+      console.log('[FTP Service] Directory ensured:', ftpPath);
+
+      const stream = Readable.from(Buffer.from(await file.arrayBuffer()));
+      await client.uploadFrom(stream, filename);
+      console.log('[FTP Service] Upload completed.');
+
+      const duration = Date.now() - startTime;
+      uploadDuration.record(duration);
+
+      const publicUrl = `https://kickoffonline.in/portal/ifa-uploads/${ftpPath}${filename}`;
+
+      return {
+        success: true,
+        message: 'File uploaded successfully',
+        url: publicUrl,
+        name: filename
+      };
+    } catch (error: any) {
+      console.error('[FTP Service] FTP error:', error);
+      span.recordException(error);
+      span.setStatus({
+        code: SpanStatusCode.ERROR,
+        message: error.message
+      });
+      return {
+        success: false,
+        message: error.message || 'FTP upload failed'
+      };
+    } finally {
+      console.log('[FTP Service] Closing FTP client.');
+      client.close();
+      span.end();
+    }
+  });
   }
 }
-
 export const ftpService = new FTPService();

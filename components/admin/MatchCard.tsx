@@ -90,14 +90,14 @@ export default function MatchCard({
           <div className="flex items-center space-x-2">
             {/* Add Logo Code Here */}
             <p className="font-semibold">{team1Name}</p>
+            </div>
+            <p className="text-3xl font-semibold">{(!isAdmin)?(status === "completed") ? team1Score : " ":team1Score}</p>
           </div>
-          <p className="text-3xl font-semibold">{team1Score}</p>
-        </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <p className="font-semibold">{team2Name}</p>
           </div>
-          <p className="text-3xl font-semibold">{team2Score}</p>
+          <p className="text-3xl font-semibold">{(!isAdmin)?(status === "completed") ? team2Score : " ":team2Score}</p>
         </div>
       </CardHeader>
       <CardContent className="p-4 grid gap-1.5">

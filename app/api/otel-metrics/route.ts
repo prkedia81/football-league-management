@@ -1,14 +1,23 @@
-import { meter } from '@/lib/otel';
+import { NextRequest, NextResponse } from 'next/server';
+import { register, Counter } from 'prom-client';
 
-export async function GET() {
-  const counter = meter.createCounter('http_requests_total', {
-    description: 'Counts all HTTP GET requests to /otel-metrics',
+const httpRequestCounter = new Counter({
+  name: 'http_requests_total',
+  help: 'Total number of HTTP requests',
+  labelNames: ['method', 'route', 'status_code'],
+});
+
+register.registerMetric(httpRequestCounter);
+
+export async function GET(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  httpRequestCounter.inc({ method: 'GET', route: pathname, status_code: 200 });
+
+  const metrics = await register.metrics();
+  return new NextResponse(metrics, {
+    status: 200,
+    headers: {
+      'Content-Type': register.contentType,
+    },
   });
-
-  counter.add(1, {
-    method: 'GET',
-    route: '/api/otel-metrics',
-  });
-
-  return new Response('Metric recorded', { status: 200 });
 }

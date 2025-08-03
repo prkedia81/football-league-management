@@ -21,8 +21,8 @@ async function page() {
       <Suspense fallback={<LoadingState />}>
         {matches.length === 0 && (
           <EmptyState
-            text="No matches added, click here to add fixtures"
-            link={"/admin/match/add-fixtures"}
+            text="Matches will be added soon"
+            link={"#"}
           />
         )}
         <DisplayMatchesComponent matches={matches} isAdmin={false} />

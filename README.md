@@ -1,70 +1,4 @@
 # Feature List & Bugs:
-./app/layout.tsx
-[API Upload] Received request for URL: http://localhost:3000/api/upload
-[API Upload] Processing: Parsing form data...
-[API Upload] Raw path from FormData: "null"
-[API Upload] Path before sanitization: "uploads/documents/"
-[API Upload] Processing: Calling FTP service with sanitized path: "uploads/documents/"
-[FTP Service] 'uploadFile' method initiated.
-[FTP Service] Full remote path will be: "uploads/documents/match1.pdf"
-[FTP Service] Connecting with config: {
-  host: 'ftp.teqv.in',
-  port: 21,
-  user: 'ifa-uploads@kickoffonline.in',
-  password: '***',
-  secure: false
-}
-[FTP Service] Connection successful.
-[FTP Service] Ensuring directory exists: "uploads/documents/"
-[FTP Service] Directory check complete.
-[FTP Service] Starting upload to "uploads/documents/match1.pdf"...
-[FTP Service] An error occurred during FTP operation: FTPError: 553 Can't open that file: No such file or directory
-    at FTPContext._onControlSocketData (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:283:39)
-    at Socket.eval (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:127:44)
-    at Socket.emit (node:events:524:28)
-    at addChunk (node:internal/streams/readable:561:12)
-[FTP Service] An error occurred during FTP operation: FTPError: 553 Can't open that file: No such file or directory
-    at FTPContext._onControlSocketData (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:283:39)
-    at Socket.eval (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:127:44)
-    at Socket.emit (node:events:524:28)
-[FTP Service] An error occurred during FTP operation: FTPError: 553 Can't open that file: No such file or directory
-    at FTPContext._onControlSocketData (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:283:39)
-    at Socket.eval (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:127:44)
-    at Socket.emit (node:events:524:28)
-[FTP Service] An error occurred during FTP operation: FTPError: 553 Can't open that file: No such file or directory
-    at FTPContext._onControlSocketData (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:283:39)
-    at Socket.eval (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:127:44)
-    at Socket.emit (node:events:524:28)
-[FTP Service] An error occurred during FTP operation: FTPError: 553 Can't open that file: No such file or directory
-    at FTPContext._onControlSocketData (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:283:39)
-    at Socket.eval (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:127:44)
-[FTP Service] An error occurred during FTP operation: FTPError: 553 Can't open that file: No such file or directory
-    at FTPContext._onControlSocketData (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:283:39)
-[FTP Service] An error occurred during FTP operation: FTPError: 553 Can't open that file: No such file or directory
-    at FTPContext._onControlSocketData (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:283:39)
-    at Socket.eval (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:127:44)
-[FTP Service] An error occurred during FTP operation: FTPError: 553 Can't open that file: No such file or directory
-    at FTPContext._onControlSocketData (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:283:39)
-    at Socket.eval (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:127:44)
-[FTP Service] An error occurred during FTP operation: FTPError: 553 Can't open that file: No such file or directory
-    at FTPContext._onControlSocketData (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:283:39)
-[FTP Service] An error occurred during FTP operation: FTPError: 553 Can't open that file: No such file or directory
-    at FTPContext._onControlSocketData (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:283:39)
-[FTP Service] An error occurred during FTP operation: FTPError: 553 Can't open that file: No such file or directory
-[FTP Service] An error occurred during FTP operation: FTPError: 553 Can't open that file: No such file or directory
-    at FTPContext._onControlSocketData (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:283:39)
-    at Socket.eval (webpack-internal:///(rsc)/./node_modules/basic-ftp/dist/FtpContext.js:127:44)
-    at Socket.emit (node:events:524:28)
-    at addChunk (node:internal/streams/readable:561:12)
-    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
-    at Readable.push (node:internal/streams/readable:392:5)
-    at TCP.onStreamRead (node:internal/stream_base_commons:189:23)
-    at TCP.callbackTrampoline (node:internal/async_hooks:130:17) {
-  code: 553
-}
-[FTP Service] Closing FTP client connection.
-[API Upload] Block Failed: FTP service returned failure: 553 Can't open that file: No such file or directory
- POST /api/upload 500 in 4033ms
 
 ## Updates Required
 
@@ -104,6 +38,7 @@
    - [x] Every Re-schedule
    - [ ] Every Match fixture
 4. Show penalty in match details page
+5. Open-Telmetry using LGTM stack
 
 ## Changes Requested:
 
@@ -165,5 +100,5 @@ Player List in complete match changes:
 
 
 ## To Run:
-- (For DEV) type ```NEXT_OTEL=1 npm run dev``` on terminal and get started
+- (For DEV) type ```npm run dev``` on terminal and get started
 - ```docker-compose up -d```
