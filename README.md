@@ -14,7 +14,9 @@
      - Match
      - Venue
      - Player
+       - Added Player Search Box
      - Teams
+       - Added Team Search Box
      - Officials
    - Multiple Upload
      - Venue

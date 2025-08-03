@@ -1,15 +1,4 @@
 import React from "react";
-import {
-  Table,
-  TableCaption,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "../ui/table";
-import Link from "next/link";
-import DownloadTableComponent from "../admin/DownloadTableComponent";
 import { getAllPlayers } from "@/services/players";
 import PlayerTable from "../admin/PlayerTable";
 
@@ -19,7 +8,7 @@ async function AllPlayerTable() {
   return (
     <PlayerTable
       teamName={"CFL"}
-      data={playerList}
+      data={JSON.parse(JSON.stringify(playerList))}
       caption={"Table of all players in the league"}
     />
   );

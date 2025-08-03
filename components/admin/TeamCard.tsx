@@ -1,4 +1,5 @@
 import React from "react";
+import { Types } from "mongoose";
 import {
   Card,
   CardHeader,
@@ -8,17 +9,16 @@ import {
 } from "../ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { getAllPlayerDataFromTeamId } from "@/services/players";
 
 interface Props {
-  _id?: string;
+  _id?: Types.ObjectId |string;
   name: string;
   matchesPlayed?: string[];
   teamCode: string;
+  playerCount: number;
 }
 
-async function TeamCard(props: Props) {
-  const players = await getAllPlayerDataFromTeamId(props._id || "");
+function TeamCard(props: Props) {
   return (
     <Card className="w-sm">
       <CardHeader className="p-4">
@@ -35,7 +35,7 @@ async function TeamCard(props: Props) {
         </p>
         <p className="text-sm">
           <span className="font-semibold">Number of Players: </span>
-          {players ? players.length : 0}
+          {props.playerCount}
         </p>
       </CardContent>
       <CardFooter className="p-4 flex justify-center gap-2">
