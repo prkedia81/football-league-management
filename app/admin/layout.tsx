@@ -13,7 +13,7 @@ export default function AdminLayout({
       <Sidebar>
         <div className="flex flex-col min-h-screen">
           <div className="my-2 flex-grow">{children}</div>
-          <footer className="text-sm text-gray-300 bg-slate-600 py-3 text-center">
+          <footer className="text-base text-gray-300 bg-black py-3 text-center">
             Developed by Jadavpur University (Institution&apos;s Innovation Council). Developer -{" "}
             <Link href="https://www.linkedin.com/in/prannay-kedia">Prannay Kedia</Link>,
             <Link href="https://www.linkedin.com/in/kumarpiyushgupta"> Piyush Gupta</Link>

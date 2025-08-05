@@ -35,18 +35,10 @@ flm-docker-lgtm/
 
 ---
 
-## 🐳 DockerHub Deployment
-
-### Build the Docker image:
+## 🐳 Use this image on Docker
 
 ```bash
-docker build -t <YOUR_DOCKERHUB_USERNAME>/<project_name> .
-````
-
-### Push to DockerHub:
-
-```bash
-docker push <YOUR_DOCKERHUB_USERNAME>/<project_name>
+docker pull yequalsmxplusc/flm-lgtm-next:latest
 ```
 
 ---
@@ -55,8 +47,7 @@ docker push <YOUR_DOCKERHUB_USERNAME>/<project_name>
 
 1. Create a **new Web Service** on [Render.com](https://render.com/)
 
-2. Choose **Docker** and enter your image name:
-   `yourname/otel-collector`
+2. Add the image as to be pulled
 
 3. Set the following **environment variable**:
 
