@@ -1,0 +1,40 @@
+receivers:
+  otlp:
+    protocols:
+      http: {}
+
+exporters:
+  logging:
+    loglevel: debug
+
+  prometheus:
+    endpoint: "0.0.0.0:8888"
+
+  prometheusremotewrite/grafanacloud:
+    endpoint: "https://prometheus-prod-01-us-central-0.grafana.net/api/prom/push"
+    headers:
+      Authorization: "Bearer ${GRAFANA_CLOUD_API_TOKEN}"
+
+  loki/grafanacloud:
+    endpoint: "https://logs-prod-01-us-central-0.grafana.net/loki/api/v1/push"
+    headers:
+      Authorization: "Bearer ${GRAFANA_CLOUD_API_TOKEN}"
+
+  otlphttp/grafanacloud:
+    endpoint: "https://tempo-prod-01-us-central-0.grafana.net/otlp/v1/traces"
+    headers:
+      Authorization: "Bearer ${GRAFANA_CLOUD_API_TOKEN}"
+
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      exporters: [prometheus, prometheusremotewrite/grafanacloud]
+
+    logs:
+      receivers: [otlp]
+      exporters: [loki/grafanacloud]
+
+    traces:
+      receivers: [otlp]
+      exporters: [otlphttp/grafanacloud]

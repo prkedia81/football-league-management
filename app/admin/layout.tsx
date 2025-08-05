@@ -3,20 +3,19 @@ import LoadingState from "./loading";
 import { Suspense } from "react";
 import Link from "next/link";
 
-export default function Layout({
+export default function AdminLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <Suspense fallback={<LoadingState />}>
       <Sidebar>
         <div className="flex flex-col min-h-screen">
           <div className="my-2 flex-grow">{children}</div>
-          <footer className="text-xs text-gray-400 py-3 text-center">
-            Developed by Jadavpur University ({"Institution's"} Innovation
-            Council). Developer -{" "}
-            <Link href="www.linkedin.com/in/prannay-kedia">Prannay Kedia</Link> ,
+          <footer className="text-sm text-gray-300 bg-slate-600 py-3 text-center">
+            Developed by Jadavpur University (Institution&apos;s Innovation Council). Developer -{" "}
+            <Link href="https://www.linkedin.com/in/prannay-kedia">Prannay Kedia</Link>,
             <Link href="https://www.linkedin.com/in/kumarpiyushgupta"> Piyush Gupta</Link>
           </footer>
         </div>

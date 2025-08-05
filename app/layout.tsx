@@ -3,6 +3,7 @@ import "./globals.css";
 import { Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { register } from '@/lib/instrumentation';
+import Footer from "@/components/home/Footer";
 
 if (typeof window === 'undefined') {
   register();
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body>
         <Suspense>{children}</Suspense>
         <Toaster />
+        <Footer />
       </body>
     </html>
   );
